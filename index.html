@@ -1,94 +1,208 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Shihao Cheng</title>
-    <link rel="stylesheet" href="assets/style.css" />
-  </head>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Shihao Cheng</title>
+  <link rel="stylesheet" href="assets/site.css?v=2">
+</head>
 
-  <body>
-    <h1>Shihao Cheng, Ph.D.</h1>
-    <p class="subtitle">Robotics & Controls Engineer • Real-time Systems • Sensor Fusion • ML/AI</p>
-    <p class="meta">Austin, TX • chengsh@umich.edu</p>
-
-    <p class="links">
-      <a href="https://www.linkedin.com/in/shihao-cheng/">LinkedIn</a>
-      <a href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID">Google Scholar</a>
-      <a href="https://github.com/chengsh96">GitHub</a>
-      <a href="projects/index.html">Projects</a>
-    </p>
-
-    <div class="card">
-      <h2>About</h2>
-      <p>
-        I build production-ready robotics software spanning embedded real-time control, state estimation,
-        and machine learning. My work has research-to-deployment impact in wearable robotics, sim-to-real
-        reinforcement learning (MuJoCo), and multi-sensor fusion, with a focus on performance, latency,
-        and user experience.
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>Featured Projects</h2>
-      <p class="small">Click to view details.</p>
-      <div class="tag">
-        <a href="projects/shiftos.html">Moonwalkers Control System (ShiftOS)</a>
-        <a href="projects/tbme2024.html">Safety-Critical Stub Avoidance (TBME)</a>
-        <a href="projects/tnsre2024.html">Continuous Transition Control (TNSRE)</a>
-        <a href="projects/ral2024.html">Transfer Learning for Intent (RA-L)</a>
-        <a href="projects/sim2real.html">Sim-to-Real Personalization (MuJoCo)</a>
-      </div>
-      <p class="small">
-        See the full list on the <a href="projects/index.html">Projects page</a>.
-      </p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>Experience</h2>
-
-        <p><strong>Lead Control Engineer</strong> — Shift Robotics <span class="small">(Jan 2025 – Present)</span></p>
-        <ul>
-          <li>Real-time balance-aware control improving stability on uneven terrain.</li>
-          <li>Hybrid walking modes with &lt;10 ms system latency for smooth transitions across terrains.</li>
-          <li>Motion-capture lab + dataset pipeline to accelerate ML iteration.</li>
-        </ul>
-
-        <hr />
-
-        <p><strong>Gait Control Engineer</strong> — Shift Robotics <span class="small">(Sep 2024 – Jan 2025)</span></p>
-        <ul>
-          <li>ShiftOS 3.1 firmware: improved responsiveness to user intent.</li>
-          <li>EKF-based terrain estimation reducing misclassification.</li>
-          <li>Embedded deployment on ARM Cortex RTOS (Bluetooth/FLASH integration).</li>
-        </ul>
-
-        <hr />
-
-        <p><strong>Ph.D. Researcher (Robotics)</strong> — University of Michigan <span class="small">(Sep 2019 – Jul 2024)</span></p>
-        <ul>
-          <li>Multi-activity control enabling seamless activity transitions; validated in real-time trials.</li>
-          <li>Intent recognition + transfer learning for cross-user adaptability with limited data.</li>
-          <li>Obstacle/stub avoidance using sensor fusion and trajectory optimization.</li>
-          <li>MuJoCo digital twin + RL for safe personalization (sim-to-real).</li>
-        </ul>
+<body>
+  <header class="nav">
+    <div class="navInner">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Shihao Cheng</span>
       </div>
 
+      <nav class="navLinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+        <a href="projects/index.html">All Projects</a>
+      </nav>
+
+      <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
+    </div>
+
+    <div class="mobileMenu" data-mobilemenu>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+      <a href="projects/index.html">All Projects</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="heroGrid">
+        <div class="reveal">
+          <span class="kicker">Wearable Robotics • Controls • ML</span>
+          <h1>Shihao Cheng, Ph.D.</h1>
+          <p class="sub">
+            Robotics & Controls Engineer building real-time systems, sensor fusion, and ML for wearable robots.
+            I bridge research and production deployment with a focus on robustness, latency, and user-centered performance.
+          </p>
+
+          <div class="ctaRow">
+            <a class="btn btnPrimary" href="projects/index.html">View Projects</a>
+            <a class="btn" href="https://www.linkedin.com/in/shihao-cheng/">LinkedIn</a>
+            <a class="btn" href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID">Google Scholar</a>
+            <a class="btn" href="https://github.com/chengsh96">GitHub</a>
+          </div>
+
+          <div class="pills">
+            <span class="pill">Intent Recognition</span>
+            <span class="pill">Gait & Locomotion</span>
+            <span class="pill">Machine Learning</span>
+            <span class="pill">State Estimation</span>
+            <span class="pill">MuJoCo / Sim-to-Real</span>
+            <span class="pill">Safety-Critical Control</span>
+          </div>
+        </div>
+
+        <aside class="heroCard reveal">
+          <h2>Highlights</h2>
+          <p class="small">
+            Industry deployment (ShiftOS) + PhD research across multi-activity control, transitions, and safety interventions.
+          </p>
+          <div class="ctaRow heroLinks">
+            <a class="heroLink" href="projects/shiftos.html">
+              <span class="heroLinkTitle">ShiftOS</span>
+              <span class="heroLinkMeta">Industry system</span>
+            </a>
+            <a class="heroLink" href="projects/tbme2024.html">
+              <span class="heroLinkTitle">Stub Avoidance</span>
+              <span class="heroLinkMeta">TBME 2024</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" class="section reveal">
+      <div class="sectionHead">
+        <h2>About</h2>
+        <div class="small">Research → deployment</div>
+      </div>
       <div class="card">
-        <h2>Skills</h2>
-        <p class="small">
-          <strong>Languages:</strong> Python, C++, C, Java, MATLAB, SQL<br/>
-          <strong>ML/AI:</strong> PyTorch, TensorFlow, scikit-learn, XGBoost, OpenCV<br/>
-          <strong>Robotics/Sim:</strong> ROS, MuJoCo, Simulink<br/>
-          <strong>Cloud/Tools:</strong> AWS/GCP, Docker, Kubernetes, CI/CD
+        <p class="projDesc">
+          I develop embedded real-time control and estimation systems for wearable robots, and I apply ML/RL to improve
+          intent recognition, personalization, and robustness. I care about clean architecture, measurable performance,
+          and safe behavior in the real world.
         </p>
-
-        <hr />
-
-        <h2>Contact</h2>
-        <p>Email: chengsh@umich.edu</p>
       </div>
-    </div>
-  </body>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="sectionHead reveal">
+        <h2>Featured Projects</h2>
+        <div class="small">Wearable Robotics • Human-Robot Interaction</div>
+      </div>
+
+      <div class="grid">
+        <a class="card proj reveal" href="projects/shiftos.html">
+          <div class="projTop">
+            <p class="projTitle">Moonwalkers Control System (ShiftOS)</p>
+            <span class="tag">Industry</span>
+          </div>
+          <p class="projDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
+          <ul class="projList">
+            <li>Balance-aware behaviors for uneven terrain</li>
+            <li>Low-latency transitions and safety constraints</li>
+            <li>RTOS integration and reliability hardening</li>
+          </ul>
+        </a>
+
+        <a class="card proj reveal" href="projects/tbme2024.html">
+          <div class="projTop">
+            <p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p>
+            <span class="tag">Research</span>
+          </div>
+          <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
+          <ul class="projList">
+            <li>Safety intervention compatible with continuous control</li>
+            <li>Multi-sensor inputs (kinematics + ranging)</li>
+          </ul>
+        </a>
+
+        <a class="card proj reveal" href="projects/tnsre2024.html">
+          <div class="projTop">
+            <p class="projTitle">Continuous Transition Control (TNSRE 2024)</p>
+            <span class="tag">Research</span>
+          </div>
+          <p class="projDesc">Continuous trajectories for walk↔stairs transitions, robust to timing errors.</p>
+          <ul class="projList">
+            <li>Phase-aligned reference generation</li>
+            <li>Robust across inter-leg transition cases</li>
+          </ul>
+        </a>
+
+        <a class="card proj reveal" href="projects/ral2024.html">
+          <div class="projTop">
+            <p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p>
+            <span class="tag">Research</span>
+          </div>
+          <p class="projDesc">Low-data adaptation for intent prediction across users with practical dataset constraints.</p>
+          <ul class="projList">
+            <li>Cross-user generalization</li>
+            <li>Reduced subject-specific data requirements</li>
+          </ul>
+        </a>
+      </div>
+    </section>
+
+    <section id="experience" class="section reveal">
+      <div class="sectionHead">
+        <h2>Experience</h2>
+        <div class="small">Selected roles</div>
+      </div>
+
+      <div class="split">
+        <div class="card">
+          <h3>Shift Robotics</h3>
+          <p class="small"><strong>Lead Control Engineer</strong> (2025–Present)</p>
+          <ul class="projList">
+            <li>Balance-aware control improving stability on uneven terrain</li>
+            <li>Hybrid walking modes with &lt;10 ms latency</li>
+            <li>Motion-capture lab + dataset pipeline for ML acceleration</li>
+          </ul>
+          <hr>
+          <p class="small"><strong>Gait Control Engineer</strong> (2024–2025)</p>
+          <ul class="projList">
+            <li>ShiftOS 3.1 firmware and embedded deployment</li>
+            <li>EKF-based terrain estimation</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>University of Michigan</h3>
+          <p class="small"><strong>Ph.D. Researcher</strong> (2019–2024)</p>
+          <ul class="projList">
+            <li>Multi-activity prosthesis control and activity transitions</li>
+            <li>Intent recognition and cross-user adaptation</li>
+            <li>Safety interventions for obstacle avoidance</li>
+            <li>MuJoCo digital twin + sim-to-real personalization</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <div class="sectionHead">
+        <h2>Contact</h2>
+        <div class="small">Let’s connect</div>
+      </div>
+      <div class="card">
+        <p class="projDesc">Email: <a href="mailto:chengsh@umich.edu">chengsh@umich.edu</a></p>
+      </div>
+      <div class="footer">© <span id="y"></span> Shihao Cheng</div>
+    </section>
+  </main>
+
+  <script src="assets/site.js"></script>
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+</body>
 </html>

@@ -1,43 +1,92 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Projects | Shihao Cheng</title>
-    <link rel="stylesheet" href="../assets/style.css" />
-  </head>
-  <body>
-    <div class="breadcrumb"><a href="../index.html">Home</a> / Projects</div>
-    <h1>Projects</h1>
-    <p class="subtitle">Selected work across wearable robotics, control, estimation, and ML.</p>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Projects | Shihao Cheng</title>
+  <link rel="stylesheet" href="../assets/site.css?v=2">
+</head>
 
-    <div class="card">
-      <h2>Wearable Robotics (Industry)</h2>
-      <ul>
-        <li><a href="shiftos.html"><strong>Moonwalkers Control System (ShiftOS 3.0 & 3.1)</strong></a> — real-time control, sensing, embedded deployment.</li>
-      </ul>
+<body>
+  <header class="nav">
+    <div class="navInner">
+      <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+      <nav class="navLinks">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#experience">Experience</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="index.html">All Projects</a>
+      </nav>
+      <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
     </div>
+    <div class="mobileMenu" data-mobilemenu>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html">All Projects</a>
+    </div>
+  </header>
 
-    <div class="card">
-      <h2>Wearable Robotics (Research)</h2>
-      <ul>
-        <li><a href="tmrb2022.html"><strong>Transitional Kinematics Model</strong></a> — unified walking↔stairs kinematics (TMRB 2022).</li>
-        <li><a href="tnsre2024.html"><strong>Continuous Transition Control</strong></a> — smooth inter-leg transitions across activities (TNSRE 2024 / IROS 2023).</li>
-        <li><a href="icf.html"><strong>Activity Recognition & Ambilateral Control</strong></a> — interpretable features + robust transitions (TNSRE 2021 / TRO 2025).</li>
-        <li><a href="tbme2024.html"><strong>Safety-Critical Stub Avoidance</strong></a> — trajectory reshaping for obstacle clearance (TBME 2024).</li>
-        <li><a href="ral2024.html"><strong>Transfer Learning for Intent Prediction</strong></a> — low-data adaptation across users (RA-L 2024).</li>
-        <li><a href="sim2real.html"><strong>Sim-to-Real Impedance Personalization</strong></a> — MuJoCo digital twin + RL (in prep).</li>
-        <li><a href="embc2025.html"><strong>Smartwatch Gesture Control & Haptics</strong></a> — low-latency interface (EMBC 2025).</li>
-        <li><a href="iros2023.html"><strong>Amputee Endurance Study</strong></a> — controller robustness under fatigue (IROS 2023).</li>
-      </ul>
-    </div>
+  <main class="container">
+    <section class="section reveal">
+      <div class="sectionHead">
+        <h2>All Projects</h2>
+        <div class="small">Industry + Research</div>
+      </div>
 
-    <div class="card">
-      <h2>Course Projects</h2>
-      <ul>
-        <li><a href="armlab.html"><strong>ArmLab (ROB 550)</strong></a> — perception + manipulation pipeline.</li>
-        <li><a href="botlab.html"><strong>BotLab (ROB 550)</strong></a> — SLAM + planning + autonomous navigation.</li>
-      </ul>
-    </div>
-  </body>
+      <div class="grid">
+        <a class="card proj reveal" href="shiftos.html">
+          <div class="projTop"><p class="projTitle">Moonwalkers Control System (ShiftOS)</p><span class="tag">Industry</span></div>
+          <p class="projDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
+        </a>
+
+        <a class="card proj reveal" href="tbme2024.html">
+          <div class="projTop"><p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
+        </a>
+
+        <a class="card proj reveal" href="tnsre2024.html">
+          <div class="projTop"><p class="projTitle">Continuous Transition Control (TNSRE 2024)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Continuous trajectories for walk↔stairs transitions, robust to timing errors.</p>
+        </a>
+
+        <a class="card proj reveal" href="tmrb2022.html">
+          <div class="projTop"><p class="projTitle">Transitional Kinematics Model (TMRB 2022)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Unified kinematic modeling of walking/stairs and their transitions.</p>
+        </a>
+
+        <a class="card proj reveal" href="icf.html">
+          <div class="projTop"><p class="projTitle">Activity Recognition & Ambilateral Control</p><span class="tag">Research</span></div>
+          <p class="projDesc">Interpretable features + robust transition logic across activities.</p>
+        </a>
+
+        <a class="card proj reveal" href="ral2024.html">
+          <div class="projTop"><p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Low-data adaptation and cross-user generalization for intent prediction.</p>
+        </a>
+
+        <a class="card proj reveal" href="embc2025.html">
+          <div class="projTop"><p class="projTitle">Smartwatch Gesture Control (EMBC 2025)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Gesture interface with low-latency comms and feedback for mode switching.</p>
+        </a>
+
+        <a class="card proj reveal" href="iros2023.html">
+          <div class="projTop"><p class="projTitle">Amputee Endurance Study (IROS 2023)</p><span class="tag">Research</span></div>
+          <p class="projDesc">Controller robustness evaluation under fatigue and endurance constraints.</p>
+        </a>
+
+        <a class="card proj reveal" href="sim2real.html">
+          <div class="projTop"><p class="projTitle">Sim-to-Real Impedance Personalization</p><span class="tag">Research</span></div>
+          <p class="projDesc">MuJoCo digital twin + RL workflow for safe personalization.</p>
+        </a>
+      </div>
+    </section>
+
+    <div class="footer">Back to <a href="../index.html">Home</a></div>
+  </main>
+
+  <script src="../assets/site.js"></script>
+</body>
 </html>

@@ -1,14 +1,50 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Sim-to-Real Personalization | Shihao Cheng</title>
-<link rel="stylesheet" href="../assets/style.css"/></head><body>
-<div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Projects</a> / Sim-to-Real</div>
-<h1>Sim-to-Real Impedance Personalization (in preparation)</h1>
-<p class="subtitle">MuJoCo digital twin • RL (e.g., TD3) • Safe personalization workflow</p>
-<div class="card"><h2>Summary</h2>
-<ul>
-  <li>Built a digital twin workflow to evaluate personalization candidates in simulation before deployment.</li>
-  <li>Trained policies with safety-aware constraints and selected candidates via simulation ranking.</li>
-  <li>Goal: improve tracking/performance while maintaining safe torque behavior.</li>
-</ul></div>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sim-to-Real Personalization | Shihao Cheng</title>
+  <link rel="stylesheet" href="../assets/site.css?v=2">
+</head>
+<body>
+  <header class="nav">
+    <div class="navInner">
+      <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+      <nav class="navLinks">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#experience">Experience</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="index.html">All Projects</a>
+      </nav>
+      <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
+    </div>
+    <div class="mobileMenu" data-mobilemenu>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html">All Projects</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section reveal">
+      <div class="sectionHead">
+        <h2>Sim-to-Real Impedance Personalization</h2>
+        <div class="small">Research</div>
+      </div>
+      <div class="card">
+        <p class="projDesc">MuJoCo digital twin + RL workflow for safe personalization.</p>
+        <ul class="projList">
+          <li>Evaluate personalization candidates in simulation before deployment</li>
+          <li>Safety-aware selection and ranking of candidate policies</li>
+          <li>Goal: better tracking/performance while maintaining safe torque behavior</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/site.js"></script>
+</body>
+</html>

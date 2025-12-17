@@ -1,15 +1,50 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Safety-Critical Stub Avoidance (TBME) | Shihao Cheng</title>
-<link rel="stylesheet" href="../assets/style.css"/></head><body>
-<div class="breadcrumb"><a href="../index.html">Home</a> / <a href="index.html">Projects</a> / TBME</div>
-<h1>Safety-Critical Swing-Phase Adjustment for Obstacle Avoidance (TBME 2024)</h1>
-<p class="subtitle">Safety constraints • Minimum-jerk optimization • Real-time intervention</p>
-<div class="card"><h2>Summary</h2>
-<ul>
-  <li>Predicted insufficient clearance and reshaped knee trajectories in real time.</li>
-  <li>Used sensing (e.g., kinematics + ranging) to detect obstacles/steps.</li>
-  <li>Integrated with continuous control so safety intervention works across locomotion modes.</li>
-</ul></div>
-<div class="card"><h2>Links</h2><ul><li>Paper: <span class="small">(add link)</span></li></ul></div>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Stub Avoidance (TBME 2024) | Shihao Cheng</title>
+  <link rel="stylesheet" href="../assets/site.css?v=2">
+</head>
+<body>
+  <header class="nav">
+    <div class="navInner">
+      <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+      <nav class="navLinks">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#experience">Experience</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="index.html">All Projects</a>
+      </nav>
+      <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
+    </div>
+    <div class="mobileMenu" data-mobilemenu>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="index.html">All Projects</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section reveal">
+      <div class="sectionHead">
+        <h2>Safety-Critical Stub Avoidance (TBME 2024)</h2>
+        <div class="small">Research</div>
+      </div>
+      <div class="card">
+        <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
+        <ul class="projList">
+          <li>Safety intervention compatible with continuous control</li>
+          <li>Multi-sensor inputs (kinematics + ranging)</li>
+          <li>Designed for real-time use on powered prostheses</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/site.js"></script>
+</body>
+</html>
