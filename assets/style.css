@@ -204,6 +204,28 @@ p{ margin: 10px 0; color: var(--text); }
   background: rgba(148,163,184,0.08);
 }
 
+/* Award badge (inline with title) */
+.sectionHeadAward h2{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.awardBadge{
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  color: #7c2d12;
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  border: 1px solid #fed7aa;
+
+  white-space: nowrap;
+}
+
 .list{
   margin: 0;
   padding-left: 1.1rem;

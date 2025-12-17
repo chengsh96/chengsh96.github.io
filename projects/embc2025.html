@@ -1,15 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Smartwatch Gesture Control (EMBC 2025) | Shihao Cheng</title>
-  <link rel="stylesheet" href="../assets/site.css?v=2">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EMBC 2025 | Shihao Cheng</title>
+  <link rel="stylesheet" href="../assets/site.css?v=4" />
 </head>
+
 <body>
   <header class="nav">
     <div class="navInner">
-      <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Shihao Cheng</span>
+      </div>
+
       <nav class="navLinks">
         <a href="../index.html#about">About</a>
         <a href="../index.html#projects">Projects</a>
@@ -17,8 +22,10 @@
         <a href="../index.html#contact">Contact</a>
         <a href="index.html">All Projects</a>
       </nav>
+
       <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
     </div>
+
     <div class="mobileMenu" data-mobilemenu>
       <a href="../index.html#about">About</a>
       <a href="../index.html#projects">Projects</a>
@@ -31,16 +38,125 @@
   <main class="container">
     <section class="section reveal">
       <div class="sectionHead">
-        <h2>Smartwatch Gesture Control & Haptic Feedback (EMBC 2025)</h2>
+        <h2>
+          Smartwatch Gesture & Vibrotactile Feedback for Multi-Activity Prosthesis Control (EMBC 2025)
+        </h2>
         <div class="small">Research</div>
       </div>
+
       <div class="card">
-        <p class="projDesc">Gesture interface with low-latency comms and feedback for mode switching.</p>
-        <ul class="projList">
-          <li>Smartwatch-to-device control interface enabling swipe gestures</li>
-          <li>Real-time communication pipeline and confirmation feedback</li>
-          <li>User-study evaluation focused on reliability and latency</li>
-        </ul>
+
+        <!-- Badges -->
+        <div class="badgeRow">
+          <span class="badge">IEEE EMBC 2025</span>
+          <span class="badge badgeSoft">Human-in-the-Loop Control</span>
+          <span class="badge badgeSoft">Wearable UI</span>
+          <span class="badge badgeSoft">Vibrotactile Feedback</span>
+          <span class="badge badgeSoft">Prosthetic Locomotion</span>
+        </div>
+
+        <!-- Paper link -->
+        <div class="linkRow" style="margin-top:14px;">
+          <a class="btn"
+             href="https://locolab.robotics.umich.edu/documents/LangGregg-EMBC2025.pdf"
+             target="_blank" rel="noopener">
+            embc 2025 Paper
+          </a>
+        </div>
+
+        <!-- Media -->
+        <div class="mediaGrid" style="margin-top:16px;">
+          <figure class="mediaItem">
+            <img
+              src="../assets/img/projects/embc2025_watch.jpg"
+              alt="Smartwatch interface for prosthesis mode switching (EMBC 2025)"
+              loading="lazy"
+            />
+            <figcaption class="mediaCaption">
+              Smartwatch interface enabling swipe-based activity mode commands with clear on-watch visual feedback.
+            </figcaption>
+          </figure>
+
+          <figure class="mediaItem">
+            <img
+              src="../assets/img/projects/embc2025_exp.jpg"
+              alt="Experimental validation and multi-activity circuit (EMBC 2025)"
+              loading="lazy"
+            />
+            <figcaption class="mediaCaption">
+              Experimental validation on a multi-activity circuit (walking, ramps, stairs, sit-stand) using user-commanded transitions.
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- Overview -->
+        <p class="projDesc" style="margin-top:14px;">
+          This work presents a <strong>smartwatch-based human–robot interface</strong> that allows users of a powered
+          knee-ankle prosthesis to explicitly command locomotion mode transitions while receiving immediate
+          <strong>vibrotactile and visual feedback</strong>. The system is designed as a practical override and complement
+          to automatic intent recognition, improving transparency, trust, and reliability in real-world use.
+        </p>
+
+        <!-- What / Why -->
+        <div class="split" style="margin-top:12px;">
+          <div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+            <h3 style="margin-top:0;">What I contributed</h3>
+            <ul class="projList">
+              <li>
+                A smartwatch UI that presents four activity modes (walk, stair ascent, stair descent, sit-stand),
+                with each mode mapped to an intuitive swipe gesture.
+              </li>
+              <li>
+                Distinct vibrotactile patterns associated with each mode, enabling eyes-free confirmation of controller state.
+              </li>
+              <li>
+                Reliable bidirectional communication between the smartwatch and prosthesis controller using TCP networking.
+              </li>
+              <li>
+                Integration with a powered knee-ankle prosthesis controller running on a real-time LabVIEW system.
+              </li>
+            </ul>
+          </div>
+
+          <div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+            <h3 style="margin-top:0;">Why it matters</h3>
+            <ul class="projList">
+              <li>
+                Preserves user agency by providing a clear, low-cognitive-load method for commanding transitions.
+              </li>
+              <li>
+                Enables reliable operation even when automatic intent recognition is uncertain or disabled.
+              </li>
+              <li>
+                Demonstrates high reliability across hundreds of transitions with minimal latency and no false commands.
+              </li>
+              <li>
+                Provides a deployment-ready pathway for combining autonomy with explicit user control.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div style="margin-top:12px;">
+          <h3>Skills highlighted</h3>
+          <div class="pills" style="margin-top:8px;">
+            <span class="pill">Human–Robot Interaction</span>
+            <span class="pill">Wearable UI/UX</span>
+            <span class="pill">Vibrotactile Feedback Design</span>
+            <span class="pill">Android / Java</span>
+            <span class="pill">TCP Networking</span>
+            <span class="pill">Real-Time Prosthesis Control</span>
+            <span class="pill">User Studies & Validation</span>
+          </div>
+        </div>
+
+        <!-- Footer nav -->
+        <div class="linkRow" style="margin-top:18px;">
+          <a class="btn" href="index.html">← Back to All Projects</a>
+          <a class="btn" href="../index.html#projects">Featured Projects</a>
+        </div>
+
       </div>
     </section>
   </main>

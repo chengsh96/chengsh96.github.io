@@ -1,15 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Activity Recognition & Ambilateral Control | Shihao Cheng</title>
-  <link rel="stylesheet" href="../assets/site.css?v=2">
+  <title>ICF-Based Intent Recognition | Shihao Cheng</title>
+  <link rel="stylesheet" href="../assets/site.css?v=4"/>
 </head>
+
 <body>
   <header class="nav">
     <div class="navInner">
       <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+
       <nav class="navLinks">
         <a href="../index.html#about">About</a>
         <a href="../index.html#projects">Projects</a>
@@ -17,8 +19,10 @@
         <a href="../index.html#contact">Contact</a>
         <a href="index.html">All Projects</a>
       </nav>
+
       <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
     </div>
+
     <div class="mobileMenu" data-mobilemenu>
       <a href="../index.html#about">About</a>
       <a href="../index.html#projects">Projects</a>
@@ -30,17 +34,130 @@
 
   <main class="container">
     <section class="section reveal">
-      <div class="sectionHead">
-        <h2>Activity Recognition & Ambilateral Transition Control</h2>
+      <div class="sectionHead sectionHeadAward">
+        <div class="headLeft">
+          <h2>Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis</h2>
+          <div class="awardBadge">High Accuracy Interpretable ML</div>
+        </div>
         <div class="small">Research</div>
       </div>
+
       <div class="card">
-        <p class="projDesc">Interpretable features + robust transition logic across activities.</p>
+        <!-- Links -->
+        <div class="linkRow">
+          <a class="btn" href="https://ieeexplore.ieee.org/abstract/document/9521902/" target="_blank" rel="noopener">
+            TNSRE 2021 Paper
+          </a>
+
+          <a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10874153/" target="_blank" rel="noopener">
+            TRO 2025 Paper
+          </a>
+
+          <a class="btn btnPrimary" href="https://youtu.be/4tPWJnouVEA?si=I_EYAOf3ixCrstqj" target="_blank" rel="noopener">
+            Watch Video
+          </a>
+        </div>
+
+        <!-- Media -->
+        <div class="mediaGrid">
+          <figure class="mediaItem">
+            <img
+              src="../assets/img/projects/icf_concept.jpg"
+              alt="ICF-based activity and intent recognition conceptual diagram"
+              loading="lazy"
+            />
+            <figcaption class="mediaCaption">
+              Concept: biomechanically meaningful ICFs extracted from thigh kinematics enable explainable decision logic.
+            </figcaption>
+          </figure>
+
+          <figure class="mediaItem">
+            <img
+              src="../assets/img/projects/icf_exp.jpg"
+              alt="Experimental setup for evaluating ICF-based recognition and transitions"
+              loading="lazy"
+            />
+            <figcaption class="mediaCaption">
+              Evaluation: multi-activity courses (walk, ramps, stairs, sit/stand) used to stress-test recognition + transitions.
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- Narrative -->
+        <p class="projDesc" style="margin-top: 14px;">
+          High-level intent recognition is a common failure point in multi-activity prosthesis control: black-box models can be
+          accurate offline yet unpredictable in real time, and small timing errors can trigger incorrect transitions. In this work,
+          I introduced <strong>Instantaneous Characteristic Features (ICFs)</strong>—a <strong>low-dimensional</strong>,
+          <strong>biomechanically interpretable</strong> feature space derived from <strong>thigh kinematics</strong> to enable
+          fast, reliable, and explainable activity/intent recognition.
+        </p>
+
+        <p class="projDesc">
+          The key design goal was to make the classifier not only accurate, but also <strong>intuitive to users and engineers</strong>:
+          the rules operate in a simple 1-D/low-D feature space with clear physical meaning, which helps reduce “surprise” behavior
+          and supports trustworthy human-in-the-loop locomotion control.
+        </p>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">What I built</h3>
         <ul class="projList">
-          <li>Instantaneous Characteristic Features (ICFs) for real-time recognition</li>
-          <li>Robust transitions across walk/ramp/stair/sit–stand using phase + intent cues</li>
-          <li>Extended to multi-sensor fusion enabling ambilateral transitions</li>
+          <li>
+            <strong>ICF feature design:</strong> derived instantaneous features from thigh kinematics that encode phase and intent cues
+            in a way that remains interpretable and easy to debug (clear boundaries, no hidden embeddings).
+          </li>
+          <li>
+            <strong>Real-time classifier:</strong> implemented a lightweight decision logic that runs in <strong>&lt;5 ms</strong>,
+            supporting on-device deployment and tight control-loop integration.
+          </li>
+          <li>
+            <strong>Transition-aware intent logic:</strong> designed rules that robustly permute among activities
+            (level walking, ramps, stairs, sit/stand) with minimal false transitions.
+          </li>
+          <li>
+            <strong>Ambilateral extension (later work):</strong> expanded the framework toward recognizing transitions initiated by either leg,
+            leveraging multi-sensor inputs (e.g., IMU / ranging / load sensing) to improve robustness in practical settings.
+          </li>
         </ul>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">Why it matters</h3>
+        <ul class="projList">
+          <li>
+            <strong>Explainable + predictable:</strong> interpretable rules help users adapt to the system over time and help engineers
+            diagnose edge cases quickly—critical for real-world assistive devices.
+          </li>
+          <li>
+            <strong>Low-latency intent for smooth control:</strong> fast, reliable intent signals reduce sensitivity to timing errors and enable
+            smoother transitions when paired with continuous mid-level controllers.
+          </li>
+          <li>
+            <strong>Scalable architecture:</strong> the same design philosophy (simple, meaningful features + layered safety/transition logic)
+            supports later upgrades such as ambilateral decision-making and sensor fusion.
+          </li>
+        </ul>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">Skills highlighted</h3>
+        <div class="pills" style="margin-top: 10px;">
+          <span class="pill">Real-time classification</span>
+          <span class="pill">Interpretable ML / features</span>
+          <span class="pill">Gait phase / biomechanics</span>
+          <span class="pill">Transition logic</span>
+          <span class="pill">Embedded-friendly algorithms</span>
+          <span class="pill">Sensor fusion (ambilateral extension)</span>
+        </div>
+
+        <p class="small" style="margin-top: 12px;">
+          If your image filenames differ, keep everything else the same and only update the two <code>src</code> paths above.
+        </p>
+      </div>
+      <!-- Footer nav -->
+      <div class="linkRow" style="margin-top: 18px;">
+        <a class="btn" href="index.html">← Back to All Projects</a>
+        <a class="btn" href="../index.html#projects">Featured Projects</a>
       </div>
     </section>
   </main>

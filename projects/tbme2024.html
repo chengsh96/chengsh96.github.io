@@ -1,15 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Stub Avoidance (TBME 2024) | Shihao Cheng</title>
-  <link rel="stylesheet" href="../assets/site.css?v=2">
+  <link rel="stylesheet" href="../assets/site.css?v=4"/>
 </head>
+
 <body>
   <header class="nav">
     <div class="navInner">
       <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+
       <nav class="navLinks">
         <a href="../index.html#about">About</a>
         <a href="../index.html#projects">Projects</a>
@@ -17,8 +19,10 @@
         <a href="../index.html#contact">Contact</a>
         <a href="index.html">All Projects</a>
       </nav>
+
       <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
     </div>
+
     <div class="mobileMenu" data-mobilemenu>
       <a href="../index.html#about">About</a>
       <a href="../index.html#projects">Projects</a>
@@ -30,17 +34,120 @@
 
   <main class="container">
     <section class="section reveal">
-      <div class="sectionHead">
-        <h2>Safety-Critical Stub Avoidance (TBME 2024)</h2>
+      <div class="sectionHead sectionHeadAward">
+        <div class="headLeft">
+          <h2>Automatic Stub Avoidance for a Powered Prosthetic Leg Over Stairs and Obstacles (TBME 2024)</h2>
+          <div class="awardBadge">TBME 2024 Featured Article</div>
+        </div>
         <div class="small">Research</div>
       </div>
+
       <div class="card">
-        <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
+        <!-- Links -->
+        <div class="linkRow">
+          <a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10347471" target="_blank" rel="noopener">
+            TBME 2024 Paper
+          </a>
+          <a class="btn btnPrimary" href="https://youtu.be/Mq_Qx1WDkg8?si=szw2Dc7INelrnpMF" target="_blank" rel="noopener">
+            Watch Video
+          </a>
+        </div>
+
+        <!-- Media -->
+        <div class="mediaGrid">
+          <!-- NOTE: if your image is png/webp, just change the extension. -->
+          <div class="mediaItem">
+            <img
+              src="../assets/img/projects/tbme2024_exp_demo.jpg"
+              alt="Stub avoidance experimental demo (TBME 2024)"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="mediaItem">
+            <img
+              src="../assets/img/projects/tbme2024_concept.jpg"
+              alt="Conceptual / block diagram of swing-phase obstacle-avoidance controller"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Narrative -->
+        <p class="projDesc" style="margin-top: 14px;">
+          Toe stubbing during swing is a common safety risk for transfemoral prosthesis users, especially on stairs and
+          during obstacle negotiation. This work adds a <strong>reactive safety layer</strong> on top of continuous locomotion
+          control: the controller predicts insufficient clearance and automatically reshapes swing trajectories to increase
+          toe clearance, while preserving smoothness and user comfort.
+        </p>
+
+        <p class="projDesc">
+          The core idea is to treat stub avoidance as a <strong>trajectory adjustment problem</strong>, not a mode switch:
+          when a risk is detected, the system computes a <strong>minimum-jerk corrective trajectory</strong> and blends it into
+          the nominal gait to avoid abrupt motion or destabilizing transients. :contentReference[oaicite:3]{index=3}
+        </p>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">What I built</h3>
         <ul class="projList">
-          <li>Safety intervention compatible with continuous control</li>
-          <li>Multi-sensor inputs (kinematics + ranging)</li>
-          <li>Designed for real-time use on powered prostheses</li>
+          <li>
+            <strong>Real-time risk estimation:</strong> detected toe-clearance risk using prosthesis kinematics
+            (e.g., knee/shank angles) combined with <strong>ultrasonic distance measurements</strong> to stairs/obstacles. :contentReference[oaicite:4]{index=4}
+          </li>
+          <li>
+            <strong>Minimum-jerk trajectory reshaping:</strong> computed smooth corrective knee trajectories and blended them
+            into the nominal motion to preserve comfort and stability. :contentReference[oaicite:5]{index=5}
+          </li>
+          <li>
+            <strong>Compatibility with continuous control:</strong> integrated the safety layer with the continuous controller
+            so that avoidance behavior is consistent across locomotion modes (walking and stairs), rather than bolted-on
+            as a separate “special case.” :contentReference[oaicite:6]{index=6}
+          </li>
         </ul>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">Results &amp; robustness highlights</h3>
+        <ul class="projList">
+          <li>
+            <strong>Large reduction in stub events on stairs (risky stepping):</strong>
+            in a “safe-line” protocol designed to induce high stubbing risk, the controller reduced stub rate from ~49% to
+            ~5% overall, with participant reductions of <strong>87.6%</strong> and <strong>92.3%</strong>. :contentReference[oaicite:7]{index=7}
+          </li>
+          <li>
+            <strong>Obstacle-crossing effectiveness:</strong>
+            achieved successful obstacle crossings, with remaining scuffs tied to conservative knee-velocity limits that were
+            later tuned (demonstrating practical deployment tradeoffs). :contentReference[oaicite:8]{index=8}
+          </li>
+          <li>
+            <strong>Low false-trigger rate across multi-activity circuits:</strong>
+            in an offline simulation spanning diverse daily activities (turning, ramps, stairs, sit/stand), the false-positive
+            rate for noticeable extra flexion was <strong>1.23%</strong>, and all extra flexions returned to nominal by heel strike. :contentReference[oaicite:9]{index=9}
+          </li>
+        </ul>
+
+        <hr>
+
+        <h3 style="margin: 0 0 8px;">Skills highlighted</h3>
+        <div class="pills" style="margin-top: 10px;">
+          <span class="pill">Safety-critical control</span>
+          <span class="pill">Minimum-jerk optimization</span>
+          <span class="pill">Environmental sensing (distance)</span>
+          <span class="pill">Trajectory blending</span>
+          <span class="pill">Human-subject experiments</span>
+          <span class="pill">Robustness / FP analysis</span>
+        </div>
+
+        <p class="small" style="margin-top: 12px;">
+          If either image filename differs in your repo, keep the layout and only change the <code>src</code> paths
+          (e.g., <code>tbme2024_exp.png</code> / <code>tbme2024_diag.png</code>).
+        </p>
+      </div>
+      <!-- Footer nav -->
+      <div class="linkRow" style="margin-top: 18px;">
+        <a class="btn" href="index.html">← Back to All Projects</a>
+        <a class="btn" href="../index.html#projects">Featured Projects</a>
       </div>
     </section>
   </main>

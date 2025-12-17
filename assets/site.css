@@ -282,6 +282,31 @@ h1{
   border: 1px solid rgba(15,23,42,0.08);
 }
 
+/* ---------- Badges ---------- */
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #2563eb;        /* primary blue */
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.badgeSoft {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1e40af;
+}
+
+
 /* ===========================
    SECTIONS
    =========================== */
@@ -326,6 +351,167 @@ h2{
   padding: 16px;
 }
 
+
+/* ===========================
+   PROJECT MEDIA (thumbnails + hero)
+   No cropping: use contain + letterbox
+   =========================== */
+
+.projMedia{
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: transparent;
+
+  /* consistent frame without cropping */
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.projMedia img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* no crop */
+  display: block;
+  transform: scale(1);
+  transition: transform 220ms ease;
+  background: transparent;
+}
+
+.proj:hover .projMedia img{
+  transform: scale(1.02);
+}
+
+/* Project page hero image (no cropping) */
+.heroImg{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: contain;   /* no crop */
+  border-radius: var(--radius);
+  border: 1px solid rgba(15,23,42,0.10);
+  box-shadow: var(--shadow);
+  background: transparent;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.linkRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin: 6px 0 12px;
+}
+
+/* Optional image grid on project pages */
+/* ---------- Project media layout ---------- */
+
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.mediaFigure {
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+/* CRITICAL FIX */
+.mediaFigure img,
+.mediaItem img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;   /* prevents cropping */
+  border-radius: 10px;
+}
+
+/* Optional: visually cap height so tall images don’t dominate */
+.mediaFigure img {
+  max-height: 420px;
+}
+
+/* Caption styling */
+.mediaCaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Single-column media layout (used for wide figures) */
+.mediaGridSingle {
+  grid-template-columns: 1fr !important;
+}
+
+
+/* Optional: subtle emphasis for first words (Fig.-style feel) */
+/* .mediaCaption::first-line{
+  font-weight: 600;
+  color: rgba(15,23,42,0.85);
+} */
+
+
+/* Project page: dominant hero media (GIF/video) */
+.heroMedia{
+  margin: 14px 0 12px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.10);
+  box-shadow: var(--shadow);
+  background: transparent;
+}
+
+.heroMedia img{
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+}
+
+/* Project page: 2-up secondary media */
+.mediaGrid2{
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 920px){
+  .mediaGrid2{
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 920px){
+  .mediaGrid{ grid-template-columns: 1fr; }
+}
+
+.mediaItem{
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.08);
+  background: transparent;
+}
+
+.mediaItem img{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: contain;   /* no crop */
+  display: block;
+  background: transparent;
+  padding: 10px;
+}
+
+
 /* ===========================
    PROJECT CARDS
    =========================== */
@@ -363,6 +549,41 @@ h2{
   border: 1px solid rgba(43,108,255,0.20);
   color: var(--primaryDark);
 }
+
+/* Section head with award badge */
+.sectionHeadAward{
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sectionHeadAward .headLeft{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0; /* prevents overflow issues */
+}
+
+.sectionHeadAward h2{
+  margin: 0;
+}
+
+.awardBadge{
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  color: #7c2d12;
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  border: 1px solid #fed7aa;
+
+  white-space: nowrap;
+}
+
 
 .projDesc{
   color: var(--muted);
