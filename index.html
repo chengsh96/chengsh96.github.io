@@ -4,146 +4,91 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Shihao Cheng</title>
-    <style>
-      body {
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        max-width: 900px;
-        margin: 48px auto;
-        padding: 0 16px;
-        line-height: 1.6;
-      }
-      h1 { margin: 0 0 0.25rem 0; letter-spacing: -0.02em; }
-      .subtitle { color: #555; margin: 0 0 1rem 0; }
-      .meta { color: #555; margin: 0 0 1.25rem 0; }
-      .links a { margin-right: 14px; }
-      a { color: inherit; }
-      .card {
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 16px;
-        margin: 16px 0;
-      }
-      ul { margin: 0.25rem 0 0 1.2rem; }
-      li { margin: 0.35rem 0; }
-      .role { font-weight: 700; }
-      .org { font-weight: 700; }
-      .time { color: #666; }
-      .tagline { margin-top: 0.8rem; }
-      .small { color: #666; font-size: 0.95rem; }
-      hr { border: none; border-top: 1px solid #eee; margin: 16px 0; }
-    </style>
+    <link rel="stylesheet" href="assets/style.css" />
   </head>
 
   <body>
     <h1>Shihao Cheng, Ph.D.</h1>
-    <p class="subtitle">Software & Robotics Engineer • Real-time Systems • ML/AI • Sensor Fusion</p>
-    <p class="meta">Austin, TX • chengsh@umich.edu • +1 (765) 337-3422</p>
+    <p class="subtitle">Robotics & Controls Engineer • Real-time Systems • Sensor Fusion • ML/AI</p>
+    <p class="meta">Austin, TX • chengsh@umich.edu</p>
 
     <p class="links">
-      <!-- Update these 3 links with your real URLs -->
-      <a href="https://www.linkedin.com/in/YOUR-LINKEDIN">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/shihao-cheng/">LinkedIn</a>
       <a href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID">Google Scholar</a>
       <a href="https://github.com/chengsh96">GitHub</a>
-      <a href="cv.pdf">CV (PDF)</a>
-    </p>
-
-    <p class="tagline">
-      I build production-ready robotics software spanning embedded real-time control, state estimation,
-      and machine learning. My work has research-to-deployment impact in wearable robotics, reinforcement learning
-      (MuJoCo, sim-to-real), and multi-sensor fusion, with a focus on improving performance, latency, and user experience.
+      <a href="projects/index.html">Projects</a>
     </p>
 
     <div class="card">
-      <h2>Selected Work</h2>
-      <ul>
-        <li>
-          <strong>Real-time balance-aware control (Shift Robotics)</strong> — Built a real-time control system improving user
-          stability on uneven terrain; designed hybrid walking modes with &lt;10 ms latency for smooth transitions across
-          multiple terrain types.
-        </li>
-        <li>
-          <strong>Terrain estimation via EKF (Moonwalkers™)</strong> — Designed an Extended Kalman Filter for terrain estimation,
-          reducing misclassification by 35%, and integrated control algorithms into an ARM Cortex RTOS for production deployment.
-        </li>
-        <li>
-          <strong>Obstacle avoidance & adaptive control (PhD)</strong> — Engineered a sensor-fusion framework (IMU, load cell,
-          distance sensor) for real-time obstacle avoidance and adaptive control, reducing foot-stubbing events by &gt;90%.
-        </li>
-        <li>
-          <strong>MuJoCo digital twin + TD3 personalization (PhD)</strong> — Built a MuJoCo digital twin and trained TD3 policies
-          for impedance personalization with zero-shot sim-to-real transfer, improving tracking while ensuring safe torque.
-        </li>
-      </ul>
+      <h2>About</h2>
+      <p>
+        I build production-ready robotics software spanning embedded real-time control, state estimation,
+        and machine learning. My work has research-to-deployment impact in wearable robotics, sim-to-real
+        reinforcement learning (MuJoCo), and multi-sensor fusion, with a focus on performance, latency,
+        and user experience.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Featured Projects</h2>
+      <p class="small">Click to view details.</p>
+      <div class="tag">
+        <a href="projects/shiftos.html">Moonwalkers Control System (ShiftOS)</a>
+        <a href="projects/tbme2024.html">Safety-Critical Stub Avoidance (TBME)</a>
+        <a href="projects/tnsre2024.html">Continuous Transition Control (TNSRE)</a>
+        <a href="projects/ral2024.html">Transfer Learning for Intent (RA-L)</a>
+        <a href="projects/sim2real.html">Sim-to-Real Personalization (MuJoCo)</a>
+      </div>
       <p class="small">
-        (Highlights adapted from my resume; details available on request.)
+        See the full list on the <a href="projects/index.html">Projects page</a>.
       </p>
     </div>
 
-    <div class="card">
-      <h2>Experience</h2>
+    <div class="grid">
+      <div class="card">
+        <h2>Experience</h2>
 
-      <p>
-        <span class="role">Lead Control Engineer</span> — <span class="org">Shift Robotics</span>
-        <span class="time">(Jan 2025 – Present)</span>
-      </p>
-      <ul>
-        <li>Built real-time balance-aware control; improved stability on uneven terrain.</li>
-        <li>Designed hybrid walking modes with &lt;10 ms system latency for smooth terrain transitions.</li>
-        <li>Led development of a motion-capture lab generating large-scale datasets to accelerate ML training.</li>
-      </ul>
+        <p><strong>Lead Control Engineer</strong> — Shift Robotics <span class="small">(Jan 2025 – Present)</span></p>
+        <ul>
+          <li>Real-time balance-aware control improving stability on uneven terrain.</li>
+          <li>Hybrid walking modes with &lt;10 ms system latency for smooth transitions across terrains.</li>
+          <li>Motion-capture lab + dataset pipeline to accelerate ML iteration.</li>
+        </ul>
 
-      <hr />
+        <hr />
 
-      <p>
-        <span class="role">Gait Control Engineer</span> — <span class="org">Shift Robotics</span>
-        <span class="time">(Sep 2024 – Jan 2025)</span>
-      </p>
-      <ul>
-        <li>Directed ShiftOS 3.1 firmware for Moonwalkers™, improving responsiveness to user intent.</li>
-        <li>Designed EKF-based terrain estimation; reduced misclassification by 35%.</li>
-        <li>Integrated control algorithms into ARM Cortex RTOS with Bluetooth/FLASH for production.</li>
-      </ul>
+        <p><strong>Gait Control Engineer</strong> — Shift Robotics <span class="small">(Sep 2024 – Jan 2025)</span></p>
+        <ul>
+          <li>ShiftOS 3.1 firmware: improved responsiveness to user intent.</li>
+          <li>EKF-based terrain estimation reducing misclassification.</li>
+          <li>Embedded deployment on ARM Cortex RTOS (Bluetooth/FLASH integration).</li>
+        </ul>
 
-      <hr />
+        <hr />
 
-      <p>
-        <span class="role">Ph.D. Researcher, Robotics</span> — <span class="org">University of Michigan</span>
-        <span class="time">(Sep 2019 – Jul 2024)</span>
-      </p>
-      <ul>
-        <li>Designed multi-activity control architectures and validated in real-time amputee trials.</li>
-        <li>Applied transfer learning for locomotion intent recognition to improve cross-user adaptability.</li>
-        <li>Built a smartwatch app for gesture-based prosthesis control with haptic/visual feedback.</li>
-      </ul>
-    </div>
+        <p><strong>Ph.D. Researcher (Robotics)</strong> — University of Michigan <span class="small">(Sep 2019 – Jul 2024)</span></p>
+        <ul>
+          <li>Multi-activity control enabling seamless activity transitions; validated in real-time trials.</li>
+          <li>Intent recognition + transfer learning for cross-user adaptability with limited data.</li>
+          <li>Obstacle/stub avoidance using sensor fusion and trajectory optimization.</li>
+          <li>MuJoCo digital twin + RL for safe personalization (sim-to-real).</li>
+        </ul>
+      </div>
 
-    <div class="card">
-      <h2>Selected Publications</h2>
-      <ul>
-        <li>
-          Cheng, S., Laubscher, C. A., Best, T. K., &amp; Gregg, R. D. (2025).
-          <em>Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis.</em>
-          IEEE Transactions on Robotics.
-        </li>
-        <li>
-          Le, D., Cheng, S., Gregg, R. D., &amp; Ghaffari, M. (2024).
-          <em>Transfer learning for efficient intent prediction in lower-limb prosthetics: A strategy for limited datasets.</em>
-          IEEE Robotics and Automation Letters.
-        </li>
-      </ul>
-    </div>
+      <div class="card">
+        <h2>Skills</h2>
+        <p class="small">
+          <strong>Languages:</strong> Python, C++, C, Java, MATLAB, SQL<br/>
+          <strong>ML/AI:</strong> PyTorch, TensorFlow, scikit-learn, XGBoost, OpenCV<br/>
+          <strong>Robotics/Sim:</strong> ROS, MuJoCo, Simulink<br/>
+          <strong>Cloud/Tools:</strong> AWS/GCP, Docker, Kubernetes, CI/CD
+        </p>
 
-    <div class="card">
-      <h2>Skills</h2>
-      <p class="small">
-        Python, C++, C, Java, MATLAB • Real-time systems • ML/AI (PyTorch, TensorFlow, scikit-learn) •
-        Cloud & Data (AWS/GCP, Docker, Kubernetes, CI/CD) • Robotics/Simulation (ROS, MuJoCo, Simulink)
-      </p>
-    </div>
+        <hr />
 
-    <div class="card">
-      <h2>Contact</h2>
-      <p>Email: chengsh@umich.edu</p>
+        <h2>Contact</h2>
+        <p>Email: chengsh@umich.edu</p>
+      </div>
     </div>
   </body>
 </html>
