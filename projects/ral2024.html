@@ -1,156 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RA-L 2024 | Shihao Cheng</title>
-  <link rel="stylesheet" href="../assets/site.css?v=4" />
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>RA-L 2024 | Shihao Cheng</title>
+<link href="../assets/site.css?v=4" rel="stylesheet"/>
 </head>
-
 <body>
-  <header class="nav">
-    <div class="navInner">
-      <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
-
-      <nav class="navLinks">
-        <a href="../index.html#about">About</a>
-        <a href="../index.html#projects">Projects</a>
-        <a href="../index.html#experience">Experience</a>
-        <a href="../index.html#contact">Contact</a>
-        <a href="index.html">All Projects</a>
-      </nav>
-
-      <button class="navBtn" data-navbtn aria-label="Open menu">Menu</button>
-    </div>
-
-    <div class="mobileMenu" data-mobilemenu>
-      <a href="../index.html#about">About</a>
-      <a href="../index.html#projects">Projects</a>
-      <a href="../index.html#experience">Experience</a>
-      <a href="../index.html#contact">Contact</a>
-      <a href="index.html">All Projects</a>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="section reveal">
-      <div class="sectionHead">
-        <h2>Transfer Learning for Efficient Intent Prediction (RA-L 2024)</h2>
-        <div class="small">Research</div>
-      </div>
-
-      <div class="card">
-        <!-- Badges / quick meta -->
-        <div class="badgeRow">
-          <span class="badge">IEEE Robotics & Automation Letters</span>
-          <span class="badge badgeSoft">Transfer Learning</span>
-          <span class="badge badgeSoft">Intent Prediction</span>
-          <span class="badge badgeSoft">Data-Limited Training</span>
-        </div>
-
-        <!-- Links -->
-        <div class="linkRow" style="margin-top: 14px;">
-          <a class="btn"
-             href="https://ieeexplore.ieee.org/abstract/document/10476673"
-             target="_blank" rel="noopener">
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+<nav class="navLinks"><a href="../index.html">Home</a><a href="../index.html#about">About</a><a href="../index.html#news">News</a><a href="../index.html#projects">Featured Projects</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a><a href="index.html">All Projects</a></nav>
+<button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
+</div>
+<div class="mobileMenu" data-mobilemenu=""><a href="../index.html">Home</a><a href="../index.html#about">About</a><a href="../index.html#news">News</a><a href="../index.html#projects">Featured Projects</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a><a href="index.html">All Projects</a></div>
+</header>
+<main class="container">
+<section class="section reveal">
+<div class="sectionHead">
+<h2>Transfer Learning for Efficient Intent Prediction (RA-L 2024)</h2>
+<div class="small">Research</div>
+</div>
+<div class="card">
+<!-- Badges / quick meta -->
+<div class="badgeRow">
+<span class="badge">IEEE Robotics &amp; Automation Letters</span>
+<span class="badge badgeSoft">Transfer Learning</span>
+<span class="badge badgeSoft">Intent Prediction</span>
+<span class="badge badgeSoft">Data-Limited Training</span>
+</div>
+<!-- Links -->
+<div class="linkRow" style="margin-top: 14px;">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10476673" rel="noopener" target="_blank">
             RA-L 2024 Paper
           </a>
-          <!-- Optional: add arXiv / project repo later if you want -->
-        </div>
-
-        <!-- Media -->
-        <div class="mediaGrid mediaGridSingle" style="margin-top: 16px;">
-          <!-- IMPORTANT:
+<!-- Optional: add arXiv / project repo later if you want -->
+</div>
+<!-- Media -->
+<div class="mediaGrid mediaGridSingle" style="margin-top: 16px;">
+<!-- IMPORTANT:
                Use an existing image in your repo. If you already have a preview image for this project,
                keep the filename consistent with what you renamed earlier.
                Examples below (pick ONE that exists and delete the other <figure>).
           -->
-          <figure class="mediaFigure">
-            <img
-              src="../assets/img/projects/ral2024_concept.jpg"
-              alt="Transfer learning framework for locomotion intent prediction (RA-L 2024)"
-              loading="lazy"
-            />
-            <figcaption class="mediaCaption">
+<figure class="mediaFigure">
+<img alt="Transfer learning framework for locomotion intent prediction (RA-L 2024)" loading="lazy" src="../assets/img/projects/ral2024_concept.jpg"/>
+<figcaption class="mediaCaption">
               Transfer learning for intent prediction: pre-train on larger datasets, then fine-tune with minimal user-specific data.
             </figcaption>
-          </figure>
-
-          <figure class="mediaFigure">
-            <img
-              src="../assets/img/projects/ral2024_demo.jpg"
-              alt="Sensor configuration and evaluation setup for intent prediction"
-              loading="lazy"
-            />
-            <figcaption class="mediaCaption">
+</figure>
+<figure class="mediaFigure">
+<img alt="Sensor configuration and evaluation setup for intent prediction" loading="lazy" src="../assets/img/projects/ral2024_demo.jpg"/>
+<figcaption class="mediaCaption">
               Practical sensor insight: a thigh IMU + load cell can be an efficient, high-performing setup in data-limited scenarios.
             </figcaption>
-          </figure>
-        </div>
-
-        <!-- Enriched description -->
-        <p class="projDesc" style="margin-top: 14px;">
+</figure>
+</div>
+<!-- Enriched description -->
+<p class="projDesc" style="margin-top: 14px;">
           This project develops a transfer learning pipeline to improve locomotion intent prediction for new transfemoral
           amputee users when only a small amount of labeled data is available. Instead of training a fully subject-dependent
           model from scratch (which requires extensive per-user data), we fine-tune pre-trained CNN models to quickly adapt
           to a novel user while retaining useful feature representations learned from prior datasets.
         </p>
-
-        <div class="split" style="margin-top: 12px;">
-          <div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
-            <h3 style="margin-top:0;">What I contributed</h3>
-            <ul class="projList">
-              <li>
+<div class="split" style="margin-top: 12px;">
+<div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">What I contributed</h3>
+<ul class="projList">
+<li>
                 A CNN-based intent classifier using a Fully Convolutional Network backbone, designed for continuous-time prediction.
               </li>
-              <li>
+<li>
                 Transfer learning strategy: freeze early convolutional blocks and fine-tune remaining layers for a new amputee user,
                 improving accuracy with limited training circuits.
               </li>
-              <li>
+<li>
                 Comparative evaluation across subject-dependent, subject-independent, and transfer-learning models, plus sensor ablations.
               </li>
-            </ul>
-          </div>
-
-          <div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
-            <h3 style="margin-top:0;">Key findings (why it matters)</h3>
-            <ul class="projList">
-              <li>
+</ul>
+</div>
+<div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">Key findings (why it matters)</h3>
+<ul class="projList">
+<li>
                 Transfer learning achieves error rates comparable to heavier subject-dependent training, but with substantially less user data.
               </li>
-              <li>
+<li>
                 Pre-training can leverage both amputee and able-bodied datasets; performance improves as more subject data is available.
               </li>
-              <li>
+<li>
                 A thigh IMU + load cell is identified as a practical, efficient sensing choice for deployment-oriented systems.
               </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Skills -->
-        <div style="margin-top: 12px;">
-          <h3>Skills highlighted</h3>
-          <div class="pills" style="margin-top: 8px;">
-            <span class="pill">Deep Learning (CNN / FCN)</span>
-            <span class="pill">Transfer Learning / Fine-Tuning</span>
-            <span class="pill">Time-Series Windows</span>
-            <span class="pill">Wearable Sensing (IMU + Load Cell)</span>
-            <span class="pill">Model Evaluation & Ablations</span>
-            <span class="pill">Deployment-Oriented Design</span>
-          </div>
-        </div>
-
-        <!-- Footer nav -->
-        <div class="linkRow" style="margin-top: 18px;">
-          <a class="btn" href="index.html">← Back to All Projects</a>
-          <a class="btn" href="../index.html#projects">Featured Projects</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="../assets/site.js"></script>
+</ul>
+</div>
+</div>
+<!-- Skills -->
+<div style="margin-top: 12px;">
+<h3>Skills highlighted</h3>
+<div class="pills" style="margin-top: 8px;">
+<span class="pill">Deep Learning (CNN / FCN)</span>
+<span class="pill">Transfer Learning / Fine-Tuning</span>
+<span class="pill">Time-Series Windows</span>
+<span class="pill">Wearable Sensing (IMU + Load Cell)</span>
+<span class="pill">Model Evaluation &amp; Ablations</span>
+<span class="pill">Deployment-Oriented Design</span>
+</div>
+</div>
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← Back to All Projects</a>
+<a class="btn" href="../index.html#projects">Featured Projects</a>
+</div>
+</div>
+</section>
+</main>
+<script src="../assets/site.js"></script>
 </body>
 </html>

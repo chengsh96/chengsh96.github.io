@@ -5,7 +5,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Shihao Cheng</title>
-<link href="assets/site.css?v=4" rel="stylesheet"/>
+<link href="assets/site.css?v=5" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -15,8 +15,10 @@
 <span>Shihao Cheng</span>
 </div>
 <nav class="navLinks">
+<a href="index.html">Home</a>
 <a href="#about">About</a>
-<a href="#projects">FeaturedProjects</a>
+<a href="#news">News</a>
+<a href="#projects">Featured Projects</a>
 <a href="#experience">Experience</a>
 <a href="#contact">Contact</a>
 <a href="projects/index.html">All Projects</a>
@@ -24,7 +26,9 @@
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
+<a href="index.html">Home</a>
 <a href="#about">About</a>
+<a href="#news">News</a>
 <a href="#projects">Featured Projects</a>
 <a href="#experience">Experience</a>
 <a href="#contact">Contact</a>
@@ -36,7 +40,10 @@
 <div class="heroGrid">
 <div class="reveal">
 <span class="kicker">Wearable Robotics • Controls • ML</span>
-<h1>Shihao Cheng, Ph.D.</h1>
+<div class="heroTitleRow">
+  <img class="avatar" src="assets/img/profile.jpg" alt="Shihao Cheng"/>
+  <h1>Shihao Cheng, Ph.D.</h1>
+</div>
 <p class="sub">
             Robotics &amp; Controls Engineer building real-time systems, sensor fusion, and ML for wearable robots.
             I bridge research and production deployment with a focus on robustness, latency, and user-centered performance.
@@ -86,6 +93,21 @@
           and safe behavior in the real world.
         </p>
 </div>
+<section class="section reveal" id="news">
+  <div class="sectionHead">
+    <h2>Recent News</h2>
+    <div class="small">Latest updates</div>
+  </div>
+  <div class="card">
+    <ul class="newsList">
+      <li><span class="newsDate">Dec 2025</span><span class="newsText">Add your latest update here (e.g., paper accepted, product release, talk, etc.).</span></li>
+      <li><span class="newsDate">Nov 2025</span><span class="newsText">Add another update here.</span></li>
+    </ul>
+    <div class="newsControls">
+      <button class="btn newsToggle" id="newsToggleBtn" type="button" aria-expanded="false">Show more</button>
+    </div>
+  </div>
+</section>
 </section>
 <section class="section" id="projects">
 <div class="sectionHead reveal">

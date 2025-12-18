@@ -11,22 +11,10 @@
 <header class="nav">
 <div class="navInner">
 <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
-<nav class="navLinks">
-<a href="../index.html#about">About</a>
-<a href="../index.html#projects">Projects</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
-</nav>
+<nav class="navLinks"><a href="../index.html">Home</a><a href="../index.html#about">About</a><a href="../index.html#news">News</a><a href="../index.html#projects">Featured Projects</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a><a href="index.html">All Projects</a></nav>
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
-<div class="mobileMenu" data-mobilemenu="">
-<a href="../index.html#about">About</a>
-<a href="../index.html#projects">Projects</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
-</div>
+<div class="mobileMenu" data-mobilemenu=""><a href="../index.html">Home</a><a href="../index.html#about">About</a><a href="../index.html#news">News</a><a href="../index.html#projects">Featured Projects</a><a href="../index.html#experience">Experience</a><a href="../index.html#contact">Contact</a><a href="index.html">All Projects</a></div>
 </header>
 <main class="container">
 <section class="section reveal">
@@ -35,74 +23,67 @@
 <div class="small">Industry</div>
 </div>
 <div class="card">
-  <div class="linkRow">
-    <a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-30-release-notes-829006" rel="noopener" target="_blank">ShiftOS 3.0 Notes</a>
-    <a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-31-release-notes-1062606" rel="noopener" target="_blank">ShiftOS 3.1 Notes</a>
-  </div>
-
-  <!-- HERO (dominant) -->
-  <div class="heroMedia">
-    <img alt="ShiftOS preset profile demo (GIF)" src="../assets/img/projects/shiftos_demo.gif"/>
-  </div>
-
-  <!-- Secondary images -->
-  <div class="mediaGrid mediaGrid2">
-    <div class="mediaItem">
-      <img alt="ShiftOS / Moonwalkers (Aero)" src="../assets/img/projects/shiftos_aero.jpg"/>
-    </div>
-    <div class="mediaItem">
-      <img alt="ShiftOS / Moonwalkers" src="../assets/img/projects/shiftos_orig.jpg"/>
-    </div>
-  </div>
-
-  <p class="projDesc">
+<div class="linkRow">
+<a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-30-release-notes-829006" rel="noopener" target="_blank">ShiftOS 3.0 Notes</a>
+<a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-31-release-notes-1062606" rel="noopener" target="_blank">ShiftOS 3.1 Notes</a>
+</div>
+<!-- HERO (dominant) -->
+<div class="heroMedia">
+<img alt="ShiftOS preset profile demo (GIF)" src="../assets/img/projects/shiftos_demo.gif"/>
+</div>
+<!-- Secondary images -->
+<div class="mediaGrid mediaGrid2">
+<div class="mediaItem">
+<img alt="ShiftOS / Moonwalkers (Aero)" src="../assets/img/projects/shiftos_aero.jpg"/>
+</div>
+<div class="mediaItem">
+<img alt="ShiftOS / Moonwalkers" src="../assets/img/projects/shiftos_orig.jpg"/>
+</div>
+</div>
+<p class="projDesc">
     ShiftOS is the production control system powering the Moonwalkers robotic footwear.
     I led the design and deployment of real-time locomotion behaviors across ShiftOS 3.0 and 3.1,
     focusing on balance robustness, low-latency transitions, and safety-critical operation in
     unconstrained real-world environments.
   </p>
-
-  <p class="projDesc">
+<p class="projDesc">
     The system integrates onboard sensing, state estimation, and user-intent inference to adapt
     assistance across walking modes, terrain conditions, and user profiles. Emphasis was placed on
     deterministic timing, fault tolerance, and deployability on resource-constrained embedded hardware.
   </p>
-
-  <ul class="projList">
-    <li>
-      <strong>Balance-aware locomotion control:</strong>
+<ul class="projList">
+<li>
+<strong>Balance-aware locomotion control:</strong>
       Designed control behaviors that adapt assistance based on user posture and ground interaction,
       improving stability on uneven terrain and during speed changes.
     </li>
-    <li>
-      <strong>Low-latency state transitions:</strong>
+<li>
+<strong>Low-latency state transitions:</strong>
       Implemented hybrid mode switching with low latency, enabling smooth transitions between
       walking modes while preserving user intent and comfort.
     </li>
-    <li>
-      <strong>Safety-critical constraints:</strong>
+<li>
+<strong>Safety-critical constraints:</strong>
       Integrated real-time safety checks and fallback behaviors to handle disturbances,
       sensor anomalies, and edge cases without disrupting user motion.
     </li>
-    <li>
-      <strong>Embedded systems &amp; RTOS integration:</strong>
+<li>
+<strong>Embedded systems &amp; RTOS integration:</strong>
       Deployed the full control stack on an RTOS-based embedded platform, emphasizing deterministic
       scheduling, memory safety, and long-term reliability in daily use.
     </li>
-    <li>
-      <strong>Production validation:</strong>
+<li>
+<strong>Production validation:</strong>
       Contributed to internal testing, field trials, and performance validation supporting
       the public releases of ShiftOS 3.0 and 3.1.
     </li>
-  </ul>
-
+</ul>
 </div>
 <!-- Footer nav -->
 <div class="linkRow" style="margin-top: 18px;">
-  <a class="btn" href="index.html">← Back to All Projects</a>
-  <a class="btn" href="../index.html#projects">Featured Projects</a>
+<a class="btn" href="index.html">← Back to All Projects</a>
+<a class="btn" href="../index.html#projects">Featured Projects</a>
 </div>
-
 </section>
 </main>
 <script src="../assets/site.js"></script>
