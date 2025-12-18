@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>绊脚规避（TBME 2024） | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead sectionHeadAward">
+<div class="headLeft">
+<h2>
+动力假肢在楼梯与障碍环境下的自动绊脚规避控制（TBME 2024）
+</h2>
+<div class="awardBadge">TBME 2024 精选文章</div>
+</div>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Links -->
+<div class="linkRow">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10347471" rel="noopener" target="_blank">
+TBME 2024 论文
+</a>
+<a class="btn btnPrimary" href="https://youtu.be/Mq_Qx1WDkg8?si=szw2Dc7INelrnpMF" rel="noopener" target="_blank">
+观看视频
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid">
+<div class="mediaItem">
+<img
+  src="../../assets/img/projects/tbme2024_exp_demo.jpg"
+  alt="TBME 2024 绊脚规避实验演示"
+  loading="lazy"/>
+</div>
+<div class="mediaItem">
+<img
+  src="../../assets/img/projects/tbme2024_concept.jpg"
+  alt="摆动相绊脚规避控制器的概念与框图"
+  loading="lazy"/>
+</div>
+</div>
+
+<!-- Narrative -->
+<p class="projDesc" style="margin-top: 14px;">
+摆动相脚尖绊脚是股骨假肢使用者中常见且具有安全风险的问题，
+在上下楼梯及跨越障碍物时尤为突出。
+本工作在连续步态控制之上引入了一层
+<strong>反应式安全控制机制</strong>：
+系统能够预测脚尖净空不足的风险，并自动重塑摆动相轨迹以增加脚尖抬高，
+同时保持运动的平滑性与用户舒适性。
+</p>
+
+<p class="projDesc">
+核心思想是将绊脚规避视为一个
+<strong>轨迹调整问题</strong>，而非模式切换问题。
+一旦检测到风险，控制器会在线计算
+<strong>最小跃度（minimum-jerk）修正轨迹</strong>，
+并将其平滑融合进名义步态中，从而避免突兀动作或不稳定瞬态。
+</p>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">本人贡献</h3>
+<ul class="projList">
+<li>
+<strong>实时风险估计：</strong>
+基于假肢运动学信息（如膝关节与小腿角度），
+并结合对楼梯/障碍物的
+<strong>超声距离测量</strong>，
+在线检测脚尖净空不足的风险。
+</li>
+
+<li>
+<strong>最小跃度轨迹重塑：</strong>
+计算平滑的修正膝关节轨迹，
+并与原有运动轨迹进行融合，以保持行走舒适性与稳定性。
+</li>
+
+<li>
+<strong>与连续控制的兼容性：</strong>
+将安全层无缝集成进连续控制框架中，
+使规避行为在步行与楼梯等不同运动模式下保持一致，
+而非作为额外的“特例模块”。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">实验结果与鲁棒性亮点</h3>
+<ul class="projList">
+<li>
+<strong>楼梯场景下绊脚事件显著减少：</strong>
+在 специально 设计的高风险 “safe-line” 实验协议中，
+整体绊脚率由约 49% 降低至约 5%，
+两名受试者的降幅分别达到
+<strong>87.6%</strong> 与 <strong>92.3%</strong>。
+</li>
+
+<li>
+<strong>障碍跨越效果：</strong>
+成功实现对障碍物的稳定跨越，
+剩余轻微擦碰主要源于保守的膝关节速度限制，
+该限制在后续调参中得到改进，
+体现了真实部署中的工程权衡。
+</li>
+
+<li>
+<strong>多活动场景下的低误触发率：</strong>
+在覆盖转弯、坡道、楼梯、坐立等日常活动的离线仿真中，
+引起明显额外屈曲的误触发率仅为
+<strong>1.23%</strong>，
+且所有额外屈曲均在脚跟着地前恢复至名义状态。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">技术要点</h3>
+<div class="pills" style="margin-top: 10px;">
+<span class="pill">安全关键控制</span>
+<span class="pill">最小跃度优化</span>
+<span class="pill">环境感知（距离测量）</span>
+<span class="pill">轨迹融合</span>
+<span class="pill">人体实验</span>
+<span class="pill">鲁棒性 / 误触发分析</span>
+</div>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

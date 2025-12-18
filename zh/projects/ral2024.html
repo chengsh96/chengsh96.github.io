@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>RA-L 2024 | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="Open menu" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead">
+<h2>用于高效意图预测的迁移学习（RA-L 2024）</h2>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Badges / quick meta -->
+<div class="badgeRow">
+<span class="badge">IEEE Robotics &amp; Automation Letters</span>
+<span class="badge badgeSoft">迁移学习</span>
+<span class="badge badgeSoft">意图预测</span>
+<span class="badge badgeSoft">小样本训练</span>
+</div>
+
+<!-- Links -->
+<div class="linkRow" style="margin-top: 14px;">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10476673" rel="noopener" target="_blank">
+RA-L 2024 论文
+</a>
+<!-- Optional: add arXiv / project repo later if you want -->
+</div>
+
+<!-- Media -->
+<div class="mediaGrid mediaGridSingle" style="margin-top: 16px;">
+<figure class="mediaFigure">
+<img alt="用于行走意图预测的迁移学习框架（RA-L 2024）" loading="lazy" src="../../assets/img/projects/ral2024_concept.jpg"/>
+<figcaption class="mediaCaption">
+意图预测的迁移学习：先在更大规模数据集上预训练，再用极少量的用户专属数据进行 fine-tuning。
+</figcaption>
+</figure>
+<figure class="mediaFigure">
+<img alt="意图预测的传感器配置与评估设置" loading="lazy" src="../../assets/img/projects/ral2024_demo.jpg"/>
+<figcaption class="mediaCaption">
+面向落地的传感器结论：在小样本条件下，“大腿 IMU + 负载传感（load cell）”是一种高性价比且性能优秀的配置。
+</figcaption>
+</figure>
+</div>
+
+<!-- Enriched description -->
+<p class="projDesc" style="margin-top: 14px;">
+本项目面向新的股骨假肢用户，在标注数据非常有限的情况下提升行走意图预测性能。
+与“从零开始为每个用户训练一套完全个体化模型”（需要大量用户数据）不同，
+我们通过对预训练的 CNN 模型进行 fine-tuning，
+让模型能够快速适配新用户，同时保留从历史数据集中学到的有效特征表示。
+</p>
+
+<div class="split" style="margin-top: 12px;">
+
+<div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">本人贡献</h3>
+<ul class="projList">
+<li>
+构建基于 CNN 的意图分类器，以 Fully Convolutional Network（FCN）为骨干网络，支持连续时间的意图预测。
+</li>
+<li>
+提出迁移学习策略：冻结早期卷积模块，仅对后续层进行 fine-tuning，
+在少量训练回路数据下显著提升新用户的识别精度。
+</li>
+<li>
+完成多维度对比评估：个体化（subject-dependent）、跨用户（subject-independent）与迁移学习方案，
+并进行了传感器消融实验（ablations）。
+</li>
+</ul>
+</div>
+
+<div class="card" style="box-shadow:none; border: 1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">关键发现（意义）</h3>
+<ul class="projList">
+<li>
+迁移学习在显著减少用户数据需求的同时，能够达到接近“重度个体化训练”的误差水平。
+</li>
+<li>
+预训练可同时利用截肢者与健全人数据集；随着可用受试者数据增多，性能进一步提升。
+</li>
+<li>
+识别出“大腿 IMU + load cell”的组合是面向部署的务实选择：传感成本低、性能稳定、训练数据需求更友好。
+</li>
+</ul>
+</div>
+
+</div>
+
+<!-- Skills -->
+<div style="margin-top: 12px;">
+<h3>技术要点</h3>
+<div class="pills" style="margin-top: 8px;">
+<span class="pill">深度学习（CNN / FCN）</span>
+<span class="pill">迁移学习 / Fine-Tuning</span>
+<span class="pill">时序窗口建模</span>
+<span class="pill">可穿戴传感（IMU + Load Cell）</span>
+<span class="pill">模型评估与消融实验</span>
+<span class="pill">面向部署的系统设计</span>
+</div>
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</div>
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

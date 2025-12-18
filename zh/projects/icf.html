@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>基于 ICF 的意图识别 | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead sectionHeadAward">
+<div class="headLeft">
+<h2>
+双侧活动识别与动力膝踝假肢的持续自适应控制
+</h2>
+<div class="awardBadge">高精度 · 可解释机器学习</div>
+</div>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Links -->
+<div class="linkRow">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/9521902/" rel="noopener" target="_blank">
+TNSRE 2021 论文
+</a>
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10874153/" rel="noopener" target="_blank">
+TRO 2025 论文
+</a>
+<a class="btn btnPrimary" href="https://youtu.be/4tPWJnouVEA?si=I_EYAOf3ixCrstqj" rel="noopener" target="_blank">
+观看视频
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid">
+
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/icf_concept.jpg"
+  alt="基于 ICF 的活动与意图识别概念图"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+概念：从大腿运动学中提取具有生物力学意义的 ICF 特征，
+构建可解释的决策逻辑。
+</figcaption>
+</figure>
+
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/icf_exp.jpg"
+  alt="ICF 识别与转换实验评估场景"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+评估：在多活动测试路径（步行、坡道、楼梯、坐立）中，
+系统性验证识别与转换性能。
+</figcaption>
+</figure>
+
+</div>
+
+<!-- Narrative -->
+<p class="projDesc" style="margin-top: 14px;">
+在多活动假肢控制中，高层意图识别往往是系统失效的关键环节：
+黑箱模型虽然在离线条件下精度较高，
+但在实时运行中往往不可预测，
+且微小的时序误差就可能触发错误的活动转换。
+本工作提出
+<strong>瞬时特征（Instantaneous Characteristic Features, ICFs）</strong>，
+一种由
+<strong>大腿运动学</strong>
+直接构建的
+<strong>低维、具有生物力学可解释性</strong>
+的特征空间，融合<strong>环境感知信息</strong>，
+用于实现快速、稳定且可解释的活动与意图识别。
+</p>
+
+<p class="projDesc">
+核心设计目标不仅是提高分类精度，
+更在于让系统对
+<strong>用户与工程师都“可理解”</strong>：
+识别规则运行于一维或低维、具有清晰物理含义的特征空间中，
+有效降低“意外行为”，
+并支撑可信的人在环行走控制。
+</p>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">本人贡献</h3>
+<ul class="projList">
+<li>
+<strong>ICF 特征设计：</strong>
+从大腿运动学中提取瞬时特征，
+将步态相位与意图信息编码为清晰、可调试的低维表示，
+避免隐藏嵌入与不可解释边界。
+</li>
+
+<li>
+<strong>实时分类器：</strong>
+实现轻量级决策逻辑，
+单次运行时间
+<strong>&lt; 5 ms</strong>，
+适用于板载部署并可紧密集成至控制回路。
+</li>
+
+<li>
+<strong>具备转换感知的意图逻辑：</strong>
+设计鲁棒的规则体系，
+在平地、坡道、楼梯、坐立等多活动之间实现可靠切换，
+显著降低误触发率。
+</li>
+
+<li>
+<strong>双侧扩展（后续工作）：</strong>
+将框架拓展至由任一条腿触发的活动转换，
+并结合多传感器输入
+（如 IMU、距离传感、负载测量）
+以提升真实场景下的鲁棒性。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">研究意义</h3>
+<ul class="projList">
+<li>
+<strong>可解释且可预测：</strong>
+直观的决策规则有助于用户逐步适应系统行为，
+也使工程师能够快速定位极端工况，
+这对真实可穿戴辅助设备至关重要。
+</li>
+
+<li>
+<strong>低延迟意图信号：</strong>
+快速、可靠的意图识别
+显著降低系统对时序误差的敏感性，
+并与连续中层控制器协同，实现更平滑的运动转换。
+</li>
+
+<li>
+<strong>可扩展的系统架构：</strong>
+“简洁且有物理意义的特征 + 分层安全与转换逻辑”
+这一设计范式，
+为后续的双侧决策与多传感器融合提供了清晰升级路径。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">技术要点</h3>
+<div class="pills" style="margin-top: 10px;">
+<span class="pill">实时分类</span>
+<span class="pill">可解释机器学习 / 特征设计</span>
+<span class="pill">步态相位 / 生物力学</span>
+<span class="pill">转换逻辑</span>
+<span class="pill">嵌入式友好算法</span>
+<span class="pill">传感器融合（双侧扩展）</span>
+</div>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

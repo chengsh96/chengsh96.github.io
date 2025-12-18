@@ -15,26 +15,27 @@
 <span>Shihao Cheng</span>
 </div>
 <nav class="navLinks">
-<a href="index.html">Home</a>
-<a href="#about">About</a>
-<a href="#news">News</a>
-<a href="#projects">Featured Projects</a>
-<a href="#experience">Experience</a>
-<a href="#education">Education</a>
-<a href="#contact">Contact</a>
-<a href="projects/index.html">All Projects</a>
+<a href="index.html" data-i18n="nav.home">Home</a>
+<a href="#about" data-i18n="nav.about">About</a>
+<a href="#news" data-i18n="nav.news">News</a>
+<a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="#experience" data-i18n="nav.experience">Experience</a>
+<a href="#education" data-i18n="nav.education">Education</a>
+<a href="#contact" data-i18n="nav.contact">Contact</a>
+<a href="projects/index.html" data-i18n="nav.all">All Projects</a>
 </nav>
-<button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
+<button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
+<button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="index.html">Home</a>
-<a href="#about">About</a>
-<a href="#news">News</a>
-<a href="#projects">Featured Projects</a>
-<a href="#experience">Experience</a>
-<a href="#education">Education</a>
-<a href="#contact">Contact</a>
-<a href="projects/index.html">All Projects</a>
+<a href="index.html" data-i18n="nav.home">Home</a>
+<a href="#about" data-i18n="nav.about">About</a>
+<a href="#news" data-i18n="nav.news">News</a>
+<a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="#experience" data-i18n="nav.experience">Experience</a>
+<a href="#education" data-i18n="nav.education">Education</a>
+<a href="#contact" data-i18n="nav.contact">Contact</a>
+<a href="projects/index.html" data-i18n="nav.all">All Projects</a>
 </div>
 </header>
 <main class="container">
@@ -89,9 +90,9 @@
     <a class="impactCTA" href="projects/index.html">View Projects →</a>
   </div>
   <ul class="impactList">
-    <li><strong>IEEE T-RO</strong> publication (Jan 2025)</li>
-    <li><strong>IROS Best Student Paper Award</strong> (Oct 2023)</li>
     <li><strong>Production deployment</strong> (ShiftOS)</li>
+    <li><strong>IEEE T-RO</strong> publication (2025)</li>
+    <li><strong>IROS Best Student Paper Award</strong> (2023)</li>
   </ul>
 </div>
 </div>
@@ -99,8 +100,8 @@
 </section>
 <section class="section reveal" id="about">
 <div class="sectionHead">
-<h2>About</h2>
-<div class="small">Research → deployment</div>
+<h2 data-i18n="section.about">About</h2>
+<div class="small" data-i18n="small.research_to_deploy">Research → deployment</div>
 </div>
 <div class="card">
 <p class="projDesc">
@@ -112,8 +113,8 @@
 
 <section class="section reveal" id="news">
   <div class="sectionHead">
-    <h2>Recent News</h2>
-    <div class="small">Latest updates</div>
+    <h2 data-i18n="section.news">Recent News</h2>
+    <div class="small" data-i18n="small.latest">Latest updates</div>
   </div>
   <div class="card">
     <ul class="newsList">
@@ -190,7 +191,7 @@
 </section>
 <section class="section" id="projects">
 <div class="sectionHead reveal">
-<h2>Featured Projects</h2>
+<h2 data-i18n="section.projects">Featured Projects</h2>
 <div class="small">Wearable Robotics • Human-Robot Interaction</div>
 </div>
 <div class="grid">
@@ -243,8 +244,8 @@
 </section>
 <section class="section reveal" id="experience">
 <div class="sectionHead">
-<h2>Experience</h2>
-<div class="small">Selected roles</div>
+<h2 data-i18n="section.experience">Experience</h2>
+<div class="small" data-i18n="small.selected_roles">Selected roles</div>
 </div>
 <div class="split">
 <div class="card">
@@ -252,14 +253,14 @@
 <p class="small"><strong>Lead Control Engineer</strong> (2025–Present)</p>
 <ul class="projList">
 <li>Balance-aware control improving stability on uneven terrain</li>
-<li>Hybrid walking modes with &lt;10 ms latency</li>
-<li>Motion-capture lab + dataset pipeline for ML acceleration</li>
+<li>Hybrid walking modes with seamless and low-latency transitions</li>
+<li>Motion-capture lab + dataset pipeline for learning-based control</li>
 </ul>
 <hr/>
 <p class="small"><strong>Gait Control Engineer</strong> (2024–2025)</p>
 <ul class="projList">
-<li>ShiftOS 3.1 firmware and embedded deployment</li>
-<li>EKF-based terrain estimation</li>
+<li>ShiftOS 3.0 / 3.1 firmware and embedded deployment</li>
+<li>EKF-based terrain estimation with quick recognition to user's intention</li>
 </ul>
 </div>
 <div class="card">
@@ -267,17 +268,17 @@
 <p class="small"><strong>Ph.D. Researcher</strong> (2019–2024)</p>
 <ul class="projList">
 <li>Multi-activity prosthesis control and activity transitions</li>
-<li>Intent recognition and cross-user adaptation</li>
-<li>Safety interventions for obstacle avoidance</li>
-<li>MuJoCo digital twin + sim-to-real personalization</li>
+<li>Interpretable ML-based intent recognition and cross-user adaptation</li>
+<li>Environmental sensing for safety interventions for obstacle avoidance</li>
+<li>MuJoCo digital twin modeling + sim-to-real personalization</li>
 </ul>
 </div>
 </div>
 
 <section class="section reveal" id="education">
   <div class="sectionHead">
-    <h2>Education</h2>
-    <div class="small">Degrees</div>
+    <h2 data-i18n="section.education">Education</h2>
+    <div class="small" data-i18n="small.degrees">Degrees</div>
   </div>
   <div class="card">
     <ul class="projList">
@@ -291,8 +292,8 @@
 </section>
 <section class="section reveal" id="contact">
 <div class="sectionHead">
-<h2>Contact</h2>
-<div class="small">Let’s connect</div>
+<h2 data-i18n="section.contact">Contact</h2>
+<div class="small" data-i18n="small.lets_connect">Let’s connect</div>
 </div>
 <div class="card">
 <p class="projDesc">Email: <a href="mailto:chengsh@umich.edu">chengsh@umich.edu</a></p>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>连续转换控制（TNSRE 2024） | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead sectionHeadAward">
+<div class="headLeft">
+<h2>
+跨活动的双腿连续转换控制（TNSRE 2024）
+</h2>
+<div class="awardBadge" aria-label="最佳学生论文奖">
+IROS 2023 最佳学生论文
+</div>
+</div>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Links -->
+<div class="linkRow">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10734360" rel="noopener" target="_blank">
+TNSRE 2024 论文
+</a>
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10341457" rel="noopener" target="_blank">
+IROS 2023 论文
+</a>
+<a class="btn btnPrimary" href="https://youtu.be/vcpUjCDu1LM?si=wFjRNt9RQBiGFJC7" rel="noopener" target="_blank">
+观看视频
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid">
+<div class="mediaItem">
+<img
+  src="../../assets/img/projects/iros_best.jpg"
+  alt="IROS 2023 最佳学生论文奖（连续转换控制）"
+  loading="lazy"/>
+</div>
+<div class="mediaItem">
+<img
+  src="../../assets/img/projects/tnsre2024_exp.jpg"
+  alt="连续双腿转换控制的实验评估（TNSRE 2024）"
+  loading="lazy"/>
+</div>
+</div>
+
+<!-- Narrative -->
+<p class="projDesc" style="margin-top: 14px;">
+本工作实现了动力膝–踝假肢在平地行走与上下楼梯之间的
+<strong>连续、类生物过渡控制</strong>，
+<strong>无需依赖离散模式切换</strong>。
+该方法覆盖了
+<strong>全部八种双腿转换情形</strong>
+（上/下楼梯、进入/离开楼梯、健侧主导/假肢侧主导），
+这是实现自然、真实环境移动能力的关键。
+</p>
+
+<p class="projDesc">
+<strong>奖项：</strong>
+该工作荣获
+<strong>2023 IEEE/RSJ IROS 最佳学生论文奖</strong>。
+</p>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">本人贡献</h3>
+<ul class="projList">
+<li>
+<strong>连续变化转换（CVT）轨迹模型：</strong>
+提出一种在整个步态周期内连续变化的关节轨迹模型，
+在活动转换过程中平滑调整运动学参数，
+显著降低不连续性与“控制器突变”。
+</li>
+
+<li>
+<strong>最优切换转换（OST）基线方法：</strong>
+构建在最优步态相位进行离散模型切换的对比方法，
+作为评估 CVT 性能的强基线。
+</li>
+
+<li>
+<strong>相位变量控制框架：</strong>
+基于相位变量实时执行上述模型，
+实现膝关节与踝关节的连续、相位对齐轨迹生成。
+</li>
+
+<li>
+<strong>延迟鲁棒性分析：</strong>
+系统性分析连续参数化在意图识别存在延迟或误判时的优势，
+解释了传统模式切换系统在真实应用中的主要失效机理。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">研究意义</h3>
+<ul class="projList">
+<li>
+<strong>消除对切换时机的高度依赖：</strong>
+传统切换式控制器依赖“完美”的转换时刻，
+CVT 显著降低了对时序误差的敏感性。
+</li>
+
+<li>
+<strong>显式建模双腿差异：</strong>
+由健侧或假肢侧主导的转换在生物力学上存在显著差异，
+该框架能够系统性地处理这些差别。
+</li>
+
+<li>
+<strong>实验验证：</strong>
+在股骨假肢使用者实验中，
+于两种不同楼梯/台阶高度条件下，
+成功验证了全部八种转换情形的无缝过渡。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">技术要点</h3>
+<div class="pills" style="margin-top: 10px;">
+<span class="pill">相位变量控制</span>
+<span class="pill">轨迹生成</span>
+<span class="pill">人体实验</span>
+<span class="pill">生物力学建模</span>
+<span class="pill">鲁棒性分析（延迟 / 误分类）</span>
+<span class="pill">对比基线（OST vs CVT）</span>
+</div>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

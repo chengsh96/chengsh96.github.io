@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>过渡运动学模型（TMRB 2022） | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead">
+<h2>过渡运动学模型（TMRB 2022）</h2>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Links -->
+<div class="linkRow">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/9803191" rel="noopener" target="_blank">
+TMRB 2022 论文
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid">
+
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/tmrb2022_concept.jpg"
+  alt="过渡运动学模型的概念性构建"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+通过对稳态步态行为进行凸组合，
+构建统一的过渡运动学模型的概念性示意。
+</figcaption>
+</figure>
+
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/tmrb2022_model.jpg"
+  alt="训练后的过渡运动学模型（TMRB 2022）"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+由训练得到的过渡模型生成的运动学轨迹，
+展示了不同活动之间平滑、连续的过渡效果。
+</figcaption>
+</figure>
+
+</div>
+
+<!-- Narrative -->
+<p class="projDesc" style="margin-top: 14px;">
+过渡运动学模型通过将下肢运动学表示为多个稳态步态行为的
+<strong>凸组合</strong>，
+在单一连续框架中统一描述步态与活动转换过程。
+该方法能够在不依赖离散模式切换的情况下，
+实现不同运动活动之间（如平地行走 ↔ 上下楼梯）的平滑过渡，
+避免了传统切换方法中常见的时序误差与用户不适。
+</p>
+
+<p class="projDesc">
+该模型在经典步态表征与活动转换行为之间建立了桥梁，
+通过引入对平滑性与连续性的数学约束，
+为假肢与外骨骼系统提供了一种更加鲁棒、可推广的控制建模基础。
+</p>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">本人贡献</h3>
+<ul class="projList">
+<li>
+构建基于<strong>凸组合</strong>的运动学模型，
+通过融合平地行走与楼梯运动的稳态参考轨迹，
+生成活动转换过程中的连续运动。
+</li>
+
+<li>
+提出满足可微性与平滑性约束的数学表述，
+确保整个步态周期内的轨迹连续性与跃度受限特性。
+</li>
+
+<li>
+搭建实验验证流程，
+在多名受试者与多种运动场景下验证运动学重构精度。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">研究意义</h3>
+<ul class="projList">
+<li>
+为活动转换提供了不同于离散模式切换的
+<strong>理论化连续建模方法</strong>，
+显著减少控制行为中的突变与不可预测性。
+</li>
+
+<li>
+支持多种转换情形（平地行走 ↔ 楼梯），
+为辅助行走设备实现更加自然的运动模式奠定基础。
+</li>
+
+<li>
+从理论与实验层面展示了
+<strong>连续转换模型</strong>
+相较于混合或有限状态方法在舒适性与稳定性方面的潜在优势。
+</li>
+</ul>
+
+<hr/>
+
+<h3 style="margin: 0 0 8px;">技术要点</h3>
+<div class="pills" style="margin-top: 10px;">
+<span class="pill">生物力学建模</span>
+<span class="pill">轨迹平滑</span>
+<span class="pill">凸组合策略</span>
+<span class="pill">连续转换建模</span>
+</div>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

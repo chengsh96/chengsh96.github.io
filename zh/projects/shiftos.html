@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>ShiftOS | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+
+<section class="section reveal">
+<div class="sectionHead">
+<h2>Moonwalkers 控制系统（ShiftOS 3.0 &amp; 3.1）</h2>
+<div class="small">量产系统</div>
+</div>
+
+<div class="card">
+
+<div class="linkRow">
+<a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-30-release-notes-829006" rel="noopener" target="_blank">
+ShiftOS 3.0 发布说明
+</a>
+<a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-31-release-notes-1062606" rel="noopener" target="_blank">
+ShiftOS 3.1 发布说明
+</a>
+</div>
+
+<!-- HERO (dominant) -->
+<div class="heroMedia">
+<img alt="ShiftOS 预设配置演示（GIF）" src="../../assets/img/projects/shiftos_demo.gif"/>
+</div>
+
+<!-- Secondary images -->
+<div class="mediaGrid mediaGrid2">
+<div class="mediaItem">
+<img alt="ShiftOS / Moonwalkers（Aero）" src="../../assets/img/projects/shiftos_aero.jpg"/>
+</div>
+<div class="mediaItem">
+<img alt="ShiftOS / Moonwalkers" src="../../assets/img/projects/shiftos_orig.jpg"/>
+</div>
+</div>
+
+<p class="projDesc">
+ShiftOS 是驱动 Moonwalkers 机器人动力鞋的量产级控制系统。
+我主导了 ShiftOS 3.0 与 3.1 中实时行走控制行为的设计与部署，
+重点提升系统在真实、非受控环境下的平衡鲁棒性、低延迟状态切换，
+以及安全关键运行能力。
+</p>
+
+<p class="projDesc">
+该系统深度集成了板载传感、状态估计与用户意图推断，
+能够根据行走模式、地形条件与用户配置自适应调整辅助策略。
+系统设计重点放在确定性时序、容错能力，以及在资源受限嵌入式硬件上的可靠部署。
+</p>
+
+<ul class="projList">
+<li>
+<strong>平衡感知行走控制：</strong>
+基于用户姿态与地面交互信息，自适应调整辅助输出，
+显著提升在不平路面与速度变化过程中的稳定性。
+</li>
+
+<li>
+<strong>低延迟状态切换：</strong>
+实现低延迟的混合模式切换机制，
+在保持用户意图与舒适性的同时，实现不同步态模式之间的平滑过渡。
+</li>
+
+<li>
+<strong>安全关键约束机制：</strong>
+集成实时安全检查与回退策略，
+用于应对外界扰动、传感器异常与极端工况，且不干扰用户自然运动。
+</li>
+
+<li>
+<strong>嵌入式系统与 RTOS 集成：</strong>
+在基于 RTOS 的嵌入式平台上部署完整控制栈，
+重点关注确定性调度、内存安全与长期日常使用的可靠性。
+</li>
+
+<li>
+<strong>量产验证与发布支持：</strong>
+参与内部测试、实地试验与性能评估，
+支撑 ShiftOS 3.0 与 3.1 的正式对外发布。
+</li>
+</ul>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top: 18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

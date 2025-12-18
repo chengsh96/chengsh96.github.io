@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>IROS 2023 | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<!-- CONTENT -->
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead">
+<h2>
+提升假肢使用者在日常多活动中的耐力表现
+<span style="font-weight:500;">（IROS 2023）</span>
+</h2>
+<div class="small">科研 · 案例研究</div>
+</div>
+
+<div class="card">
+
+<!-- Badges -->
+<div class="badgeRow">
+<span class="badge">IEEE IROS 2023</span>
+<span class="badge badgeSoft">动力膝–踝假肢</span>
+<span class="badge badgeSoft">中层控制</span>
+<span class="badge badgeSoft">耐力评估</span>
+</div>
+
+<!-- Links -->
+<div class="linkRow" style="margin-top:14px;">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10341643" rel="noopener" target="_blank">
+IROS 2023 论文
+</a>
+<a class="btn btnPrimary" href="https://youtu.be/BSXXhr5qzVQ?si=2e40kQQ5ht9cisYC" rel="noopener" target="_blank">
+观看视频
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid mediaGridSingle" style="margin-top: 16px;">
+
+<figure class="mediaFigure">
+<img
+  src="../../assets/img/projects/iros2023_exp.jpg"
+  alt="受试者在多活动耐力测试路径中使用动力假肢"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+结合坐下、站起、平地行走、坡道与楼梯的多活动耐力测试路径，
+用于评估真实使用场景下的假肢性能。
+</figcaption>
+</figure>
+
+<figure class="mediaFigure">
+<img
+  src="../../assets/img/projects/iros2023_result.jpg"
+  alt="动力假肢在日常活动中的时间分布结果"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+群点图展示不同日常活动（坐/站、坡道、平地、楼梯、转向、休息、总时间）
+在多圈测试中的耗时分布，对比被动假肢（PAS）与动力假肢（ROB）。
+</figcaption>
+</figure>
+
+</div>
+
+<!-- Overview -->
+<p class="projDesc" style="margin-top:14px;">
+本 IROS 2023 案例研究表明，
+当动力膝–踝假肢配合
+<strong>连续、基于步态相位的中层控制器</strong> 使用时，
+可在高负荷的日常多活动场景中
+<strong>显著提升使用者的整体耐力</strong>，
+即使传统的基于时间的性能指标并未体现出明显改善。
+</p>
+
+<!-- Two-column detail -->
+<div class="split" style="margin-top:12px;">
+
+<div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">本人贡献</h3>
+<ul class="projList">
+<li>
+将多种连续假肢控制策略（坐立、平地行走、坡道、楼梯）
+整合为统一的中层控制框架。
+</li>
+<li>
+设计基于步态相位的阻抗与运动学控制律，
+使控制行为随任务需求连续变化，而非依赖离散模式切换。
+</li>
+<li>
+参与设计并分析以“耐力”为核心的高强度实验方案，
+揭示传统定时测试难以反映的真实优势。
+</li>
+</ul>
+</div>
+
+<div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">主要发现</h3>
+<ul class="projList">
+<li>
+与被动微处理器膝关节相比，
+受试者在动力假肢条件下完成的测试圈数
+<strong>超过两倍</strong>。
+</li>
+<li>
+仅依赖时间指标无法捕捉该优势，
+突出了“耐力”作为更具临床意义的评价指标。
+</li>
+<li>
+连续中层控制在无需手动重整参数的情况下，
+在多种活动中实现了类生物的关节运动学与动力学表现。
+</li>
+</ul>
+</div>
+
+</div>
+
+<!-- Skills -->
+<div style="margin-top:12px;">
+<h3>技术要点</h3>
+<div class="pills" style="margin-top:8px;">
+<span class="pill">相位变量控制</span>
+<span class="pill">阻抗控制</span>
+<span class="pill">动力假肢控制</span>
+<span class="pill">生物力学与步态分析</span>
+<span class="pill">临床实验设计</span>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="linkRow" style="margin-top:18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</div>
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>

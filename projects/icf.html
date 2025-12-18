@@ -12,26 +12,27 @@
 <div class="navInner">
 <div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
 <nav class="navLinks">
-<a href="../index.html">Home</a>
-<a href="../index.html#about">About</a>
-<a href="../index.html#news">News</a>
-<a href="../index.html#projects">Featured Projects</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#education">Education</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
+<a href="../index.html" data-i18n="nav.home">Home</a>
+<a href="../index.html#about" data-i18n="nav.about">About</a>
+<a href="../index.html#news" data-i18n="nav.news">News</a>
+<a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
+<a href="../index.html#education" data-i18n="nav.education">Education</a>
+<a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+<a href="index.html" data-i18n="nav.all">All Projects</a>
 </nav>
-<button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
+<button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
+<button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="../index.html">Home</a>
-<a href="../index.html#about">About</a>
-<a href="../index.html#news">News</a>
-<a href="../index.html#projects">Featured Projects</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#education">Education</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
+<a href="../index.html" data-i18n="nav.home">Home</a>
+<a href="../index.html#about" data-i18n="nav.about">About</a>
+<a href="../index.html#news" data-i18n="nav.news">News</a>
+<a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
+<a href="../index.html#education" data-i18n="nav.education">Education</a>
+<a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+<a href="index.html" data-i18n="nav.all">All Projects</a>
 </div>
 </header>
 <main class="container">
@@ -76,8 +77,8 @@
           High-level intent recognition is a common failure point in multi-activity prosthesis control: black-box models can be
           accurate offline yet unpredictable in real time, and small timing errors can trigger incorrect transitions. In this work,
           I introduced <strong>Instantaneous Characteristic Features (ICFs)</strong>—a <strong>low-dimensional</strong>,
-          <strong>biomechanically interpretable</strong> feature space derived from <strong>thigh kinematics</strong> to enable
-          fast, reliable, and explainable activity/intent recognition.
+          <strong>biomechanically interpretable</strong> feature space derived from <strong>thigh kinematics</strong> fused with <strong>environmental sensing</strong>
+          to enable fast, reliable, and explainable activity/intent recognition.
         </p>
 <p class="projDesc">
           The key design goal was to make the classifier not only accurate, but also <strong>intuitive to users and engineers</strong>:
@@ -134,7 +135,7 @@
 <!-- Footer nav -->
 <div class="linkRow" style="margin-top: 18px;">
 <a class="btn" href="index.html">← Back to All Projects</a>
-<a class="btn" href="../index.html#projects">Featured Projects</a>
+<a class="btn" href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
 </div>
 </section>
 </main>

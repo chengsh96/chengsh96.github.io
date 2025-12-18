@@ -787,6 +787,22 @@ h2{
 
 
 /* ===========================
+   Language Toggle Button
+   =========================== */
+.langBtn{
+  border: 1px solid rgba(15,23,42,0.16);
+  background: rgba(255,255,255,0.75);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.langBtn:hover{
+  transform: translateY(-1px);
+}
+
+
+/* ===========================
    HERO RIGHT COLUMN (Highlights + Impact)
    =========================== */
 .heroRight{
@@ -832,8 +848,4 @@ h2{
 
 .impactList li{
   margin: 6px 0;
-}
-
-@media (max-width: 920px){
-  .heroRight{ gap: 12px; }
 }

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>EMBC 2025 | 程世浩</title>
+<link href="../../assets/site.css?v=4" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand">
+<span class="dot"></span>
+<span>程世浩</span>
+</div>
+<nav class="navLinks">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../../index.html">首页</a>
+<a href="../../index.html#about">关于</a>
+<a href="../../index.html#news">动态</a>
+<a href="../../index.html#projects">精选项目</a>
+<a href="../../index.html#experience">经历</a>
+<a href="../../index.html#education">教育</a>
+<a href="../../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead">
+<h2>
+基于智能手表的手势控制与振动反馈用于多活动假肢控制（EMBC 2025）
+</h2>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Badges -->
+<div class="badgeRow">
+<span class="badge">IEEE EMBC 2025</span>
+<span class="badge badgeSoft">人在环控制</span>
+<span class="badge badgeSoft">可穿戴交互界面</span>
+<span class="badge badgeSoft">振动触觉反馈</span>
+<span class="badge badgeSoft">假肢行走控制</span>
+</div>
+
+<!-- Paper link -->
+<div class="linkRow" style="margin-top:14px;">
+<a class="btn" href="https://locolab.robotics.umich.edu/documents/LangGregg-EMBC2025.pdf" rel="noopener" target="_blank">
+EMBC 2025 论文
+</a>
+</div>
+
+<!-- Media -->
+<div class="mediaGrid" style="margin-top:16px;">
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/embc2025_watch.jpg"
+  alt="用于假肢模式切换的智能手表界面（EMBC 2025）"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+基于滑动手势的智能手表交互界面，
+支持活动模式指令输入，并提供清晰的手表端视觉反馈。
+</figcaption>
+</figure>
+
+<figure class="mediaItem">
+<img
+  src="../../assets/img/projects/embc2025_exp.jpg"
+  alt="多活动实验路径与系统验证（EMBC 2025）"
+  loading="lazy"/>
+<figcaption class="mediaCaption">
+在多活动实验路径（步行、坡道、楼梯、坐立）中，
+基于用户指令的活动转换验证系统可靠性。
+</figcaption>
+</figure>
+</div>
+
+<!-- Overview -->
+<p class="projDesc" style="margin-top:14px;">
+本研究提出了一种
+<strong>基于智能手表的人–机交互接口</strong>，
+使动力膝–踝假肢使用者能够显式地下达行走模式切换指令，
+并即时获得
+<strong>振动触觉与视觉反馈</strong>。
+该系统被设计为自动意图识别的实用补充与人工覆盖手段，
+有效提升了真实使用场景中的透明性、信任度与可靠性。
+</p>
+
+<!-- What / Why -->
+<div class="split" style="margin-top:12px;">
+
+<div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">本人贡献</h3>
+<ul class="projList">
+<li>
+设计并实现智能手表 UI，
+支持四种活动模式（步行、上楼、下楼、坐立），
+并将每种模式映射为直观的滑动手势。
+</li>
+<li>
+为不同活动模式设计差异化的振动触觉反馈，
+实现无需注视即可确认控制器状态。
+</li>
+<li>
+基于 TCP 网络实现智能手表与假肢控制器之间的可靠双向通信。
+</li>
+<li>
+将交互系统集成至运行于实时 LabVIEW 平台的动力膝–踝假肢控制器中。
+</li>
+</ul>
+</div>
+
+<div class="card" style="box-shadow:none; border:1px solid rgba(15,23,42,0.08);">
+<h3 style="margin-top:0;">研究意义</h3>
+<ul class="projList">
+<li>
+通过低认知负担的交互方式，
+保留并强化用户对行走模式切换的主导权。
+</li>
+<li>
+在自动意图识别不确定或被关闭时，
+仍可保证系统的可靠运行。
+</li>
+<li>
+在数百次活动转换实验中验证了高可靠性，
+具备低延迟、零误触发的实际性能。
+</li>
+<li>
+为“自动控制 + 用户显式指令”相结合的部署路径提供了可行方案。
+</li>
+</ul>
+</div>
+
+</div>
+
+<!-- Skills -->
+<div style="margin-top:12px;">
+<h3>技术要点</h3>
+<div class="pills" style="margin-top:8px;">
+<span class="pill">人机交互（HRI）</span>
+<span class="pill">可穿戴 UI / UX</span>
+<span class="pill">振动触觉反馈设计</span>
+<span class="pill">Android / Java</span>
+<span class="pill">TCP 网络通信</span>
+<span class="pill">实时假肢控制</span>
+<span class="pill">用户实验与验证</span>
+</div>
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top:18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../../index.html#projects">精选项目</a>
+</div>
+
+</div>
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>
