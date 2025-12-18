@@ -223,13 +223,21 @@ if (lightboxTargets.length) {
   const btn = document.querySelector("[data-lang-toggle]");
   if (!btn) return;
 
-  // Support both user pages (/) and project pages (/<repo>/)
+  // Support both:
+  // 1) User pages: https://<user>.github.io/...           (no repo prefix)
+  // 2) Project pages: https://<user>.github.io/<repo>/... (repo prefix)
   function parsePath() {
     const parts = window.location.pathname.split("/").filter(Boolean);
+
+    // Known top-level folders/files for your USER PAGES site.
+    // If the first segment matches one of these, we should NOT treat it as a repo prefix.
+    const TOP_LEVEL = new Set(["projects", "assets", "zh", "index.html", "README.md"]);
+
     // Cases:
-    // 1) /zh/...                => parts[0] === "zh"
-    // 2) /<repo>/zh/...         => parts[1] === "zh"
-    // 3) /<repo>/... or /...
+    // 1) /zh/...                => parts[0] === "zh" (user page Chinese)
+    // 2) /<repo>/zh/...         => parts[1] === "zh" (project page Chinese)
+    // 3) /...                   => user page English
+    // 4) /<repo>/...            => project page English
     let prefix = "";
     let isZh = false;
     let restParts = [];
@@ -244,17 +252,15 @@ if (lightboxTargets.length) {
       restParts = parts.slice(2);
     } else {
       isZh = false;
-      // If this is a project page, treat first segment as repo prefix.
-      // If it's a user page, prefix will just be "" (no repo segment).
-      // Heuristic: if the site is a project page, your homepage is at /<repo>/.
-      // We assume that if there is at least one segment and it's not a file like index.html,
-      // it's a repo prefix.
-      if (parts.length > 0) {
+
+      // Only treat the first segment as a repo prefix if it does NOT look like one of your
+      // normal top-level user-page folders.
+      if (parts.length > 0 && !TOP_LEVEL.has(parts[0])) {
         prefix = "/" + parts[0];
         restParts = parts.slice(1);
       } else {
         prefix = "";
-        restParts = [];
+        restParts = parts;
       }
     }
 
@@ -265,20 +271,18 @@ if (lightboxTargets.length) {
     btn.textContent = isZh ? "EN" : "中文";
   }
 
-  function buildTarget(prefix, isZh, rest) {
-    // Keep default document when rest is empty
+  function buildTarget(prefix, targetIsZh, rest) {
     if (!rest) rest = "index.html";
-    if (isZh) {
-      return prefix + "/" + rest;
-    } else {
-      return prefix + "/zh/" + rest;
-    }
+    const p = prefix || "";
+    if (targetIsZh) return (p + "/zh/" + rest).replace(/\/+/g, "/");
+    return (p + "/" + rest).replace(/\/+/g, "/");
   }
 
   btn.addEventListener("click", () => {
     const { prefix, isZh, rest } = parsePath();
-    localStorage.setItem("lang", isZh ? "en" : "zh");
-    window.location.href = buildTarget(prefix, !isZh, rest) + window.location.search + window.location.hash;
+    const nextIsZh = !isZh;
+    localStorage.setItem("lang", nextIsZh ? "zh" : "en");
+    window.location.href = buildTarget(prefix, nextIsZh, rest) + window.location.search + window.location.hash;
   });
 
   const pref = localStorage.getItem("lang") || "en";
@@ -286,11 +290,13 @@ if (lightboxTargets.length) {
 
   // Auto-redirect to preferred language version
   if (pref === "zh" && !isZh) {
-    window.location.replace(buildTarget(prefix, false, rest) + window.location.search + window.location.hash);
+    // Prefer Chinese -> go to /zh/<same-path>
+    window.location.replace(buildTarget(prefix, true, rest) + window.location.search + window.location.hash);
     return;
   }
   if (pref === "en" && isZh) {
-    window.location.replace(buildTarget(prefix, true, rest) + window.location.search + window.location.hash);
+    // Prefer English -> go to /<same-path>
+    window.location.replace(buildTarget(prefix, false, rest) + window.location.search + window.location.hash);
     return;
   }
 
