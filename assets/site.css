@@ -784,3 +784,56 @@ h2{
   display:none;
 }
 
+
+
+/* ===========================
+   HERO RIGHT COLUMN (Highlights + Impact)
+   =========================== */
+.heroRight{
+  display:flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.impactCard h2{
+  margin: 0;
+  font-size: 18px;
+}
+
+.impactHead{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.impactCTA{
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(11,18,32,0.72);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(15,23,42,0.10);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.impactCTA:hover{
+  transform: translateY(-1px);
+  background: rgba(43,108,255,0.10);
+}
+
+.impactList{
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(11,18,32,0.72);
+}
+
+.impactList li{
+  margin: 6px 0;
+}
+
+@media (max-width: 920px){
+  .heroRight{ gap: 12px; }
+}
