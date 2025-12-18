@@ -17,7 +17,10 @@ els.forEach(el => io.observe(el));
 // ===========================
 // Recent News: show first 3 items, expand/collapse
 // ===========================
-(function initNewsToggle(){
+// ===========================
+// Recent News: show first 3 items, expand/collapse
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
   const list = document.querySelector(".newsList");
   const btn = document.getElementById("newsToggleBtn");
   if (!list || !btn) return;
@@ -26,20 +29,20 @@ els.forEach(el => io.observe(el));
   const DEFAULT_VISIBLE = 3;
 
   if (items.length <= DEFAULT_VISIBLE) {
-    // Nothing to collapse
     btn.style.display = "none";
     return;
   }
 
   let expanded = false;
 
-  function apply(){
+  function apply() {
     items.forEach((li, idx) => {
-      const hide = (!expanded && idx >= DEFAULT_VISIBLE);
-      li.classList.toggle("newsHidden", hide);
+      li.style.display = (!expanded && idx >= DEFAULT_VISIBLE)
+        ? "none"
+        : "";
     });
     btn.textContent = expanded ? "Show less" : "Show more";
-    btn.setAttribute("aria-expanded", String(expanded));
+    btn.setAttribute("aria-expanded", expanded ? "true" : "false");
   }
 
   btn.addEventListener("click", () => {
@@ -48,7 +51,8 @@ els.forEach(el => io.observe(el));
   });
 
   apply();
-})();
+});
+
 
 // ===========================
 // Simple Lightbox (project figures)
