@@ -218,44 +218,65 @@ if (lightboxTargets.length) {
 // - Default: EN
 // - Persist choice in localStorage under key "lang"
 // - Switches between /zh/<path> and /<path>
+// Supports:
+//   A) GitHub USER pages:    https://<user>.github.io/...
+//   B) GitHub PROJECT pages: https://<user>.github.io/<repo>/...
+//   C) Local dev server:     http://127.0.0.1:5500/<repo>/...
 // ===========================
-(function initLanguageTogglePath(){
+(function initLanguageTogglePath() {
   const btn = document.querySelector("[data-lang-toggle]");
   if (!btn) return;
 
-  // Support both:
-  // 1) User pages: https://<user>.github.io/...           (no repo prefix)
-  // 2) Project pages: https://<user>.github.io/<repo>/... (repo prefix)
+  const isLocal =
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "localhost";
+
+  // For your USER pages site, these are "real" top-level folders/files.
+  // If the first segment matches one of these, it is NOT a repo prefix.
+  const TOP_LEVEL = new Set(["projects", "assets", "zh", "index.html", "README.md"]);
+
   function parsePath() {
     const parts = window.location.pathname.split("/").filter(Boolean);
 
-    // Known top-level folders/files for your USER PAGES site.
-    // If the first segment matches one of these, we should NOT treat it as a repo prefix.
-    const TOP_LEVEL = new Set(["projects", "assets", "zh", "index.html", "README.md"]);
-
-    // Cases:
-    // 1) /zh/...                => parts[0] === "zh" (user page Chinese)
-    // 2) /<repo>/zh/...         => parts[1] === "zh" (project page Chinese)
-    // 3) /...                   => user page English
-    // 4) /<repo>/...            => project page English
     let prefix = "";
     let isZh = false;
     let restParts = [];
 
+    // Chinese page patterns:
+    // 1) USER pages:    /zh/<rest>
+    // 2) PROJECT/local: /<prefix>/zh/<rest>
     if (parts.length > 0 && parts[0] === "zh") {
       isZh = true;
       prefix = "";
       restParts = parts.slice(1);
-    } else if (parts.length > 1 && parts[1] === "zh") {
+      return { prefix, isZh, rest: restParts.join("/") };
+    }
+    if (parts.length > 1 && parts[1] === "zh") {
       isZh = true;
       prefix = "/" + parts[0];
       restParts = parts.slice(2);
-    } else {
-      isZh = false;
+      return { prefix, isZh, rest: restParts.join("/") };
+    }
 
-      // Only treat the first segment as a repo prefix if it does NOT look like one of your
-      // normal top-level user-page folders.
-      if (parts.length > 0 && !TOP_LEVEL.has(parts[0])) {
+    // English page patterns:
+    // - Local dev often looks like /<repo-folder>/<rest>  (must keep prefix)
+    // - GitHub USER pages looks like /<rest>              (no prefix)
+    // - GitHub PROJECT pages looks like /<repo>/<rest>    (has prefix)
+    isZh = false;
+
+    if (isLocal) {
+      // Local: treat first segment as prefix (repo folder)
+      prefix = parts.length > 0 ? "/" + parts[0] : "";
+      restParts = parts.slice(1);
+    } else {
+      // GitHub Pages:
+      // Only treat first segment as prefix if it doesn't look like your normal top-level
+      // and it doesn't look like a file (contains ".")
+      if (
+        parts.length > 0 &&
+        !TOP_LEVEL.has(parts[0]) &&
+        !parts[0].includes(".")
+      ) {
         prefix = "/" + parts[0];
         restParts = parts.slice(1);
       } else {
@@ -267,35 +288,46 @@ if (lightboxTargets.length) {
     return { prefix, isZh, rest: restParts.join("/") };
   }
 
-  function setBtnLabel(isZh) {
-    btn.textContent = isZh ? "EN" : "中文";
+  function setBtnLabel(isZhNow) {
+    btn.textContent = isZhNow ? "EN" : "中文";
+  }
+
+  function normalizePath(path) {
+    return path.replace(/\/+/g, "/");
   }
 
   function buildTarget(prefix, targetIsZh, rest) {
-    if (!rest) rest = "index.html";
+    let r = rest || "";
+    if (!r || r.endsWith("/")) r += "index.html";
+    if (r === "") r = "index.html";
+
+    // Safety: avoid accidental duplication
+    if (r === "index.html/index.html") r = "index.html";
+
     const p = prefix || "";
-    if (targetIsZh) return (p + "/zh/" + rest).replace(/\/+/g, "/");
-    return (p + "/" + rest).replace(/\/+/g, "/");
+    if (targetIsZh) return normalizePath(p + "/zh/" + r);
+    return normalizePath(p + "/" + r);
   }
 
   btn.addEventListener("click", () => {
     const { prefix, isZh, rest } = parsePath();
     const nextIsZh = !isZh;
+
     localStorage.setItem("lang", nextIsZh ? "zh" : "en");
-    window.location.href = buildTarget(prefix, nextIsZh, rest) + window.location.search + window.location.hash;
+
+    const target = buildTarget(prefix, nextIsZh, rest);
+    window.location.href = target + window.location.search + window.location.hash;
   });
 
+  // Apply persisted preference
   const pref = localStorage.getItem("lang") || "en";
   const { prefix, isZh, rest } = parsePath();
 
-  // Auto-redirect to preferred language version
   if (pref === "zh" && !isZh) {
-    // Prefer Chinese -> go to /zh/<same-path>
     window.location.replace(buildTarget(prefix, true, rest) + window.location.search + window.location.hash);
     return;
   }
   if (pref === "en" && isZh) {
-    // Prefer English -> go to /<same-path>
     window.location.replace(buildTarget(prefix, false, rest) + window.location.search + window.location.hash);
     return;
   }
