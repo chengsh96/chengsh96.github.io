@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!list || !btn) return;
 
   const items = Array.from(list.querySelectorAll("li"));
-  const DEFAULT_VISIBLE = 3;
+  const DEFAULT_VISIBLE = 4;
 
   if (items.length <= DEFAULT_VISIBLE) {
     btn.style.display = "none";
