@@ -79,7 +79,12 @@ ShiftOS 3.1 发布说明
     </figure>
   </div>
   <div class="shiftosVideo">
-    <img alt="Moonwalkers 实战演示 — IKEA 仓库部署" src="../../assets/video/homepage_demo_keyscenes.gif"/>
+    <figure class="shiftosVideoItem">
+      <img alt="Moonwalkers 实战演示 — IKEA 仓库部署" src="../../assets/video/homepage_demo_keyscenes.gif"/>
+    </figure>
+    <figure class="shiftosVideoItem">
+      <img alt="ShiftOS 预设配置 — 行走模式" src="../../assets/video/preset_profile_walking_final.gif"/>
+    </figure>
   </div>
 </div>
 
@@ -102,82 +107,170 @@ ShiftOS 3.1 发布说明
       <strong class="pressHook">CES 2024 · Moonwalkers X</strong>
       <p class="pressSnippet">轻量化设计与控制系统升级在 CES 获得媒体报道</p>
     </a>
+    <a class="pressBadge" href="https://2025.ieee-icra.org/partners/confirmed-partners-and-exhibitors/" target="_blank" rel="noopener">
+      <span class="pressTag">IEEE ICRA 2025</span>
+      <strong class="pressHook">参展商 · 亚特兰大 2025</strong>
+      <p class="pressSnippet">Shift Robotics 携 Moonwalkers 亮相全球最大机器人学术会议</p>
+    </a>
   </div>
 </div>
 
 <!-- Moonwalkers 产品历程 -->
 <h3 class="pressSectionTitle" style="margin-top:1.5rem;">产品历程</h3>
-<div class="mwTimeline">
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#2b6cff;"></div>
-    <div class="mwYear" style="color:#2b6cff;">2024</div>
-    <div class="mwStatus">发布</div>
-    <span class="mwBadge" style="color:#2b6cff;">Original</span>
+<div class="mwGenRow">
+  <div class="mwGenCard" style="--gc:#2b6cff;">
+    <div class="mwGenName">Original</div>
+    <div class="mwGenYear">2024</div>
+    <span class="mwGenPill mwGenPill--live">已发布</span>
+    <p class="mwGenDetail">越野能力 · 8 轮动力系统 · 时速 11 km · 续航 11 km · 每只 2.4 kg</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#8B6914;"></div>
-    <div class="mwYear" style="color:#8B6914;">2025</div>
-    <div class="mwStatus">发布</div>
-    <span class="mwBadge" style="color:#8B6914;">Aero</span>
+  <div class="mwGenCard" style="--gc:#2b6cff;">
+    <div class="mwGenName">Aero</div>
+    <div class="mwGenYear">2025</div>
+    <span class="mwGenPill mwGenPill--live">已发布</span>
+    <p class="mwGenDetail">城市版 · 更轻、更安静、更敏捷 · 4 轮动力系统 · 时速 11 km · 续航 11 km · 每只 1.9 kg</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#8B1A4A;"></div>
-    <div class="mwYear" style="color:#8B1A4A;">2026年7月</div>
-    <div class="mwStatus">发布</div>
-    <span class="mwBadge" style="color:#8B1A4A;">Dusk</span>
+  <div class="mwGenCard" style="--gc:#8B1A4A;">
+    <div class="mwGenName">Dusk</div>
+    <div class="mwGenYear">2026年7月</div>
+    <span class="mwGenPill mwGenPill--soon">即将发布</span>
+    <p class="mwGenDetail">尺码扩展 · 更小机身 · 紧凑传动系统 · 更广尺码范围 · 自适应控制</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="border:2px solid #2D6A2D; background:transparent;"></div>
-    <div class="mwYear" style="color:#2D6A2D;">2026年底</div>
-    <div class="mwStatus">开发中</div>
-    <span class="mwBadge" style="color:#2D6A2D;">Pro</span>
+  <div class="mwGenCard mwGenCard--future" style="--gc:#2D6A2D;">
+    <div class="mwGenName">Pro</div>
+    <div class="mwGenYear">2026年底</div>
+    <span class="mwGenPill mwGenPill--dev">开发中</span>
+    <p class="mwGenDetail">平衡感知移动 · 更丰富传感 · 越野能力 · 可换电池</p>
   </div>
 </div>
 
-<p class="projDesc">
-ShiftOS 是驱动 Moonwalkers 机器人动力鞋的量产级控制系统。
-我主导了 ShiftOS 3.0 与 3.1 中实时行走控制行为的设计与部署，
-重点提升系统在真实、非受控环境下的平衡鲁棒性、低延迟状态切换，
-以及安全关键运行能力。
-</p>
+<!-- 控制演进 -->
+<div class="mwEvolution">
+  <div class="mwEvolHeader">
+    <h3 class="mwEvolTitle">Moonwalkers 控制演进</h3>
+    <p class="mwEvolSubtitle">我在控制、传感与嵌入式方向的贡献，如何从量产部署演进至自适应与平衡感知移动能力。</p>
+  </div>
 
-<p class="projDesc">
-该系统深度集成了板载传感、状态估计与用户意图推断，
-能够根据行走模式、地形条件与用户配置自适应调整辅助策略。
-系统设计重点放在确定性时序、容错能力，以及在资源受限嵌入式硬件上的可靠部署。
-</p>
+  <!-- 顶部时间轴 -->
+  <div class="mwEvolTimeline">
+    <div class="mwEvolTimeNode" style="--tn:#2b6cff;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">2024–2025</div>
+      <div class="mwEvolTimeName">量产控制基础</div>
+    </div>
+    <div class="mwEvolTimeTrack"></div>
+    <div class="mwEvolTimeNode" style="--tn:#8B1A4A;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">2026年7月</div>
+      <div class="mwEvolTimeName">自适应运动</div>
+    </div>
+    <div class="mwEvolTimeTrack"></div>
+    <div class="mwEvolTimeNode" style="--tn:#2D6A2D;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">2026年底</div>
+      <div class="mwEvolTimeName">平衡感知移动</div>
+    </div>
+  </div>
 
-<ul class="projList">
-<li>
-<strong>平衡感知行走控制：</strong>
-基于用户姿态与地面交互信息，自适应调整辅助输出，
-显著提升在不平路面与速度变化过程中的稳定性。
-</li>
+  <!-- 三列演进卡片 -->
+  <div class="mwEvolGrid">
 
-<li>
-<strong>低延迟状态切换：</strong>
-实现低延迟的混合模式切换机制，
-在保持用户意图与舒适性的同时，实现不同步态模式之间的平滑过渡。
-</li>
+    <!-- 第一列：Original + Aero -->
+    <div class="mwEvolCard" style="--ec:#2b6cff;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">01 · 交付</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers / Aero</div>
+          <div class="mwEvolCardSub">量产控制基础 · 2024–2025</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">核心目标</div>
+        <div class="mwEvolFocus">让机器人鞋在量产中感觉流畅、安全、高效且可定制。</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">贡献</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--perception">感知</span>可靠的意图预测</li>
+          <li><span class="mwEvolPill ep--perception">感知</span>鲁棒步态检测</li>
+          <li><span class="mwEvolPill ep--control">控制</span>自定义控制配置</li>
+          <li><span class="mwEvolPill ep--control">控制</span>速度区间响应</li>
+          <li><span class="mwEvolPill ep--control">控制</span>自适应制动</li>
+          <li><span class="mwEvolPill ep--control">控制</span>坡道感知停止</li>
+          <li><span class="mwEvolPill ep--embedded">嵌入式</span>OTA 部署支持</li>
+          <li><span class="mwEvolPill ep--safety">安全</span>运行时回退逻辑</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">成果</span>
+        流畅、高效的量产 ShiftOS 行走行为
+      </div>
+    </div>
 
-<li>
-<strong>安全关键约束机制：</strong>
-集成实时安全检查与回退策略，
-用于应对外界扰动、传感器异常与极端工况，且不干扰用户自然运动。
-</li>
+    <!-- 第二列：Dusk -->
+    <div class="mwEvolCard" style="--ec:#8B1A4A;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">02 · 自适应</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers Dusk</div>
+          <div class="mwEvolCardSub">自适应运动 · 2026年7月</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">核心目标</div>
+        <div class="mwEvolFocus">让控制系统实时适应不同用户、步态模式和地形。</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">贡献</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--architecture">架构</span>控制栈全面重设计</li>
+          <li><span class="mwEvolPill ep--estimation">估计</span>精准步态时序</li>
+          <li><span class="mwEvolPill ep--estimation">估计</span>鲁棒步态参数</li>
+          <li><span class="mwEvolPill ep--perception">感知</span>精准地形识别</li>
+          <li><span class="mwEvolPill ep--control">控制</span>地形感知辅助</li>
+          <li><span class="mwEvolPill ep--adaptation">自适应</span>个性化步态响应</li>
+          <li><span class="mwEvolPill ep--mode">模式逻辑</span>步行 / 跑步混合</li>
+          <li><span class="mwEvolPill ep--framework">控制框架</span>基于相位的运动</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">成果</span>
+        自适应、地形感知移动能力
+      </div>
+    </div>
 
-<li>
-<strong>嵌入式系统与 RTOS 集成：</strong>
-在基于 RTOS 的嵌入式平台上部署完整控制栈，
-重点关注确定性调度、内存安全与长期日常使用的可靠性。
-</li>
+    <!-- 第三列：Pro -->
+    <div class="mwEvolCard mwEvolCard--future" style="--ec:#2D6A2D;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">03 · 平衡</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers Pro</div>
+          <div class="mwEvolCardSub">平衡感知移动 · 2026年底</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">核心目标</div>
+        <div class="mwEvolFocus">让鞋理解平衡、地面交互和更复杂的地形。</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">贡献</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--sensing">传感</span>测力传感器 + FSR 集成</li>
+          <li><span class="mwEvolPill ep--estimation">估计</span>实时平衡状态</li>
+          <li><span class="mwEvolPill ep--prediction">预测</span>落脚点预测</li>
+          <li><span class="mwEvolPill ep--control">控制</span>平衡感知辅助</li>
+          <li><span class="mwEvolPill ep--mode">模式逻辑</span>步行 / 滑行混合</li>
+          <li><span class="mwEvolPill ep--terrain">地形</span>越野控制能力</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">成果</span>
+        下一代平衡感知移动智能
+      </div>
+    </div>
 
-<li>
-<strong>量产验证与发布支持：</strong>
-参与内部测试、实地试验与性能评估，
-支撑 ShiftOS 3.0 与 3.1 的正式对外发布。
-</li>
-</ul>
+  </div>
+</div>
 
 </div>
 

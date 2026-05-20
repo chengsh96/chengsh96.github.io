@@ -68,7 +68,12 @@
     </figure>
   </div>
   <div class="shiftosVideo">
-    <img alt="Moonwalkers in action — IKEA warehouse deployment" src="../assets/video/homepage_demo_keyscenes.gif"/>
+    <figure class="shiftosVideoItem">
+      <img alt="Moonwalkers in action — IKEA warehouse deployment" src="../assets/video/homepage_demo_keyscenes.gif"/>
+    </figure>
+    <figure class="shiftosVideoItem">
+      <img alt="ShiftOS preset profile — walking mode" src="../assets/video/preset_profile_walking_final.gif"/>
+    </figure>
   </div>
 </div>
 
@@ -91,76 +96,170 @@
       <strong class="pressHook">CES 2024 · Moonwalkers X</strong>
       <p class="pressSnippet">Lighter design and control-system upgrades highlighted at CES</p>
     </a>
+    <a class="pressBadge" href="https://2025.ieee-icra.org/partners/confirmed-partners-and-exhibitors/" target="_blank" rel="noopener">
+      <span class="pressTag">IEEE ICRA 2025</span>
+      <strong class="pressHook">Exhibitor · Atlanta 2025</strong>
+      <p class="pressSnippet">Shift Robotics exhibited Moonwalkers at the world's largest robotics research conference</p>
+    </a>
   </div>
 </div>
 
-<!-- Moonwalkers product history -->
+<!-- Product Generation Cards -->
 <h3 class="pressSectionTitle" style="margin-top:1.5rem;">Product History</h3>
-<div class="mwTimeline">
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#2b6cff;"></div>
-    <div class="mwYear" style="color:#2b6cff;">2024</div>
-    <div class="mwStatus">Launch</div>
-    <span class="mwBadge" style="color:#2b6cff;">Original</span>
+<div class="mwGenRow">
+  <div class="mwGenCard" style="--gc:#2b6cff;">
+    <div class="mwGenName">Original</div>
+    <div class="mwGenYear">2024</div>
+    <span class="mwGenPill mwGenPill--live">Launched</span>
+    <p class="mwGenDetail">Rugged / off-road capable · 8-wheel powertrain · 7 mph · 7 mi range · 5.3 lb each</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#8B6914;"></div>
-    <div class="mwYear" style="color:#8B6914;">2025</div>
-    <div class="mwStatus">Launch</div>
-    <span class="mwBadge" style="color:#8B6914;">Aero</span>
+  <div class="mwGenCard" style="--gc:#2b6cff;">
+    <div class="mwGenName">Aero</div>
+    <div class="mwGenYear">2025</div>
+    <span class="mwGenPill mwGenPill--live">Launched</span>
+    <p class="mwGenDetail">Urban edition · lighter, quieter, quicker · 4-wheel powertrain · 7 mph · 7 mi range · 4.2 lb each</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="background:#8B1A4A;"></div>
-    <div class="mwYear" style="color:#8B1A4A;">July 2026</div>
-    <div class="mwStatus">Launch</div>
-    <span class="mwBadge" style="color:#8B1A4A;">Dusk</span>
+  <div class="mwGenCard" style="--gc:#8B1A4A;">
+    <div class="mwGenName">Dusk</div>
+    <div class="mwGenYear">July 2026</div>
+    <span class="mwGenPill mwGenPill--soon">Coming Soon</span>
+    <p class="mwGenDetail">Fit expansion · smaller chassis · compact drivetrain · broader size range · self-adaptive control</p>
   </div>
-  <div class="mwMilestone">
-    <div class="mwDot" style="border:2px solid #2D6A2D; background:transparent;"></div>
-    <div class="mwYear" style="color:#2D6A2D;">End 2026</div>
-    <div class="mwStatus">In development</div>
-    <span class="mwBadge" style="color:#2D6A2D;">Pro</span>
+  <div class="mwGenCard mwGenCard--future" style="--gc:#2D6A2D;">
+    <div class="mwGenName">Pro</div>
+    <div class="mwGenYear">End 2026</div>
+    <span class="mwGenPill mwGenPill--dev">In Development</span>
+    <p class="mwGenDetail">Balance-aware mobility · richer sensing · off-road capability · swappable battery</p>
   </div>
 </div>
 
-<p class="projDesc">
-    ShiftOS is the production control system powering the Moonwalkers robotic footwear.
-    I led the design and deployment of real-time locomotion behaviors across ShiftOS 3.0 and 3.1,
-    focusing on balance robustness, low-latency transitions, and safety-critical operation in
-    unconstrained real-world environments.
-  </p>
-<p class="projDesc">
-    The system integrates onboard sensing, state estimation, and user-intent inference to adapt
-    assistance across walking modes, terrain conditions, and user profiles. Emphasis was placed on
-    deterministic timing, fault tolerance, and deployability on resource-constrained embedded hardware.
-  </p>
-<ul class="projList">
-<li>
-<strong>Balance-aware locomotion control:</strong>
-      Designed control behaviors that adapt assistance based on user posture and ground interaction,
-      improving stability on uneven terrain and during speed changes.
-    </li>
-<li>
-<strong>Low-latency state transitions:</strong>
-      Implemented hybrid mode switching with low latency, enabling smooth transitions between
-      walking modes while preserving user intent and comfort.
-    </li>
-<li>
-<strong>Safety-critical constraints:</strong>
-      Integrated real-time safety checks and fallback behaviors to handle disturbances,
-      sensor anomalies, and edge cases without disrupting user motion.
-    </li>
-<li>
-<strong>Embedded systems &amp; RTOS integration:</strong>
-      Deployed the full control stack on an RTOS-based embedded platform, emphasizing deterministic
-      scheduling, memory safety, and long-term reliability in daily use.
-    </li>
-<li>
-<strong>Production validation:</strong>
-      Contributed to internal testing, field trials, and performance validation supporting
-      the public releases of ShiftOS 3.0 and 3.1.
-    </li>
-</ul>
+<!-- Control Evolution -->
+<div class="mwEvolution">
+  <div class="mwEvolHeader">
+    <h3 class="mwEvolTitle">Moonwalkers Control Evolution</h3>
+    <p class="mwEvolSubtitle">How my control, sensing, and embedded contributions evolved from production deployment to adaptive and balance-aware mobility.</p>
+  </div>
+
+  <!-- Top timeline strip -->
+  <div class="mwEvolTimeline">
+    <div class="mwEvolTimeNode" style="--tn:#2b6cff;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">2024–2025</div>
+      <div class="mwEvolTimeName">Production foundation</div>
+    </div>
+    <div class="mwEvolTimeTrack"></div>
+    <div class="mwEvolTimeNode" style="--tn:#8B1A4A;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">July 2026</div>
+      <div class="mwEvolTimeName">Adaptive locomotion</div>
+    </div>
+    <div class="mwEvolTimeTrack"></div>
+    <div class="mwEvolTimeNode" style="--tn:#2D6A2D;">
+      <div class="mwEvolTimeDot"></div>
+      <div class="mwEvolTimeYear">End 2026</div>
+      <div class="mwEvolTimeName">Balance-aware mobility</div>
+    </div>
+  </div>
+
+  <!-- 3-column evolution cards -->
+  <div class="mwEvolGrid">
+
+    <!-- Column 1: Original + Aero -->
+    <div class="mwEvolCard" style="--ec:#2b6cff;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">01 · Ship</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers / Aero</div>
+          <div class="mwEvolCardSub">Production foundation · 2024–2025</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Core idea</div>
+        <div class="mwEvolFocus">Make robotic shoes feel smooth, safe, efficient, and customizable in production.</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Built</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--perception">Perception</span>Reliable intent prediction</li>
+          <li><span class="mwEvolPill ep--perception">Perception</span>Robust gait detection</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Custom control profiles</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Speed-zone responsiveness</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Adaptive braking</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Ramp-aware stopping</li>
+          <li><span class="mwEvolPill ep--embedded">Embedded</span>OTA-ready deployment</li>
+          <li><span class="mwEvolPill ep--safety">Safety</span>Runtime fallback logic</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">Unlocked</span>
+        Smooth, efficient, production-ready ShiftOS behavior
+      </div>
+    </div>
+
+    <!-- Column 2: Dusk -->
+    <div class="mwEvolCard" style="--ec:#8B1A4A;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">02 · Adapt</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers Dusk</div>
+          <div class="mwEvolCardSub">Adaptive locomotion · July 2026</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Core idea</div>
+        <div class="mwEvolFocus">Make the control system adapt to different users, gait patterns, and terrain in real time.</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Built</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--architecture">Architecture</span>Full-stack redesign</li>
+          <li><span class="mwEvolPill ep--estimation">Estimation</span>Accurate gait timing</li>
+          <li><span class="mwEvolPill ep--estimation">Estimation</span>Robust gait parameters</li>
+          <li><span class="mwEvolPill ep--perception">Perception</span>Accurate terrain recognition</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Terrain-aware assistance</li>
+          <li><span class="mwEvolPill ep--adaptation">Adaptation</span>Personalized gait response</li>
+          <li><span class="mwEvolPill ep--mode">Mode Logic</span>Walk / run hybrid</li>
+          <li><span class="mwEvolPill ep--framework">Ctrl Framework</span>Phase-based locomotion</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">Unlocked</span>
+        Adaptive, terrain-aware mobility
+      </div>
+    </div>
+
+    <!-- Column 3: Pro -->
+    <div class="mwEvolCard mwEvolCard--future" style="--ec:#2D6A2D;">
+      <div class="mwEvolCardHead">
+        <span class="mwEvolCardNum">03 · Stabilize</span>
+        <div>
+          <div class="mwEvolCardTitle">Moonwalkers Pro</div>
+          <div class="mwEvolCardSub">Balance-aware mobility · End 2026</div>
+        </div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Core idea</div>
+        <div class="mwEvolFocus">Make the shoes understand balance, ground interaction, and more challenging terrain.</div>
+      </div>
+      <div class="mwEvolSection">
+        <div class="mwEvolSectionLabel">Built</div>
+        <ul class="mwEvolList">
+          <li><span class="mwEvolPill ep--sensing">Sensing</span>Load cell + FSR integration</li>
+          <li><span class="mwEvolPill ep--estimation">Estimation</span>Real-time balance state</li>
+          <li><span class="mwEvolPill ep--prediction">Prediction</span>Foot placement prediction</li>
+          <li><span class="mwEvolPill ep--control">Control</span>Balance-aware assistance</li>
+          <li><span class="mwEvolPill ep--mode">Mode Logic</span>Walk / slide hybrid</li>
+          <li><span class="mwEvolPill ep--terrain">Terrain</span>Off-road control capability</li>
+        </ul>
+      </div>
+      <div class="mwEvolResult">
+        <span class="mwEvolResultLabel">Unlocked</span>
+        Next-generation balance-aware locomotion
+      </div>
+    </div>
+
+  </div>
+</div>
 </div>
 <!-- Footer nav -->
 <div class="linkRow" style="margin-top: 18px;">
