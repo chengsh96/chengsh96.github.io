@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>连续阻抗过渡控制（TNSRE 2026）| 程世浩</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/><link href="../../assets/site.css?v=10" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>程世浩</span></div>
+<nav class="navLinks">
+<a href="../index.html">首页</a>
+<a href="../index.html#about">关于</a>
+<a href="../index.html#news">动态</a>
+<a href="../index.html#projects">精选项目</a>
+<a href="../index.html#step-engineering">步态解析</a>
+<a href="../index.html#experience">经历</a>
+<a href="../index.html#education">教育</a>
+<a href="../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</nav>
+<button class="themeBtn" type="button" data-theme-toggle aria-label="切换暗色模式">深色</button>
+<button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
+<button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
+</div>
+
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../index.html">首页</a>
+<a href="../index.html#about">关于</a>
+<a href="../index.html#news">动态</a>
+<a href="../index.html#projects">精选项目</a>
+<a href="../index.html#step-engineering">步态解析</a>
+<a href="../index.html#experience">经历</a>
+<a href="../index.html#education">教育</a>
+<a href="../index.html#contact">联系</a>
+<a href="index.html">全部项目</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+
+<div class="sectionHead">
+<h2>步行–上下楼梯假肢连续阻抗过渡控制（TNSRE 2026）</h2>
+<div class="small">科研</div>
+</div>
+
+<div class="card">
+
+<!-- Badges -->
+<div class="badgeRow">
+<span class="badge">IEEE T-NSRE 2026</span>
+<span class="badge badgeSoft">阻抗控制</span>
+<span class="badge badgeSoft">动力假肢</span>
+<span class="badge badgeSoft">相位变量控制</span>
+<span class="badge badgeSoft">步行–楼梯过渡</span>
+</div>
+
+<!-- Links -->
+<div class="linkRow" style="margin-top:14px;">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/11479620" rel="noopener" target="_blank">TNSRE 2026 论文</a>
+<a class="btn btnPrimary" href="https://ieeexplore.ieee.org/ielx8/7333/11311371/11479620/supp1-3683020.mp4?arnumber=11479620" rel="noopener" target="_blank">观看视频</a>
+<a class="btn" href="tnsre2024.html">前序工作（TNSRE 2024）</a>
+</div>
+
+<!-- Media -->
+<div class="mediaFigure" style="margin-top:16px;">
+<figure>
+<img alt="步行–上下楼梯假肢连续站立相阻抗过渡控制（TNSRE 2026）" loading="lazy" src="../../assets/img/projects/tnsre-gagraphic-3683020.jpg" style="width:100%; border-radius:var(--radius);"/>
+</figure>
+</div>
+
+<!-- Overview -->
+<p class="projDesc" style="margin-top:14px;">
+本研究在<a href="tnsre2024.html">前序连续过渡工作</a>的基础上，
+将研究重心从摆动相运动学延伸至<strong>站立相阻抗控制</strong>。
+与离散模式切换不同，该系统在步行–楼梯过渡期间，
+于站立相内<strong>连续混合关节阻抗</strong>，
+从而为动力膝–踝假肢提供更自然的关节力矩、更好的柔顺性与更充分的支撑。
+</p>
+
+<hr/>
+<h3 style="margin:0 0 8px;">本人贡献</h3>
+<ul class="projList">
+<li>
+<strong>连续站立相阻抗过渡模型：</strong>
+在站立相内连续混合步行与楼梯阻抗行为，
+以平滑变化的阻抗曲线替代离散控制器切换。
+</li>
+<li>
+<strong>相位变量控制框架：</strong>
+将假肢阻抗与用户实时运动相位同步，
+在整个过渡过程中提供与步态一致的自然辅助。
+</li>
+<li>
+<strong>与离散切换策略的对比验证：</strong>
+在关节力矩、柔顺性与支撑曲线等维度，
+定量证明连续混合策略优于传统离散切换方案。
+</li>
+<li>
+<strong>大腿截肢者参与者的试点验证：</strong>
+在两种楼梯坡度下完成步行–楼梯过渡实验，
+验证方案的可行性与生物力学优势。
+</li>
+</ul>
+
+<hr/>
+<h3 style="margin:0 0 8px;">研究意义</h3>
+<ul class="projList">
+<li>
+<strong>楼梯过渡是假肢用户日常移动中最困难的场景之一</strong>——
+控制器突然切换会在最需要支撑的时刻产生不自然力矩与不稳定性。
+</li>
+<li>
+<strong>连续阻抗混合取代脆弱的模式切换，</strong>
+以与用户同步的连续阻抗曲线还原站立相生物力学，
+拉近假肢行为与健肢动力学之间的差距。
+</li>
+<li>
+<strong>人体实验结果</strong>验证了跨坡度过渡的运动学改善与更平滑的过渡质量，
+推动动力假肢朝无缝真实行走能力迈进。
+</li>
+</ul>
+
+<hr/>
+<h3 style="margin:0 0 8px;">技术要点</h3>
+<div class="pills" style="margin-top:10px;">
+<span class="pill">相位变量控制</span>
+<span class="pill">混合运动–阻抗控制</span>
+<span class="pill">动力假肢控制</span>
+<span class="pill">生物力学建模</span>
+<span class="pill">人体实验</span>
+<span class="pill">运动学与动力学验证</span>
+<span class="pill">连续控制混合</span>
+<span class="pill">实时假肢实现</span>
+</div>
+
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top:18px;">
+<a class="btn" href="index.html">← 返回全部项目</a>
+<a class="btn" href="../index.html#projects">精选项目</a>
+</div>
+
+</section>
+</main>
+
+<script src="../../assets/site.js"></script>
+</body>
+</html>
+
+

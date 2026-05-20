@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>程世浩</title>
-<link href="../assets/site.css?v=5" rel="stylesheet"/>
+<!-- P3-4: Social meta -->
+<meta name="description" content="程世浩 — 机器人与控制工程师，Shift Robotics 首席控制工程师。专注于可穿戴机器人实时系统、传感器融合与机器学习。"/>
+<meta property="og:title" content="程世浩 博士"/>
+<meta property="og:description" content="我编写控制可穿戴机器人行走的代码。"/>
+<meta property="og:url" content="https://chengsh96.github.io/zh/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<!-- P1-3: Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/site.css?v=10" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -15,94 +24,94 @@
 <span>程世浩</span>
 </div>
 <nav class="navLinks">
-<a href="../index.html">首页</a>
+<a href="index.html">首页</a>
 <a href="#about">关于</a>
 <a href="#news">动态</a>
 <a href="#projects">精选项目</a>
+<a href="#step-engineering">步态解析</a>
 <a href="#experience">经历</a>
 <a href="#education">教育</a>
 <a href="#contact">联系</a>
-<a href="../projects/index.html">全部项目</a>
+<a href="projects/index.html">全部项目</a>
 </nav>
+<button class="themeBtn" type="button" data-theme-toggle aria-label="切换暗色模式">深色</button>
 <button class="langBtn" type="button" data-lang-toggle aria-label="切换语言">EN</button>
 <button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="../index.html">首页</a>
+<a href="index.html">首页</a>
 <a href="#about">关于</a>
 <a href="#news">动态</a>
 <a href="#projects">精选项目</a>
+<a href="#step-engineering">步态解析</a>
 <a href="#experience">经历</a>
 <a href="#education">教育</a>
 <a href="#contact">联系</a>
-<a href="../projects/index.html">全部项目</a>
+<a href="projects/index.html">全部项目</a>
 </div>
 </header>
 
 <main class="container">
 
+<!-- P0-2: Hero with ShiftOS video -->
 <section class="hero">
 <div class="heroGrid">
-<div class="reveal">
-<span class="kicker">可穿戴机器人 • 控制 • 机器学习</span>
-<div class="heroTitleRow">
-  <img class="avatar" src="../assets/img/profile.jpg" alt="程世浩"/>
-  <h1>程世浩 • 博士</h1>
-</div>
-<p class="sub">
-机器人与控制工程师，专注于可穿戴机器人中的实时系统、传感器融合与机器学习。
-我致力于将科研成果转化为可验证、可量产的工程落地，重点关注鲁棒性、低延迟与以用户为中心的体验。
-</p>
-
-<div class="ctaRow">
-<a class="btn btnPrimary" href="../projects/index.html">查看项目</a>
-<a class="btn" href="https://www.linkedin.com/in/shihao-cheng/">领英</a>
-<a class="btn" href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID">谷歌学术</a>
-<a class="btn" href="https://github.com/chengsh96">GitHub</a>
-</div>
-
-<div class="pills">
-<span class="pill">意图识别</span>
-<span class="pill">步态与运动</span>
-<span class="pill">机器学习</span>
-<span class="pill">状态估计</span>
-<span class="pill">MuJoCo / 仿真到现实</span>
-<span class="pill">安全关键控制</span>
-</div>
-</div>
-
-<div class="heroRight">
-
-<aside class="heroCard reveal">
-<h2>亮点</h2>
-<p class="small">
-ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安全干预。
-</p>
-<div class="ctaRow heroLinks">
-<a class="heroLink" href="../projects/shiftos.html">
-<span class="heroLinkTitle">ShiftOS</span>
-<span class="heroLinkMeta">量产系统</span>
-</a>
-<a class="heroLink" href="../projects/tbme2024.html">
-<span class="heroLinkTitle">碰撞规避</span>
-<span class="heroLinkMeta">安全关键干预</span>
-</a>
-</div>
-</aside>
-
-<div class="card impactCard reveal">
-  <div class="impactHead">
-    <h2>快速概览</h2>
-    <a class="impactCTA" href="../projects/index.html">查看项目 →</a>
+<div class="heroLeft reveal">
+  <span class="kicker">可穿戴机器人 • 控制 • 机器学习</span>
+  <h1>程世浩 — <span class="nameAccent">博士</span></h1>
+  <p class="heroRole">一位 <span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+  <p class="sub heroLead">
+    我为可穿戴机器人构建实时控制系统——从
+    <a href="projects/shiftos.html">仓库地面的 Moonwalkers</a>，
+    到<a href="#projects">能自适应楼梯、坡道与复杂地形的智能假肢</a>。
+  </p>
+  <div class="ctaRow">
+    <a class="btn btnPrimary" href="projects/index.html">查看项目</a>
+    <a class="btn" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">领英</a>
+    <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">谷歌学术</a>
   </div>
-  <ul class="impactList">
-    <li><strong>量产系统落地</strong>（ShiftOS）</li>
-    <li><strong>IEEE T-RO</strong> 论文发表（2025）</li>
-    <li><strong>IROS 最佳学生论文奖</strong>（2023）</li>
-  </ul>
+  <div class="heroByline">
+    <img class="avatarSm" src="../assets/img/profile.jpg" alt="程世浩"/>
+    <span>密歇根大学机器人博士 | Shift Robotics 首席控制工程师</span>
+  </div>
 </div>
 
+<div class="heroRight reveal">
+  <figure class="heroVideo">
+    <video autoplay muted loop playsinline preload="metadata"
+      poster="../assets/video/shiftos_demo_poster.jpg"
+      aria-label="ShiftOS Moonwalkers 演示">
+      <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
+      <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
+    </video>
+    <figcaption>ShiftOS 量产系统 · <a href="projects/shiftos.html">查看详情 →</a></figcaption>
+  </figure>
 </div>
+</div>
+</section>
+
+<!-- P0-3: Stat card row -->
+<section class="section statRow reveal" aria-label="职业亮点">
+<div class="statGrid">
+  <div class="stat">
+    <div class="statNum statText">IKEA</div>
+    <div class="statLabel">Moonwalkers 全球 IKEA 仓库部署</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">10+</div><div class="statLabel">同行评审论文</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">IROS '23</div>
+    <div class="statLabel">最佳学生论文奖</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">T-RO '25</div>
+    <div class="statLabel">IEEE 机器人学汇刊</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">40+</div>
+    <div class="statLabel">期刊与会议审稿</div>
+  </div>
 </div>
 </section>
 
@@ -111,15 +120,20 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <h2>关于</h2>
 <div class="small">研究 → 落地</div>
 </div>
-<div class="card">
+<div class="aboutText">
+<p class="projDesc"><strong>我让可穿戴机器人不那么"像机器人"。</strong></p>
 <p class="projDesc">
-我开发可穿戴机器人的嵌入式实时控制与状态估计系统，并将 ML / RL 用于提升意图识别、个性化与系统鲁棒性。
-我重视清晰的系统架构、可量化的性能指标，以及真实环境中的安全与可靠运行。
+  我的工作融合控制、嵌入式系统与机器学习，帮助机器人设备在毫秒内理解人体运动意图。
+  我专注于将算法从仿真推向量产——在那里，安全、可靠与真实世界的复杂性才是最终考验。
+</p>
+<p class="projDesc">
+  我喜欢构建这样的系统：用户感觉简单，是因为底层工程远不简单。
 </p>
 </div>
 </section>
 
-<<section class="section reveal" id="news">
+<!-- P1-1: News timeline with tags -->
+<section class="section reveal" id="news">
   <div class="sectionHead">
     <h2>最新动态</h2>
     <div class="small">近期更新</div>
@@ -128,71 +142,81 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
   <div class="card">
     <ul class="newsList">
 
-      <li>
+      <li data-tag="launch">
+        <span class="newsTag newsTag-launch">🚀 发布</span>
         <span class="newsDate">2026年4月</span>
         <span class="newsText">
           由我部分主导传感与控制算法开发的 Moonwalkers Aero，正在全球 IKEA 仓库中逐步部署使用。
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2025年9月</span>
         <span class="newsText">
           参与搭建 20 摄像头动捕与 Bertec 跑台实验室，并基于该平台主导控制与传感方向的研发与验证。
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2025年5月</span>
         <span class="newsText">
           任命为 Shift Robotics 首席控制工程师，负责首款轮式外骨骼动力鞋的控制与传感系统开发。
         </span>
       </li>
 
-      <li>
+      <li data-tag="publication">
+        <span class="newsTag newsTag-publication">📄 论文</span>
         <span class="newsDate">2025年1月</span>
         <span class="newsText">
-          论文 “Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis”
+          论文 "Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis"
           发表于 <em>IEEE Transactions on Robotics</em>。
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2024年6月</span>
         <span class="newsText">
           完成博士论文答辩：《动力膝踝假肢在连续与自动活动转换中的控制方法》。
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
         <span class="newsDate">2023年10月</span>
         <span class="newsText">
           因动力假肢连续转换控制研究获得 <strong>IROS 2023 最佳学生论文奖</strong>。
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
         <span class="newsDate">2023年4月</span>
         <span class="newsText">
           获得密歇根大学 Rackham 预博士奖学金。
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2021年5月</span>
         <span class="newsText">
           获得密歇根大学机械工程与机器人双硕士学位。
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
         <span class="newsDate">2018年12月</span>
         <span class="newsText">
           普渡大学 Senior Design 项目获得 Malott Innovation Award。
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2018年12月</span>
         <span class="newsText">
           以 Distinction 荣誉获得普渡大学机械工程学士学位，辅修数学与经济学。
@@ -209,15 +233,23 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
   </div>
 </section>
 
+<!-- P1-2: Projects with filter chips -->
 <section class="section" id="projects">
 <div class="sectionHead reveal">
 <h2>精选项目</h2>
 <div class="small">可穿戴机器人 • 人机交互</div>
 </div>
-
+<div class="filterRow reveal" role="tablist" aria-label="筛选项目">
+  <button class="filterChip is-active" data-filter="all" role="tab" aria-selected="true">全部</button>
+  <button class="filterChip" data-filter="intent" role="tab" aria-selected="false">意图识别</button>
+  <button class="filterChip" data-filter="gait" role="tab" aria-selected="false">步态与运动</button>
+  <button class="filterChip" data-filter="ml" role="tab" aria-selected="false">机器学习</button>
+  <button class="filterChip" data-filter="estimation" role="tab" aria-selected="false">状态估计</button>
+  <button class="filterChip" data-filter="software" role="tab" aria-selected="false">软件与应用</button>
+</div>
 <div class="grid">
 
-<a class="card proj reveal" href="../projects/shiftos.html">
+<a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
 <div class="projMedia">
 <img src="../assets/img/projects/shiftos_aero.jpg" alt="shiftos_aero"/>
 </div>
@@ -225,6 +257,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <p class="projTitle">Moonwalkers 控制系统（ShiftOS）</p>
 <span class="tag">量产</span>
 </div>
+<p class="projOutcome">已在全球 IKEA 仓库部署</p>
 <p class="projDesc">
 为可穿戴动力鞋打造实时运动控制系统，并完成嵌入式量产部署。
 </p>
@@ -235,7 +268,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 </ul>
 </a>
 
-<a class="card proj reveal" href="../projects/tbme2024.html">
+<a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
 <div class="projMedia">
 <img src="../assets/img/projects/tbme2024_concept.jpg" alt="tbme2024"/>
 </div>
@@ -243,6 +276,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <p class="projTitle">安全关键绊脚规避（TBME 2024）</p>
 <span class="tag">科研</span>
 </div>
+<p class="projOutcome">发表于 IEEE TBME 2024</p>
 <p class="projDesc">
 基于实时预测与最小跃度轨迹重塑，实现对障碍接触的安全规避。
 </p>
@@ -252,7 +286,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 </ul>
 </a>
 
-<a class="card proj reveal" href="../projects/tnsre2024.html">
+<a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
 <div class="projMedia">
 <img src="../assets/img/projects/tnsre2024_exp.jpg" alt="tnsre2024_exp"/>
 </div>
@@ -260,6 +294,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <p class="projTitle">连续转换控制（TNSRE 2024）</p>
 <span class="tag">科研</span>
 </div>
+<p class="projOutcome">IROS 2023 最佳学生论文奖</p>
 <p class="projDesc">
 在平地与楼梯之间生成连续轨迹，对意图延迟与时序误差更鲁棒。
 </p>
@@ -269,7 +304,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 </ul>
 </a>
 
-<a class="card proj reveal" href="../projects/ral2024.html">
+<a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
 <div class="projMedia">
 <img src="../assets/img/projects/ral2024_concept.jpg" alt="ral2024_concept"/>
 </div>
@@ -277,6 +312,7 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <p class="projTitle">迁移学习意图预测（RA-L 2024）</p>
 <span class="tag">科研</span>
 </div>
+<p class="projOutcome">发表于 IEEE RA-L 2024</p>
 <p class="projDesc">
 在数据受限条件下，实现对新用户的快速意图适配与泛化。
 </p>
@@ -286,14 +322,72 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 </ul>
 </a>
 
+<a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
+<div class="projMedia">
+<img src="../assets/img/projects/icf_concept.jpg" alt="基于 ICF 的意图识别概念图"/>
+</div>
+<div class="projTop">
+<p class="projTitle">双侧活动识别（TRO 2025）</p>
+<span class="tag">科研</span>
+</div>
+<p class="projOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
+<p class="projDesc">
+面向动力假肢的可解释 ICF 意图识别框架，扩展至双侧传感，支持多活动模式的持续自适应控制。
+</p>
+<ul class="projList">
+<li>生物力学可解释特征，无黑箱嵌入</li>
+<li>实时分类（&lt;5 ms），双侧步态估计</li>
+</ul>
+</a>
+
+<a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
+<div class="projMedia">
+<img src="../assets/img/projects/embc2025_watch.jpg" alt="用于假肢模式切换的智能手表界面"/>
+</div>
+<div class="projTop">
+<p class="projTitle">智能手表手势控制（EMBC 2025）</p>
+<span class="tag">科研</span>
+</div>
+<p class="projOutcome">发表于 IEEE EMBC 2025</p>
+<p class="projDesc">
+基于智能手表的人机交互接口，通过手势指令与振动触觉反馈实现动力假肢的显式模式切换。
+</p>
+<ul class="projList">
+<li>四种步行模式映射至滑动手势</li>
+<li>振动触觉确认反馈，TCP 通信连接假肢控制器</li>
+</ul>
+</a>
+
+</div>
+<div class="linkRow reveal" style="margin-top:18px;">
+  <a class="btn" href="projects/index.html">全部项目 →</a>
 </div>
 </section>
 
+<!-- 步行中的隐藏工程 -->
+<section class="section reveal" id="step-engineering">
+  <div class="sectionHead">
+    <h2>步行中的隐藏工程</h2>
+    <div class="small">点击阶段，看机器人如何思考。</div>
+  </div>
+  <p class="stepEngIntro"></p>
+  <div class="controlLoop" aria-label="控制回路：感知、推断、决策、执行"></div>
+  <div class="stepTimeline" role="tablist" aria-label="步态阶段"></div>
+  <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
+  <div class="signalWaves" aria-hidden="true"></div>
+  <div class="stepDetail card" role="tabpanel" aria-live="polite">
+    <div id="seHuman"></div>
+    <div id="seSenses"></div>
+    <div id="seCtrl"></div>
+  </div>
+  <div class="factGrid"></div>
+  <p class="stepRef"></p>
+</section>
 
 <section class="section reveal" id="experience">
   <div class="sectionHead">
-    <h2 data-i18n="section.experience">经历</h2>
-    <div class="small" data-i18n="small.selected_roles">精选岗位</div>
+    <h2>经历</h2>
+    <div class="small">精选岗位</div>
   </div>
 
   <div class="split">
@@ -349,8 +443,21 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 <h2>联系</h2>
 <div class="small">欢迎交流</div>
 </div>
-<div class="card">
-<p class="projDesc">邮箱：<a href="mailto:chengsh@umich.edu">chengsh@umich.edu</a></p>
+<div class="contactGrid">
+  <a class="contactItem" href="mailto:chengsh@umich.edu">
+    <div class="contactIcon">@</div>
+    <div class="contactDetails">
+      <span class="contactLabel">邮箱</span>
+      <span class="contactUrl">chengsh@umich.edu</span>
+    </div>
+  </a>
+  <a class="contactItem" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">
+    <div class="contactIcon">in</div>
+    <div class="contactDetails">
+      <span class="contactLabel">领英</span>
+      <span class="contactUrl">linkedin.com/in/shihao-cheng</span>
+    </div>
+  </a>
 </div>
 <div class="footer">© <span id="y"></span> 程世浩</div>
 </section>
@@ -358,6 +465,13 @@ ShiftOS 量产系统落地 + 博士研究：多活动控制、连续转换与安
 </main>
 
 <script src="../assets/site.js"></script>
+<script src="../assets/widgets/step-engineering.js"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
+
+
+
+
+

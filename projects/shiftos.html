@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>ShiftOS | Shihao Cheng</title>
-<link href="../assets/site.css?v=4" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/><link href="../assets/site.css?v=10" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -16,11 +18,13 @@
 <a href="../index.html#about" data-i18n="nav.about">About</a>
 <a href="../index.html#news" data-i18n="nav.news">News</a>
 <a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#step-engineering">Behind a Step</a>
 <a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
 <a href="../index.html#education" data-i18n="nav.education">Education</a>
 <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
 <a href="index.html" data-i18n="nav.all">All Projects</a>
 </nav>
+<button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
 <button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
 <button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
 </div>
@@ -29,6 +33,7 @@
 <a href="../index.html#about" data-i18n="nav.about">About</a>
 <a href="../index.html#news" data-i18n="nav.news">News</a>
 <a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#step-engineering">Behind a Step</a>
 <a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
 <a href="../index.html#education" data-i18n="nav.education">Education</a>
 <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
@@ -46,19 +51,78 @@
 <a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-30-release-notes-829006" rel="noopener" target="_blank">ShiftOS 3.0 Notes</a>
 <a class="btn" href="https://help.shiftrobotics.io/en-US/shiftos-31-release-notes-1062606" rel="noopener" target="_blank">ShiftOS 3.1 Notes</a>
 </div>
-<!-- HERO (dominant) -->
-<div class="heroMedia">
-<img alt="ShiftOS preset profile demo (GIF)" src="../assets/img/projects/shiftos_demo.gif"/>
+<div class="shiftosMediaRow">
+  <div class="shiftosPhotos">
+    <figure>
+      <img alt="Moonwalkers Original" src="../assets/img/projects/shiftos_orig.jpg"/>
+      <figcaption class="mediaCaption">Moonwalkers Original</figcaption>
+    </figure>
+    <figure>
+      <img alt="Moonwalkers Aero" src="../assets/img/projects/shiftos_aero.jpg"/>
+      <figcaption class="mediaCaption">Moonwalkers Aero</figcaption>
+    </figure>
+    <figure>
+      <img alt="Moonwalkers Dusk — Coming July 2026" src="../assets/img/projects/mystry%20shoe.png"/>
+      <span class="shiftosDuskSoon">Coming July 2026</span>
+      <figcaption class="mediaCaption">Moonwalkers Dusk</figcaption>
+    </figure>
+  </div>
+  <div class="shiftosVideo">
+    <img alt="Moonwalkers in action — IKEA warehouse deployment" src="../assets/video/homepage_demo_keyscenes.gif"/>
+  </div>
 </div>
-<!-- Secondary images -->
-<div class="mediaGrid mediaGrid2">
-<div class="mediaItem">
-<img alt="ShiftOS / Moonwalkers (Aero)" src="../assets/img/projects/shiftos_aero.jpg"/>
+
+<!-- Press & Recognition -->
+<div class="pressSection">
+  <h3 class="pressSectionTitle">Press &amp; Recognition</h3>
+  <div class="pressGrid">
+    <a class="pressBadge" href="https://time.com/collections/best-inventions-2023/6324451/moonwalker-electric-shoe-skates/" target="_blank" rel="noopener">
+      <span class="pressTag">TIME</span>
+      <strong class="pressHook">Best Inventions of 2023</strong>
+      <p class="pressSnippet">Moonwalkers named one of TIME's 200 Best Inventions of 2023</p>
+    </a>
+    <a class="pressBadge" href="https://www.ingka.com/newsroom/meet-the-moonwalkers-the-boots-powering-faster-fulfilment-at-ikea/" target="_blank" rel="noopener">
+      <span class="pressTag">IKEA · Ingka Group</span>
+      <strong class="pressHook">2× faster · +16% productivity</strong>
+      <p class="pressSnippet">Deployed in IKEA Helsingborg; workers walk up to 2× faster with 16% higher picking productivity per hour</p>
+    </a>
+    <a class="pressBadge" href="https://techcrunch.com/2024/01/03/moonwalker-robotic-shoes-get-lighter-and-smarter/?utm_source=chatgpt.com" target="_blank" rel="noopener">
+      <span class="pressTag">TechCrunch</span>
+      <strong class="pressHook">CES 2024 · Moonwalkers X</strong>
+      <p class="pressSnippet">Lighter design and control-system upgrades highlighted at CES</p>
+    </a>
+  </div>
 </div>
-<div class="mediaItem">
-<img alt="ShiftOS / Moonwalkers" src="../assets/img/projects/shiftos_orig.jpg"/>
+
+<!-- Moonwalkers product history -->
+<h3 class="pressSectionTitle" style="margin-top:1.5rem;">Product History</h3>
+<div class="mwTimeline">
+  <div class="mwMilestone">
+    <div class="mwDot" style="background:#2b6cff;"></div>
+    <div class="mwYear" style="color:#2b6cff;">2024</div>
+    <div class="mwStatus">Launch</div>
+    <span class="mwBadge" style="color:#2b6cff;">Original</span>
+  </div>
+  <div class="mwMilestone">
+    <div class="mwDot" style="background:#8B6914;"></div>
+    <div class="mwYear" style="color:#8B6914;">2025</div>
+    <div class="mwStatus">Launch</div>
+    <span class="mwBadge" style="color:#8B6914;">Aero</span>
+  </div>
+  <div class="mwMilestone">
+    <div class="mwDot" style="background:#8B1A4A;"></div>
+    <div class="mwYear" style="color:#8B1A4A;">July 2026</div>
+    <div class="mwStatus">Launch</div>
+    <span class="mwBadge" style="color:#8B1A4A;">Dusk</span>
+  </div>
+  <div class="mwMilestone">
+    <div class="mwDot" style="border:2px solid #2D6A2D; background:transparent;"></div>
+    <div class="mwYear" style="color:#2D6A2D;">End 2026</div>
+    <div class="mwStatus">In development</div>
+    <span class="mwBadge" style="color:#2D6A2D;">Pro</span>
+  </div>
 </div>
-</div>
+
 <p class="projDesc">
     ShiftOS is the production control system powering the Moonwalkers robotic footwear.
     I led the design and deployment of real-time locomotion behaviors across ShiftOS 3.0 and 3.1,
@@ -108,3 +172,9 @@
 <script src="../assets/site.js"></script>
 </body>
 </html>
+
+
+
+
+
+

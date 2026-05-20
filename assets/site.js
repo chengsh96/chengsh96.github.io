@@ -1,3 +1,10 @@
+// Apply persisted theme immediately — runs on every page before paint
+// Default is light; dark only if user has explicitly chosen it.
+(function(){
+  if (localStorage.getItem('theme') === 'dark')
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+
 // Mobile menu
 const btn = document.querySelector("[data-navbtn]");
 const menu = document.querySelector("[data-mobilemenu]");
@@ -136,84 +143,6 @@ if (lightboxTargets.length) {
 
 
 // ===========================
-// Language toggle (EN / 简体中文)
-// Default: EN. Persist in localStorage under key "lang".
-// Elements with data-i18n="key" will be replaced.
-// ===========================
-(function initLanguageToggle() {
-  const I18N = {
-  "en": {
-    "nav.home": "Home",
-    "nav.about": "About",
-    "nav.news": "News",
-    "nav.featured": "Featured Projects",
-    "nav.experience": "Experience",
-    "nav.education": "Education",
-    "nav.contact": "Contact",
-    "nav.all": "All Projects",
-    "nav.menu": "Menu",
-    "section.about": "About",
-    "section.news": "Recent News",
-    "section.projects": "Featured Projects",
-    "section.experience": "Experience",
-    "section.education": "Education",
-    "section.contact": "Contact",
-    "small.latest": "Latest updates",
-    "small.degrees": "Degrees",
-    "small.selected_roles": "Selected roles",
-    "small.lets_connect": "Let’s connect",
-    "small.research_to_deploy": "Research → deployment"
-  },
-  "zh": {
-    "nav.home": "首页",
-    "nav.about": "关于",
-    "nav.news": "动态",
-    "nav.featured": "精选项目",
-    "nav.experience": "经历",
-    "nav.education": "教育",
-    "nav.contact": "联系",
-    "nav.all": "全部项目",
-    "nav.menu": "菜单",
-    "section.about": "关于",
-    "section.news": "最新动态",
-    "section.projects": "精选项目",
-    "section.experience": "经历",
-    "section.education": "教育",
-    "section.contact": "联系",
-    "small.latest": "最新更新",
-    "small.degrees": "学位",
-    "small.selected_roles": "主要经历",
-    "small.lets_connect": "欢迎联系",
-    "small.research_to_deploy": "研究 → 落地"
-  }
-};
-  const DEFAULT_LANG = "en";
-  const btn = document.querySelector("[data-lang-toggle]");
-  if (!btn) return;
-
-  let lang = localStorage.getItem("lang") || DEFAULT_LANG;
-
-  function apply() {
-    const dict = I18N[lang] || I18N[DEFAULT_LANG];
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      if (dict && dict[key]) el.textContent = dict[key];
-    });
-    btn.textContent = (lang === "en") ? "中文" : "EN";
-    document.documentElement.setAttribute("lang", (lang === "en") ? "en" : "zh-CN");
-  }
-
-  btn.addEventListener("click", () => {
-    lang = (lang === "en") ? "zh" : "en";
-    localStorage.setItem("lang", lang);
-    apply();
-  });
-
-  apply();
-})();
-
-
-// ===========================
 // Language toggle (EN / 简体中文) via separate /zh/ pages
 // - Default: EN
 // - Persist choice in localStorage under key "lang"
@@ -316,21 +245,135 @@ if (lightboxTargets.length) {
     localStorage.setItem("lang", nextIsZh ? "zh" : "en");
 
     const target = buildTarget(prefix, nextIsZh, rest);
-    window.location.href = target + window.location.search + window.location.hash;
+    window.location.href = target + window.location.search;
   });
 
-  // Apply persisted preference
-  const pref = localStorage.getItem("lang") || "en";
-  const { prefix, isZh, rest } = parsePath();
-
-  if (pref === "zh" && !isZh) {
-    window.location.replace(buildTarget(prefix, true, rest) + window.location.search + window.location.hash);
-    return;
-  }
-  if (pref === "en" && isZh) {
-    window.location.replace(buildTarget(prefix, false, rest) + window.location.search + window.location.hash);
-    return;
-  }
-
+  // URL is authoritative for language — no auto-redirect.
+  // The toggle button label reflects the current page's language.
+  const { isZh } = parsePath();
   setBtnLabel(isZh);
+})();
+
+
+// P0-3: Stat counter — animates numeric stats once they enter view
+(function initStatCounters(){
+  const stats = document.querySelectorAll('.statNum[data-count-to]');
+  if (!stats.length) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const animate = (el) => {
+    const target = parseInt(el.dataset.countTo, 10);
+    const suffix = el.dataset.suffix || '';
+    if (reduce){ el.textContent = target.toLocaleString() + suffix; return; }
+    const dur = 1400, start = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ animate(e.target); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  stats.forEach(s => obs.observe(s));
+})();
+
+
+// P1-2: Project filter chips
+(function initProjectFilter(){
+  const chips = document.querySelectorAll('.filterChip');
+  const cards = document.querySelectorAll('.proj[data-tags]');
+  if (!chips.length || !cards.length) return;
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach(c => {
+        const active = c === chip;
+        c.classList.toggle('is-active', active);
+        c.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || '').split(/\s+/);
+        const match = filter === 'all' || tags.includes(filter);
+        card.classList.toggle('is-hidden', !match);
+      });
+    });
+  });
+})();
+
+
+// Typewriter role animation in hero
+(function initTypewriter(){
+  const el = document.getElementById('roleTyped');
+  if (!el) return;
+
+  const isZh = window.location.pathname.includes('/zh/');
+  const roles = isZh
+    ? ['机器人工程师', '控制工程师', '研究科学家', '传感融合工程师', '可穿戴机器人开发者', '人体运动调试员']
+    : ['Robotics Engineer', 'Control Engineer', 'Research Scientist', 'Sensor Fusion Engineer', 'Wearable Robotics Builder', 'Human-Motion Debugger'];
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    el.textContent = roles[0]; return;
+  }
+
+  let r = 0, c = 0, deleting = false;
+  const PAUSE = 2200, TYPE = 75, DEL = 38;
+
+  function tick(){
+    const word = roles[r];
+    if (!deleting){
+      el.textContent = word.slice(0, ++c);
+      if (c === word.length){ deleting = true; setTimeout(tick, PAUSE); return; }
+    } else {
+      el.textContent = word.slice(0, --c);
+      if (c === 0){ deleting = false; r = (r + 1) % roles.length; setTimeout(tick, 300); return; }
+    }
+    setTimeout(tick, deleting ? DEL : TYPE);
+  }
+  tick();
+})();
+
+
+// P3-1: Dark mode toggle — works on every page; auto-injects button if absent
+(function initThemeToggle(){
+  const root = document.documentElement;
+
+  function sync(btn){
+    const dark = root.getAttribute('data-theme') === 'dark';
+    const zh = window.location.pathname.includes('/zh/');
+    btn.textContent = dark ? (zh ? '浅色' : 'Light') : (zh ? '深色' : 'Dark');
+    btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  function wire(btn){
+    sync(btn);
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      sync(btn);
+    });
+  }
+
+  // If button already in markup, wire it immediately
+  const existing = document.querySelector('[data-theme-toggle]');
+  if (existing) { wire(existing); return; }
+
+  // Otherwise inject before the lang button so all pages get the toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const langBtn = document.querySelector('[data-lang-toggle]');
+    if (!langBtn) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('data-theme-toggle', '');
+    btn.className = 'themeBtn';
+    langBtn.parentNode.insertBefore(btn, langBtn);
+    wire(btn);
+  });
 })();

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Continuous Impedance Transition (TNSRE 2026) | Shihao Cheng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/><link href="../assets/site.css?v=10" rel="stylesheet"/>
+</head>
+<body>
+<header class="nav">
+<div class="navInner">
+<div class="brand"><span class="dot"></span><span>Shihao Cheng</span></div>
+<nav class="navLinks">
+<a href="../index.html" data-i18n="nav.home">Home</a>
+<a href="../index.html#about" data-i18n="nav.about">About</a>
+<a href="../index.html#news" data-i18n="nav.news">News</a>
+<a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#step-engineering">Behind a Step</a>
+<a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
+<a href="../index.html#education" data-i18n="nav.education">Education</a>
+<a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+<a href="index.html" data-i18n="nav.all">All Projects</a>
+</nav>
+<button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+<button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
+<button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
+</div>
+<div class="mobileMenu" data-mobilemenu="">
+<a href="../index.html" data-i18n="nav.home">Home</a>
+<a href="../index.html#about" data-i18n="nav.about">About</a>
+<a href="../index.html#news" data-i18n="nav.news">News</a>
+<a href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="../index.html#step-engineering">Behind a Step</a>
+<a href="../index.html#experience" data-i18n="nav.experience">Experience</a>
+<a href="../index.html#education" data-i18n="nav.education">Education</a>
+<a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+<a href="index.html" data-i18n="nav.all">All Projects</a>
+</div>
+</header>
+
+<main class="container">
+<section class="section reveal">
+<div class="sectionHead">
+<h2>Continuous Impedance Transition for Walk–Stair Prosthesis Control (TNSRE 2026)</h2>
+<div class="small">Research</div>
+</div>
+
+<div class="card">
+<!-- Badges -->
+<div class="badgeRow">
+<span class="badge">IEEE T-NSRE 2026</span>
+<span class="badge badgeSoft">Impedance Control</span>
+<span class="badge badgeSoft">Powered Prosthesis</span>
+<span class="badge badgeSoft">Phase-Variable Control</span>
+<span class="badge badgeSoft">Walk–Stair Transition</span>
+</div>
+
+<!-- Links -->
+<div class="linkRow" style="margin-top:14px;">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/11479620" rel="noopener" target="_blank">TNSRE 2026 Paper</a>
+<a class="btn btnPrimary" href="https://ieeexplore.ieee.org/ielx8/7333/11311371/11479620/supp1-3683020.mp4?arnumber=11479620" rel="noopener" target="_blank">Watch Video</a>
+<a class="btn" href="tnsre2024.html">Prior Work (TNSRE 2024)</a>
+</div>
+
+<!-- Media -->
+<div class="mediaFigure" style="margin-top:16px;">
+<figure>
+<img alt="Continuous stance impedance transition for walk–stair prosthesis control (TNSRE 2026)" loading="lazy" src="../assets/img/projects/tnsre-gagraphic-3683020.jpg" style="width:100%; border-radius:var(--radius);"/>
+</figure>
+</div>
+
+<!-- Overview -->
+<p class="projDesc" style="margin-top:14px;">
+This work extends <a href="tnsre2024.html">prior continuous transition work</a> from swing-phase kinematics
+to <strong>stance-phase impedance control</strong>. Rather than discretely switching between walking and stair
+controllers, the system <strong>continuously blends joint impedance</strong> across the stance phase during
+walk–stair transitions, producing more natural knee and ankle torque, improved compliance, and better
+load support for a powered knee–ankle prosthesis.
+</p>
+
+<hr/>
+<h3 style="margin:0 0 8px;">What I built</h3>
+<ul class="projList">
+<li>
+<strong>Continuous stance impedance transition model</strong> that blends walking and stair impedance
+behavior across the stance phase, replacing discrete controller hand-offs with a smoothly varying profile.
+</li>
+<li>
+<strong>Phase-variable control framework</strong> that synchronizes prosthesis impedance with the user's
+real-time movement phase, enabling natural, gait-consistent assistance throughout the transition.
+</li>
+<li>
+<strong>Comparison against discrete switching strategies</strong>, demonstrating smoother and more
+biomimetic transition kinetics in terms of joint torque, compliance, and support profile.
+</li>
+<li>
+<strong>Pilot validation with transfemoral amputee participants</strong> across walk–stair transitions
+at two stair inclines, confirming feasibility and biomechanical benefit in real-world conditions.
+</li>
+</ul>
+
+<hr/>
+<h3 style="margin:0 0 8px;">Why it matters</h3>
+<ul class="projList">
+<li>
+<strong>Stair transitions are among the hardest daily mobility challenges</strong> for prosthesis users —
+abrupt controller switching creates unnatural torque and instability exactly when support matters most.
+</li>
+<li>
+<strong>Continuous impedance blending replaces brittle mode switching</strong> with a user-synchronized
+profile that respects the biomechanics of loaded stance, closing the gap between prosthesis behavior
+and intact-limb dynamics.
+</li>
+<li>
+<strong>Pilot human subject results</strong> validate smoother kinetics and improved transition quality
+across inclines, moving powered prostheses closer to seamless real-world locomotion.
+</li>
+</ul>
+
+<hr/>
+<h3 style="margin:0 0 8px;">Skills highlighted</h3>
+<div class="pills" style="margin-top:10px;">
+<span class="pill">Phase-variable control</span>
+<span class="pill">Hybrid kinematic impedance control</span>
+<span class="pill">Powered prosthesis control</span>
+<span class="pill">Biomechanics-informed modeling</span>
+<span class="pill">Human subject experiments</span>
+<span class="pill">Kinematic and kinetic validation</span>
+<span class="pill">Continuous control blending</span>
+<span class="pill">Real-time prosthesis implementation</span>
+</div>
+</div>
+
+<!-- Footer nav -->
+<div class="linkRow" style="margin-top:18px;">
+<a class="btn" href="index.html">← Back to All Projects</a>
+<a class="btn" href="../index.html#projects" data-i18n="nav.featured">Featured Projects</a>
+</div>
+</section>
+</main>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
+

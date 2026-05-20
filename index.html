@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Shihao Cheng</title>
-<link href="assets/site.css?v=5" rel="stylesheet"/>
+<!-- P3-4: Social meta -->
+<meta name="description" content="Shihao Cheng — Robotics &amp; Controls Engineer. Lead Control Engineer at Shift Robotics. Real-time systems, sensor fusion, and ML for wearable robots."/>
+<meta property="og:title" content="Shihao Cheng, Ph.D."/>
+<meta property="og:description" content="I write the control code that makes wearable robots walk."/>
+<meta property="og:url" content="https://chengsh96.github.io/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<!-- P1-3: Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
+<link href="assets/site.css?v=10" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -19,11 +28,13 @@
 <a href="#about" data-i18n="nav.about">About</a>
 <a href="#news" data-i18n="nav.news">News</a>
 <a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="#step-engineering">Behind a Step</a>
 <a href="#experience" data-i18n="nav.experience">Experience</a>
 <a href="#education" data-i18n="nav.education">Education</a>
 <a href="#contact" data-i18n="nav.contact">Contact</a>
 <a href="projects/index.html" data-i18n="nav.all">All Projects</a>
 </nav>
+<button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
 <button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
 <button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
 </div>
@@ -32,85 +43,97 @@
 <a href="#about" data-i18n="nav.about">About</a>
 <a href="#news" data-i18n="nav.news">News</a>
 <a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="#step-engineering">Behind a Step</a>
 <a href="#experience" data-i18n="nav.experience">Experience</a>
 <a href="#education" data-i18n="nav.education">Education</a>
 <a href="#contact" data-i18n="nav.contact">Contact</a>
 <a href="projects/index.html" data-i18n="nav.all">All Projects</a>
 </div>
 </header>
+
 <main class="container">
+
+<!-- P0-2: Hero with ShiftOS video -->
 <section class="hero">
 <div class="heroGrid">
-<div class="reveal">
-<span class="kicker">Wearable Robotics • Controls • ML</span>
-<div class="heroTitleRow">
-  <img class="avatar" src="assets/img/profile.jpg" alt="Shihao Cheng"/>
-  <h1>Shihao Cheng, Ph.D.</h1>
-</div>
-<p class="sub">
-            Robotics &amp; Controls Engineer building real-time systems, sensor fusion, and ML for wearable robots.
-            I bridge research and production deployment with a focus on robustness, latency, and user-centered performance.
-          </p>
-<div class="ctaRow">
-<a class="btn btnPrimary" href="projects/index.html">View Projects</a>
-<a class="btn" href="https://www.linkedin.com/in/shihao-cheng/">LinkedIn</a>
-<a class="btn" href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID">Google Scholar</a>
-<a class="btn" href="https://github.com/chengsh96">GitHub</a>
-</div>
-<div class="pills">
-<span class="pill">Intent Recognition</span>
-<span class="pill">Gait &amp; Locomotion</span>
-<span class="pill">Machine Learning</span>
-<span class="pill">State Estimation</span>
-<span class="pill">MuJoCo / Sim-to-Real</span>
-<span class="pill">Safety-Critical Control</span>
-</div>
-</div>
-<div class="heroRight">
-<aside class="heroCard reveal">
-<h2>Highlights</h2>
-<p class="small">
-            Industry deployment (ShiftOS) + PhD research across multi-activity control, transitions, and safety interventions.
-          </p>
-<div class="ctaRow heroLinks">
-<a class="heroLink" href="projects/shiftos.html">
-<span class="heroLinkTitle">ShiftOS</span>
-<span class="heroLinkMeta">Industry System</span>
-</a>
-<a class="heroLink" href="projects/tbme2024.html">
-<span class="heroLinkTitle">Collision Avoidance</span>
-<span class="heroLinkMeta">Safety-Critical Intervention</span>
-</a>
-</div>
-</aside>
-
-<div class="card impactCard reveal">
-  <div class="impactHead">
-    <h2>Impact at a Glance</h2>
-    <a class="impactCTA" href="projects/index.html">View Projects →</a>
+<div class="heroLeft reveal">
+  <span class="kicker">Wearable Robotics • Controls • ML</span>
+  <h1>Shihao Cheng, <span class="nameAccent">Ph.D.</span></h1>
+  <p class="heroRole">A <span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+  <p class="sub heroLead">
+    I build real-time control systems for wearable robots — from
+    <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to
+    <a href="#projects">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.
+  </p>
+  <div class="ctaRow">
+    <a class="btn btnPrimary" href="projects/index.html">View Projects</a>
+    <a class="btn" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
   </div>
-  <ul class="impactList">
-    <li><strong>Production deployment</strong> (ShiftOS)</li>
-    <li><strong>IEEE T-RO</strong> publication (2025)</li>
-    <li><strong>IROS Best Student Paper Award</strong> (2023)</li>
-  </ul>
+  <div class="heroByline">
+    <img class="avatarSm" src="assets/img/profile.jpg" alt="Shihao Cheng"/>
+    <span>Robotics PhD @ UMich | Lead Control Engineer @ Shift Robotics</span>
+  </div>
 </div>
+
+<div class="heroRight reveal">
+  <figure class="heroVideo">
+    <video autoplay muted loop playsinline preload="metadata"
+      poster="assets/video/shiftos_demo_poster.jpg"
+      aria-label="ShiftOS Moonwalkers demonstration">
+      <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
+      <source src="assets/video/shiftos_demo.mp4" type="video/mp4"/>
+    </video>
+    <figcaption>ShiftOS in production · <a href="projects/shiftos.html">See the system →</a></figcaption>
+  </figure>
 </div>
 </div>
 </section>
+
+<!-- P0-3: Stat card row -->
+<section class="section statRow reveal" aria-label="Career highlights">
+<div class="statGrid">
+  <div class="stat">
+    <div class="statNum statText">IKEA</div>
+    <div class="statLabel">Moonwalkers deployed in IKEA global warehouses</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">10+</div><div class="statLabel">Peer-reviewed publications</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">IROS '23</div>
+    <div class="statLabel">Best Student Paper Award</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">T-RO '25</div>
+    <div class="statLabel">IEEE Transactions on Robotics</div>
+  </div>
+  <div class="stat">
+    <div class="statNum statText">40+</div>
+    <div class="statLabel">Journal &amp; Conference Reviews</div>
+  </div>
+</div>
+</section>
+
 <section class="section reveal" id="about">
 <div class="sectionHead">
 <h2 data-i18n="section.about">About</h2>
 <div class="small" data-i18n="small.research_to_deploy">Research → deployment</div>
 </div>
-<div class="card">
+<div class="aboutText">
+<p class="projDesc"><strong>I make wearable robots less robotic.</strong></p>
 <p class="projDesc">
-          I develop embedded real-time control and estimation systems for wearable robots, and I apply ML/RL to improve
-          intent recognition, personalization, and robustness. I care about clean architecture, measurable performance,
-          and safe behavior in the real world.
-        </p>
+  My work blends control, embedded systems, and machine learning to help robotic devices understand
+  human movement intent in milliseconds. I focus on taking algorithms from simulation to production —
+  where safety, reliability, and real-world messiness matter most.
+</p>
+<p class="projDesc">
+  I like building systems that feel simple to the user because the engineering underneath is anything but.
+</p>
 </div>
+</section>
 
+<!-- P1-1: News timeline with tags -->
 <section class="section reveal" id="news">
   <div class="sectionHead">
     <h2 data-i18n="section.news">Recent News</h2>
@@ -120,70 +143,80 @@
   <div class="card">
     <ul class="newsList">
 
-      <li>
+      <li data-tag="launch">
+        <span class="newsTag newsTag-launch">🚀 Launch</span>
         <span class="newsDate">April 2026</span>
         <span class="newsText">
-          Moonwalkers Aero, powered in part by my sensing and control algorithms, is being deployed in IKEA warehouses worldwide.
+          Moonwalkers Aero, powered in part by my sensing and control algorithms, is being Moonwalkers deployed in IKEA global warehouses.
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">Sep 2025</span>
         <span class="newsText">
           Built a 20-camera motion-capture and Bertec treadmill lab, now leading control and sensing development using the facility.
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">May 2025</span>
         <span class="newsText">
           Appointed Lead Control Engineer at Shift Robotics, leading control and sensing for the first wheeled exoskeleton shoe.
         </span>
       </li>
 
-      <li>
+      <li data-tag="publication">
+        <span class="newsTag newsTag-publication">📄 Publication</span>
         <span class="newsDate">Jan 2025</span>
         <span class="newsText">
-          Paper “Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis” published in <em>IEEE Transactions on Robotics</em>.
+          Paper "Ambilateral Activity Recognition and Continuous Adaptation With a Powered Knee-Ankle Prosthesis" published in <em>IEEE Transactions on Robotics</em>.
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">Jun 2024</span>
         <span class="newsText">
-          Successfully defended Ph.D. dissertation: “Controlling a Powered Knee-Ankle Prosthesis During Continuous and Automatic Transitions Between Activities.”
+          Successfully defended Ph.D. dissertation: "Controlling a Powered Knee-Ankle Prosthesis During Continuous and Automatic Transitions Between Activities."
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
         <span class="newsDate">Oct 2023</span>
         <span class="newsText">
           Received the <strong>IROS 2023 Best Student Paper Award</strong> for work on continuous transition control of powered prostheses.
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
         <span class="newsDate">Apr 2023</span>
         <span class="newsText">
           Awarded the Rackham Pre-Doctoral Fellowship, University of Michigan.
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">May 2021</span>
         <span class="newsText">
           Earned dual M.S. degrees in Mechanical Engineering and Robotics from the University of Michigan.
         </span>
       </li>
 
-      <li>
+      <li data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
         <span class="newsDate">Dec 2018</span>
         <span class="newsText">
           Senior Design project received the Malott Innovation Award, Purdue University.
         </span>
       </li>
 
-      <li>
+      <li data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">Dec 2018</span>
         <span class="newsText">
           Graduated from Purdue University with a B.S. in Mechanical Engineering <em>with Distinction</em>, with minors in Mathematics and Economics.
@@ -200,18 +233,28 @@
   </div>
 </section>
 
-</section>
+<!-- P1-2: Projects with filter chips -->
 <section class="section" id="projects">
 <div class="sectionHead reveal">
 <h2 data-i18n="section.projects">Featured Projects</h2>
 <div class="small">Wearable Robotics • Human-Robot Interaction</div>
 </div>
+<div class="filterRow reveal" role="tablist" aria-label="Filter projects">
+  <button class="filterChip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+  <button class="filterChip" data-filter="intent" role="tab" aria-selected="false">Intent Recognition</button>
+  <button class="filterChip" data-filter="gait" role="tab" aria-selected="false">Gait &amp; Locomotion</button>
+  <button class="filterChip" data-filter="ml" role="tab" aria-selected="false">Machine Learning</button>
+  <button class="filterChip" data-filter="estimation" role="tab" aria-selected="false">State Estimation</button>
+  <button class="filterChip" data-filter="software" role="tab" aria-selected="false">Software &amp; App</button>
+</div>
 <div class="grid">
-<a class="card proj reveal" href="projects/shiftos.html"><div class="projMedia"><img alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
+<a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
+<div class="projMedia"><img alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Moonwalkers Control System (ShiftOS)</p>
 <span class="tag">Industry</span>
 </div>
+<p class="projOutcome">Moonwalkers deployed in IKEA global warehouses</p>
 <p class="projDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
 <ul class="projList">
 <li>Balance-aware behaviors for uneven terrain</li>
@@ -219,41 +262,97 @@
 <li>RTOS integration and reliability hardening</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tbme2024.html"><div class="projMedia"><img alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
+<a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
+<div class="projMedia"><img alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p>
 <span class="tag">Research</span>
 </div>
+<p class="projOutcome">Published in IEEE TBME 2024</p>
 <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
 <ul class="projList">
 <li>Safety intervention compatible with continuous control</li>
 <li>Multi-sensor inputs (kinematics + ranging)</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tnsre2024.html"><div class="projMedia"><img alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
+<a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
+<div class="projMedia"><img alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Continuous Transition Control (TNSRE 2024)</p>
 <span class="tag">Research</span>
 </div>
+<p class="projOutcome">IROS 2023 Best Student Paper Award</p>
 <p class="projDesc">Continuous trajectories for walk↔stairs transitions, robust to timing errors.</p>
 <ul class="projList">
 <li>Phase-aligned reference generation</li>
 <li>Robust across inter-leg transition cases</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/ral2024.html"><div class="projMedia"><img alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
+<a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
+<div class="projMedia"><img alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p>
 <span class="tag">Research</span>
 </div>
+<p class="projOutcome">Published in IEEE RA-L 2024</p>
 <p class="projDesc">Low-data adaptation for intent prediction across users with practical dataset constraints.</p>
 <ul class="projList">
 <li>Cross-user generalization</li>
 <li>Reduced subject-specific data requirements</li>
 </ul>
 </a>
+<a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
+<div class="projMedia"><img alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/></div>
+<div class="projTop">
+<p class="projTitle">Ambilateral Activity Recognition (TRO 2025)</p>
+<span class="tag">Research</span>
+</div>
+<p class="projOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
+<p class="projDesc">Interpretable ICF-based intent recognition for powered prostheses, extended to bilateral sensing for continuous adaptation across locomotion modes.</p>
+<ul class="projList">
+<li>Biomechanically interpretable features — no black-box embeddings</li>
+<li>Real-time classifier (&lt;5 ms), ambilateral gait estimation</li>
+</ul>
+</a>
+<a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
+<div class="projMedia"><img alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/></div>
+<div class="projTop">
+<p class="projTitle">Smartwatch Gesture Control (EMBC 2025)</p>
+<span class="tag">Research</span>
+</div>
+<p class="projOutcome">Published in IEEE EMBC 2025</p>
+<p class="projDesc">Smartwatch-based human–robot interface for explicit mode control of a powered knee-ankle prosthesis with vibrotactile feedback.</p>
+<ul class="projList">
+<li>Swipe gestures mapped to four locomotion modes</li>
+<li>Vibrotactile + visual confirmation, TCP comms to prosthesis</li>
+</ul>
+</a>
+</div>
+<div class="linkRow reveal" style="margin-top:18px;">
+  <a class="btn" href="projects/index.html">All Projects →</a>
 </div>
 </section>
+
+<!-- The Hidden Engineering in a Step -->
+<section class="section reveal" id="step-engineering">
+  <div class="sectionHead">
+    <h2>The Hidden Engineering in a Step</h2>
+    <div class="small">Tap a phase to see what the robot thinks.</div>
+  </div>
+  <p class="stepEngIntro"></p>
+  <div class="controlLoop" aria-label="Control loop: Sense, Infer, Decide, Act"></div>
+  <div class="stepTimeline" role="tablist" aria-label="Gait phases"></div>
+  <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
+  <div class="signalWaves" aria-hidden="true"></div>
+  <div class="stepDetail card" role="tabpanel" aria-live="polite">
+    <div id="seHuman"></div>
+    <div id="seSenses"></div>
+    <div id="seCtrl"></div>
+  </div>
+  <div class="factGrid"></div>
+  <p class="stepRef"></p>
+</section>
+
 <section class="section reveal" id="experience">
 <div class="sectionHead">
 <h2 data-i18n="section.experience">Experience</h2>
@@ -295,25 +394,48 @@
   <div class="card">
     <ul class="projList">
       <li><strong>Ph.D. Robotics</strong>, University of Michigan (2019–2024)</li>
-      <li><strong>M.S. Mechanical Engineering & Robotics</strong>, University of Michigan (2019–2021)</li>
+      <li><strong>M.S. Mechanical Engineering &amp; Robotics</strong>, University of Michigan (2019–2021)</li>
       <li><strong>B.S. Mechanical Engineering (Distinction)</strong>, Purdue University (2015–2018)</li>
     </ul>
   </div>
 </section>
 
 </section>
+
 <section class="section reveal" id="contact">
 <div class="sectionHead">
 <h2 data-i18n="section.contact">Contact</h2>
-<div class="small" data-i18n="small.lets_connect">Let’s connect</div>
+<div class="small" data-i18n="small.lets_connect">Let's connect</div>
 </div>
-<div class="card">
-<p class="projDesc">Email: <a href="mailto:chengsh@umich.edu">chengsh@umich.edu</a></p>
+<div class="contactGrid">
+  <a class="contactItem" href="mailto:chengsh@umich.edu">
+    <div class="contactIcon">@</div>
+    <div class="contactDetails">
+      <span class="contactLabel">Email</span>
+      <span class="contactUrl">chengsh@umich.edu</span>
+    </div>
+  </a>
+  <a class="contactItem" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">
+    <div class="contactIcon">in</div>
+    <div class="contactDetails">
+      <span class="contactLabel">LinkedIn</span>
+      <span class="contactUrl">linkedin.com/in/shihao-cheng</span>
+    </div>
+  </a>
 </div>
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
+
 </main>
 <script src="assets/site.js"></script>
+<script src="assets/widgets/step-engineering.js"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
+
+
+
+
+
+
