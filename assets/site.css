@@ -799,6 +799,31 @@ h2{
   margin: 0;
 }
 
+.releaseChip{
+  display: inline-block;
+  font-size: 0.68rem;
+  color: var(--primary);
+  background: rgba(43,108,255,0.06);
+  border: 1px solid rgba(43,108,255,0.2);
+  border-radius: 4px;
+  padding: 1px 7px;
+  margin-left: 4px;
+  text-decoration: none;
+}
+.releaseChip:hover{ background: rgba(43,108,255,0.13); }
+
+/* Project page titles use h1 for SEO but should look like h2 */
+.sectionHead h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  font-style: normal;
+  margin: 0;
+}
+@media (min-width: 821px){ .sectionHead h1{ font-size: 2rem; } }
+.sectionHeadAward h1{ margin: 0; }
+
 .awardBadge{
   display: inline-flex;
   align-items: center;
