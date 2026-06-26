@@ -1,0 +1,50 @@
+name: External link check
+
+# Checks outbound http(s) links. Kept separate from CI and NON-gating, because
+# external hosts go down or rate-limit independently of our changes — we never
+# want that to block a deploy. Runs weekly (and on demand) and files/updates a
+# GitHub issue when something is genuinely broken.
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  external-links:
+    name: Check external links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run lychee
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Tolerate bot-blocking hosts: 403/429/999 mean "alive but refusing
+          # an automated HEAD", not "broken". Retry transient failures.
+          args: >-
+            --no-progress
+            --max-retries 3
+            --retry-wait-time 10
+            --accept 200,206,403,429,999
+            --exclude-path .claude
+            --exclude-path node_modules
+            "./**/*.html"
+          # Don't fail the job; we report via an issue instead.
+          fail: false
+          # Only report on links that are actually broken.
+          jobSummary: true
+
+      - name: Open or update issue on broken links
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "🔗 Broken external links detected"
+          content-filepath: ./lychee/out.md
+          labels: broken-links, automated
