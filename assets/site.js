@@ -22,10 +22,7 @@ const io = new IntersectionObserver((entries) => {
 els.forEach(el => io.observe(el));
 
 // ===========================
-// Recent News: show first 3 items, expand/collapse
-// ===========================
-// ===========================
-// Recent News: show first 3 items, expand/collapse
+// Recent News: show first N items, expand/collapse
 // ===========================
 document.addEventListener("DOMContentLoaded", () => {
   const list = document.querySelector(".newsList");
@@ -95,6 +92,9 @@ function ensureLightbox() {
     document.body.classList.remove("noScroll");
     const img = overlay.querySelector(".lightboxImg");
     img.src = "";
+    if (overlay._lastFocused && document.contains(overlay._lastFocused)) {
+      overlay._lastFocused.focus();
+    }
   }
 
   closeBtn.addEventListener("click", close);
@@ -103,7 +103,24 @@ function ensureLightbox() {
     if (!content.contains(e.target)) close();
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && overlay.classList.contains("open")) close();
+    if (!overlay.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key !== "Tab") return;
+
+    const focusable = Array.from(overlay.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.disabled && el.offsetParent !== null);
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   // expose close for internal use
@@ -115,6 +132,7 @@ function openLightboxFromImage(imgEl) {
   const overlay = ensureLightbox();
   const lbImg = overlay.querySelector(".lightboxImg");
   const caption = overlay.querySelector(".lightboxCaption");
+  const closeBtn = overlay.querySelector(".lightboxClose");
 
   const src = imgEl.getAttribute("data-full") || imgEl.currentSrc || imgEl.src;
   const alt = imgEl.getAttribute("alt") || "";
@@ -123,9 +141,11 @@ function openLightboxFromImage(imgEl) {
   lbImg.alt = alt;
   caption.textContent = alt;
 
+  overlay._lastFocused = document.activeElement;
   overlay.classList.add("open");
   document.documentElement.classList.add("noScroll");
   document.body.classList.add("noScroll");
+  closeBtn.focus();
 }
 
 // Attach lightbox behavior to project-page figures.
@@ -145,7 +165,6 @@ if (lightboxTargets.length) {
 // ===========================
 // Language toggle (EN / 简体中文) via separate /zh/ pages
 // - Default: EN
-// - Persist choice in localStorage under key "lang"
 // - Switches between /zh/<path> and /<path>
 // Supports:
 //   A) GitHub USER pages:    https://<user>.github.io/...
@@ -242,8 +261,6 @@ if (lightboxTargets.length) {
     const { prefix, isZh, rest } = parsePath();
     const nextIsZh = !isZh;
 
-    localStorage.setItem("lang", nextIsZh ? "zh" : "en");
-
     const target = buildTarget(prefix, nextIsZh, rest);
     window.location.href = target + window.location.search;
   });
@@ -296,7 +313,7 @@ if (lightboxTargets.length) {
       chips.forEach(c => {
         const active = c === chip;
         c.classList.toggle('is-active', active);
-        c.setAttribute('aria-selected', active ? 'true' : 'false');
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
       cards.forEach(card => {
         const tags = (card.dataset.tags || '').split(/\s+/);

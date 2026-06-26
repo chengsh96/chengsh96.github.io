@@ -3,28 +3,32 @@
 //
 // Every page must have the tags that make it shareable and indexable:
 //   - a non-empty <title> and meta description
-//   - og:title, og:description, og:url
+//   - og:title, og:description, og:url, og:image
+//   - twitter:card, twitter:image
 //   - a canonical link
 //   - a viewport meta
 //   - exactly one <h1>
 //
-// canonical and og:url are also checked for the *correct value* (derived from
-// the file's path) so a copy-pasted page can't silently point search engines
-// and share cards at the wrong URL.
+// canonical and og:url are also checked for the correct value derived from
+// the file path, so a copied page cannot silently point search engines and
+// share cards at the wrong URL.
 
 import { readdirSync, readFileSync } from "node:fs";
-import { join, relative, sep, basename } from "node:path";
+import { basename, join, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
 const SITE = "https://chengsh96.github.io";
-const IGN = new Set([".git", ".claude", "node_modules", "scripts"]);
+const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts"]);
 
-function walk(d, a = []) {
-  for (const e of readdirSync(d, { withFileTypes: true })) {
-    if (e.isDirectory()) { if (!IGN.has(e.name)) walk(join(d, e.name), a); }
-    else if (e.name.endsWith(".html")) a.push(join(d, e.name));
+function walk(dir, files = []) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      if (!IGNORE_DIRS.has(entry.name)) walk(join(dir, entry.name), files);
+    } else if (entry.name.endsWith(".html")) {
+      files.push(join(dir, entry.name));
+    }
   }
-  return a;
+  return files;
 }
 
 function canonicalFor(rel) {
@@ -32,14 +36,20 @@ function canonicalFor(rel) {
   return `${SITE}/${rel}`;
 }
 
-const attr = (txt, re) => (txt.match(re) || [, null])[1];
+function attr(txt, re) {
+  return (txt.match(re) || [, null])[1];
+}
+
+function isAbsoluteUrl(value) {
+  return /^https?:\/\//.test(value);
+}
 
 const pages = walk(ROOT).map((p) => relative(ROOT, p).split(sep).join("/"));
 const errors = [];
 
 for (const rel of pages) {
   const txt = readFileSync(join(ROOT, rel), "utf8");
-  const fail = (m) => errors.push(`${rel}: ${m}`);
+  const fail = (message) => errors.push(`${rel}: ${message}`);
 
   const title = attr(txt, /<title>([\s\S]*?)<\/title>/);
   if (!title || !title.trim()) fail("missing/empty <title>");
@@ -49,6 +59,16 @@ for (const rel of pages) {
 
   if (!attr(txt, /property="og:title"[^>]*content="([^"]*)"/)) fail("missing og:title");
   if (!attr(txt, /property="og:description"[^>]*content="([^"]*)"/)) fail("missing og:description");
+
+  const ogImage = attr(txt, /property="og:image"[^>]*content="([^"]*)"/);
+  if (!ogImage) fail("missing og:image");
+  else if (!isAbsoluteUrl(ogImage)) fail(`og:image is not absolute: "${ogImage}"`);
+
+  if (!attr(txt, /name="twitter:card"[^>]*content="([^"]*)"/)) fail("missing twitter:card");
+  const twitterImage = attr(txt, /name="twitter:image"[^>]*content="([^"]*)"/);
+  if (!twitterImage) fail("missing twitter:image");
+  else if (!isAbsoluteUrl(twitterImage)) fail(`twitter:image is not absolute: "${twitterImage}"`);
+
   if (!/name="viewport"/.test(txt)) fail("missing viewport meta");
 
   const h1Count = (txt.match(/<h1[\s>]/g) || []).length;
@@ -68,7 +88,7 @@ for (const rel of pages) {
 console.log(`Checked SEO meta on ${pages.length} page(s).`);
 if (errors.length) {
   console.error(`\n${errors.length} SEO issue(s):`);
-  for (const e of errors) console.error("  ✗ " + e);
+  for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
-console.log("All pages have complete, correct SEO/social meta. ✓");
+console.log("All pages have complete, correct SEO/social meta.");

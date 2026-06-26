@@ -1,37 +1,33 @@
 #!/usr/bin/env node
 // Zero-dependency link checker for the static site.
-// Verifies every local href/src/poster resolves to a file on disk, and that
-// every same-site #fragment points at an element id that actually exists.
-// External (http/https) links are intentionally NOT fetched here — bot-blocking
-// hosts (LinkedIn, Scholar, fonts CDNs) make network checks flaky in CI.
+// Verifies every local href/src/poster resolves to a file on disk, and every
+// same-site #fragment points at an element id that exists. External links are
+// intentionally not fetched because common hosts can make CI flaky.
 
-import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
-import { join, dirname, normalize, resolve, relative, sep } from "node:path";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { dirname, join, normalize, relative, resolve, sep } from "node:path";
 
 const ROOT = process.cwd();
 const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts"]);
 
-function walk(dir, acc = []) {
+function walk(dir, files = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.isDirectory()) {
-      if (IGNORE_DIRS.has(entry.name)) continue;
-      walk(join(dir, entry.name), acc);
+      if (!IGNORE_DIRS.has(entry.name)) walk(join(dir, entry.name), files);
     } else if (entry.name.endsWith(".html")) {
-      acc.push(join(dir, entry.name));
+      files.push(join(dir, entry.name));
     }
   }
-  return acc;
+  return files;
 }
 
-// Collect ids declared in a given HTML file (cached).
 const idCache = new Map();
 function idsOf(file) {
   if (idCache.has(file)) return idCache.get(file);
-  let ids = new Set();
+  const ids = new Set();
   if (existsSync(file) && statSync(file).isFile()) {
     const txt = readFileSync(file, "utf8");
     for (const m of txt.matchAll(/\bid="([^"]+)"/g)) ids.add(m[1]);
-    // name="" anchors count as fragment targets too
     for (const m of txt.matchAll(/<a[^>]*\bname="([^"]+)"/g)) ids.add(m[1]);
   }
   idCache.set(file, ids);
@@ -54,16 +50,14 @@ for (const file of htmlFiles) {
 
     const [pathPart, frag] = url.split("#");
 
-    // Pure same-page anchor (href="#id")
     if (pathPart === "") {
-      if (frag && frag !== "" && frag !== "top" && !idsOf(file).has(frag)) {
+      if (frag && frag !== "top" && !idsOf(file).has(frag)) {
         errors.push(`${rel} -> "${url}" (no element with id="${frag}")`);
       }
       checked++;
       continue;
     }
 
-    // Resolve local file (leading "/" = site root)
     const clean = pathPart.split("?")[0];
     const target = clean.startsWith("/")
       ? normalize(join(ROOT, clean))
@@ -75,11 +69,8 @@ for (const file of htmlFiles) {
       continue;
     }
 
-    // Cross-page fragment (page.html#id)
-    if (frag && frag !== "" && frag !== "top" && target.endsWith(".html")) {
-      if (!idsOf(target).has(frag)) {
-        errors.push(`${rel} -> "${url}" (no id="${frag}" in ${relative(ROOT, target).split(sep).join("/")})`);
-      }
+    if (frag && frag !== "top" && target.endsWith(".html") && !idsOf(target).has(frag)) {
+      errors.push(`${rel} -> "${url}" (no id="${frag}" in ${relative(ROOT, target).split(sep).join("/")})`);
     }
   }
 }
@@ -87,7 +78,7 @@ for (const file of htmlFiles) {
 console.log(`Checked ${checked} local references across ${htmlFiles.length} HTML files.`);
 if (errors.length) {
   console.error(`\n${errors.length} broken reference(s):`);
-  for (const e of errors) console.error("  ✗ " + e);
+  for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
-console.log("All local links and anchors resolve. ✓");
+console.log("All local links and anchors resolve.");
