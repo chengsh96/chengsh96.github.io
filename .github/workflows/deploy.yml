@@ -44,6 +44,9 @@ jobs:
       - name: Check internal links & anchors
         run: npm run check:links
 
+      - name: Check navigation consistency
+        run: npm run check:nav
+
   deploy:
     name: Deploy to GitHub Pages
     # Gate deployment on validation, and only deploy from main (not PRs).

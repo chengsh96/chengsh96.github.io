@@ -8,7 +8,8 @@
     "lint:html": "htmlhint \"index.html\" \"projects/**/*.html\" \"zh/**/*.html\"",
     "lint:js": "node scripts/check-js.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "test": "npm run lint:html && npm run lint:js && npm run check:links"
+    "check:nav": "node scripts/check-nav.mjs",
+    "test": "npm run lint:html && npm run lint:js && npm run check:links && npm run check:nav"
   },
   "devDependencies": {
     "htmlhint": "^1.1.4"

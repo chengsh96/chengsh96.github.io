@@ -13,8 +13,19 @@ Every push and pull request to `main` runs
    - `lint:js` — `node --check` syntax check on every file in `assets/`
    - `check:links` — verifies every local `href`/`src`/`poster` resolves to a
      real file **and** every `#anchor` points at an existing element id
+   - `check:nav` — verifies the header nav is consistent: desktop and mobile
+     menus match on each page, and every page's nav matches its language's
+     homepage (same labels, order, and resolved destination — catches a link
+     pointing at the wrong section even when the target exists)
 2. **deploy** — runs only after `validate` passes, only on `main` (not PRs):
    publishes the site to GitHub Pages.
+
+A separate, non-gating workflow
+[`external-links.yml`](.github/workflows/external-links.yml) checks outbound
+http(s) links weekly (and on demand via *Actions → External link check → Run
+workflow*). It never blocks deploys; if a real external link is down it opens or
+updates a GitHub issue. Bot-blocking hosts (LinkedIn, Scholar) that return
+403/429/999 are treated as alive.
 
 ### One-time setup (required)
 
@@ -32,4 +43,6 @@ npm install      # one time
 npm test         # html lint + js syntax + link check
 ```
 
-Or individually: `npm run lint:html`, `npm run lint:js`, `npm run check:links`.
+Or individually: `npm run lint:html`, `npm run lint:js`, `npm run check:links`,
+`npm run check:nav`. (External link checking runs in CI only — it needs the
+`lychee` binary.)
