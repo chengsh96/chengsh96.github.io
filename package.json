@@ -1,0 +1,16 @@
+{
+  "name": "chengsh96-github-io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal website of Shihao Cheng — static GitHub Pages site.",
+  "type": "module",
+  "scripts": {
+    "lint:html": "htmlhint \"index.html\" \"projects/**/*.html\" \"zh/**/*.html\"",
+    "lint:js": "node scripts/check-js.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "test": "npm run lint:html && npm run lint:js && npm run check:links"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4"
+  }
+}

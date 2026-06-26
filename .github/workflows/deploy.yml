@@ -1,0 +1,88 @@
+name: CI / Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Allow the deploy job to publish to GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deployment at a time; don't cancel an in-flight deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint HTML (htmlhint)
+        run: npm run lint:html
+
+      - name: Check JS syntax
+        run: npm run lint:js
+
+      - name: Check internal links & anchors
+        run: npm run check:links
+
+  deploy:
+    name: Deploy to GitHub Pages
+    # Gate deployment on validation, and only deploy from main (not PRs).
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Stage publishable files
+        # Copy the static site into _site, excluding dev tooling so it is not
+        # served publicly. No build step — these are the files as authored.
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.claude' \
+            --exclude='node_modules' \
+            --exclude='scripts' \
+            --exclude='_site' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='.htmlhintrc' \
+            --exclude='.gitignore' \
+            ./ _site/
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
