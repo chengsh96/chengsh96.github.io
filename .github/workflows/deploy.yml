@@ -47,6 +47,15 @@ jobs:
       - name: Check navigation consistency
         run: npm run check:nav
 
+      - name: Check SEO / social meta
+        run: npm run check:seo
+
+      - name: Check bilingual structure (EN/ZH parity + lang)
+        run: npm run check:i18n
+
+      - name: Check sitemap.xml is up to date
+        run: npm run check:sitemap
+
   deploy:
     name: Deploy to GitHub Pages
     # Gate deployment on validation, and only deploy from main (not PRs).
@@ -78,6 +87,8 @@ jobs:
             --exclude='package.json' \
             --exclude='package-lock.json' \
             --exclude='.htmlhintrc' \
+            --exclude='.lighthouserc.json' \
+            --exclude='.pa11yci.json' \
             --exclude='.gitignore' \
             ./ _site/
 

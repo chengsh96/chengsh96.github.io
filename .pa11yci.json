@@ -1,0 +1,15 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 60000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-gpu"]
+    }
+  },
+  "urls": [
+    "http://localhost:8080/index.html",
+    "http://localhost:8080/projects/index.html",
+    "http://localhost:8080/projects/shiftos.html",
+    "http://localhost:8080/zh/index.html"
+  ]
+}
