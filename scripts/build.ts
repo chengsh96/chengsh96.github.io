@@ -11,11 +11,12 @@ import { join } from "node:path";
 import { locales } from "../src/lib/i18n.js";
 import type { Locale } from "../src/content/schema.js";
 import { routeById } from "../src/content/routes.js";
-import { homeRootPath } from "../src/lib/localized.js";
-import { routeRootPath } from "../src/lib/localized.js";
+import { projects } from "../src/content/projects.js";
+import { homeRootPath, projectRootPath, routeRootPath } from "../src/lib/localized.js";
 import { renderPage, type HeadMeta } from "../src/render/layout.js";
 import { renderHome } from "../src/render/home.js";
 import { renderProjectsIndex } from "../src/render/projects-index.js";
+import { renderProjectDetail } from "../src/render/project-detail.js";
 
 const ROOT = process.cwd();
 const CHECK = process.argv.includes("--check");
@@ -62,6 +63,31 @@ function buildPages(): Page[] {
         scripts: ["assets/site.js"],
       }),
     });
+
+    // Project detail pages — only those migrated to the content model (body set).
+    for (const project of projects) {
+      if (project.body.length === 0) continue;
+      const detailPath = projectRootPath(project.slug, locale);
+      const og = project.ogImage ?? project.image;
+      const seoTitle = project.seo?.title[locale] ?? project.title[locale];
+      const seoDesc = project.seo?.description[locale] ?? project.summary[locale];
+      pages.push({
+        rootPath: detailPath,
+        html: renderPage({
+          locale,
+          rootPath: detailPath,
+          meta: {
+            title: seoTitle,
+            description: seoDesc,
+            ogTitle: seoTitle,
+            ogDescription: seoDesc,
+            ogImage: og,
+          },
+          main: renderProjectDetail(project, locale),
+          scripts: ["assets/site.js"],
+        }),
+      });
+    }
   }
   return pages;
 }

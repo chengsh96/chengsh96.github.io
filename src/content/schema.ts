@@ -62,9 +62,10 @@ export type MediaItem = {
 };
 
 export type Block =
-  | { kind: "paragraph"; text: LocalizedRichText }
+  | { kind: "paragraph"; text: LocalizedRichText; cls?: string } // default class "projDesc"
   | { kind: "heading"; text: LocalizedString }
   | { kind: "list"; items: LocalizedRichText[] }
+  | { kind: "pills"; items: LocalizedString[] }
   | { kind: "linkRow"; links: { href: string; label: LocalizedString }[] }
   | { kind: "mediaGrid"; items: MediaItem[] }
   | { kind: "hr" }
@@ -95,7 +96,11 @@ export type Project = {
   listSummary?: LocalizedString;
   outcome?: LocalizedString; // short result line on the homepage card
   highlights: LocalizedString[]; // homepage card bullet list
-  body: Block[]; // detail page content (Phase 3)
+  // Detail page. `body` empty = detail page not yet migrated (still hand-authored).
+  detailTitle?: LocalizedString; // detail <h1>; defaults to title
+  seo?: { title: LocalizedString; description: LocalizedString }; // detail <head>
+  body: Block[]; // detail page card content
+  affil?: LocalizedRichText; // trailing <p class="affil"> after the card
 };
 
 export type NewsItem = {

@@ -207,6 +207,12 @@ export const homeContent = {
   footerName: { en: "Shihao Cheng", zh: "程世浩" } as LocalizedString,
 };
 
+// Project detail page footer nav labels.
+export const projectDetail = {
+  backToProjects: { en: "← Back to All Projects", zh: "← 返回全部项目" } as LocalizedString,
+  featuredProjects: { en: "Featured Projects", zh: "精选项目" } as LocalizedString,
+};
+
 // Projects listing page (projects/index.html) UI strings.
 export const projectsPage = {
   heading: { en: "All Projects", zh: "全部项目" } as LocalizedString,
