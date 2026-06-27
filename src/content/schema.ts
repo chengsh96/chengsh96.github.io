@@ -89,6 +89,10 @@ export type Project = {
   ogImage?: string; // detail-page social image; defaults to image
   title: LocalizedString;
   summary: LocalizedString;
+  // Listing-page card overrides — some projects show different title/summary on
+  // the listing vs the homepage in the live site. Default to title/summary.
+  listTitle?: LocalizedString;
+  listSummary?: LocalizedString;
   outcome?: LocalizedString; // short result line on the homepage card
   highlights: LocalizedString[]; // homepage card bullet list
   body: Block[]; // detail page content (Phase 3)

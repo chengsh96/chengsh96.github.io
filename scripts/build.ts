@@ -12,16 +12,18 @@ import { locales } from "../src/lib/i18n.js";
 import type { Locale } from "../src/content/schema.js";
 import { routeById } from "../src/content/routes.js";
 import { homeRootPath } from "../src/lib/localized.js";
+import { routeRootPath } from "../src/lib/localized.js";
 import { renderPage, type HeadMeta } from "../src/render/layout.js";
 import { renderHome } from "../src/render/home.js";
+import { renderProjectsIndex } from "../src/render/projects-index.js";
 
 const ROOT = process.cwd();
 const CHECK = process.argv.includes("--check");
 
 type Page = { rootPath: string; html: string };
 
-function homeMeta(locale: Locale): HeadMeta {
-  const route = routeById("home")!;
+function routeMeta(routeId: string, locale: Locale): HeadMeta {
+  const route = routeById(routeId)!;
   return {
     title: route.title[locale],
     description: route.description[locale],
@@ -34,16 +36,30 @@ function homeMeta(locale: Locale): HeadMeta {
 function buildPages(): Page[] {
   const pages: Page[] = [];
   for (const locale of locales) {
-    const rootPath = homeRootPath(locale);
+    // Homepage
+    const homePath = homeRootPath(locale);
     pages.push({
-      rootPath,
+      rootPath: homePath,
       html: renderPage({
         locale,
-        rootPath,
-        meta: homeMeta(locale),
+        rootPath: homePath,
+        meta: routeMeta("home", locale),
         main: renderHome(locale),
         scripts: ["assets/site.js", "assets/widgets/step-engineering.js"],
         inlineScripts: ['document.getElementById("y").textContent = new Date().getFullYear();'],
+      }),
+    });
+
+    // Projects listing
+    const listPath = routeRootPath("projects", locale);
+    pages.push({
+      rootPath: listPath,
+      html: renderPage({
+        locale,
+        rootPath: listPath,
+        meta: routeMeta("projects", locale),
+        main: renderProjectsIndex(locale),
+        scripts: ["assets/site.js"],
       }),
     });
   }

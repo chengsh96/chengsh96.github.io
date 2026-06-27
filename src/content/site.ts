@@ -206,3 +206,11 @@ export const homeContent = {
 
   footerName: { en: "Shihao Cheng", zh: "程世浩" } as LocalizedString,
 };
+
+// Projects listing page (projects/index.html) UI strings.
+export const projectsPage = {
+  heading: { en: "All Projects", zh: "全部项目" } as LocalizedString,
+  small: { en: "Industry + Research", zh: "量产系统 + 科研工作" } as LocalizedString,
+  backText: { en: "Back to ", zh: "返回 " } as LocalizedString,
+  homeLabel: { en: "Home", zh: "首页" } as LocalizedString,
+};
