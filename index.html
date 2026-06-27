@@ -11,12 +11,14 @@
 <meta property="og:title" content="Shihao Cheng, Ph.D."/>
 <meta property="og:description" content="I write the control code that makes wearable robots walk."/>
 <meta property="og:url" content="https://chengsh96.github.io/"/>
+<meta property="og:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <!-- P1-3: Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=11" rel="stylesheet"/>
+<link href="assets/site.css?v=13" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -26,30 +28,30 @@
 <span>Shihao Cheng</span>
 </div>
 <nav class="navLinks">
-<a href="index.html" data-i18n="nav.home">Home</a>
-<a href="#about" data-i18n="nav.about">About</a>
-<a href="#news" data-i18n="nav.news">News</a>
-<a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="index.html">Home</a>
+<a href="#about">About</a>
+<a href="#news">News</a>
+<a href="#projects">Featured Projects</a>
 <a href="#step-engineering">Behind a Step</a>
-<a href="#experience" data-i18n="nav.experience">Experience</a>
-<a href="#education" data-i18n="nav.education">Education</a>
-<a href="#contact" data-i18n="nav.contact">Contact</a>
-<a href="projects/index.html" data-i18n="nav.all">All Projects</a>
+<a href="#experience">Experience</a>
+<a href="#education">Education</a>
+<a href="#contact">Contact</a>
+<a href="projects/index.html">All Projects</a>
 </nav>
 <button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
 <button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
-<button aria-label="Open menu" class="navBtn" data-navbtn="" data-i18n="nav.menu">Menu</button>
+<button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="index.html" data-i18n="nav.home">Home</a>
-<a href="#about" data-i18n="nav.about">About</a>
-<a href="#news" data-i18n="nav.news">News</a>
-<a href="#projects" data-i18n="nav.featured">Featured Projects</a>
+<a href="index.html">Home</a>
+<a href="#about">About</a>
+<a href="#news">News</a>
+<a href="#projects">Featured Projects</a>
 <a href="#step-engineering">Behind a Step</a>
-<a href="#experience" data-i18n="nav.experience">Experience</a>
-<a href="#education" data-i18n="nav.education">Education</a>
-<a href="#contact" data-i18n="nav.contact">Contact</a>
-<a href="projects/index.html" data-i18n="nav.all">All Projects</a>
+<a href="#experience">Experience</a>
+<a href="#education">Education</a>
+<a href="#contact">Contact</a>
+<a href="projects/index.html">All Projects</a>
 </div>
 </header>
 
@@ -73,14 +75,14 @@
     <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
   </div>
   <div class="heroByline">
-    <img class="avatarSm" src="assets/img/profile.jpg" alt="Shihao Cheng"/>
+    <img width="500" height="500" class="avatarSm" src="assets/img/profile.jpg" alt="Shihao Cheng"/>
     <span>Robotics PhD @ UMich | Lead Control Engineer @ Shift Robotics</span>
   </div>
 </div>
 
 <div class="heroRight reveal">
   <figure class="heroVideo">
-    <video autoplay muted loop playsinline preload="metadata"
+    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
       poster="assets/video/shiftos_demo_poster.jpg"
       aria-label="ShiftOS Moonwalkers demonstration">
       <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
@@ -126,8 +128,8 @@
 
 <section class="section reveal" id="about">
 <div class="sectionHead">
-<h2 data-i18n="section.about">About</h2>
-<div class="small" data-i18n="small.research_to_deploy">Research → deployment</div>
+<h2>About</h2>
+<div class="small">Research → deployment</div>
 </div>
 <div class="aboutText">
 <p class="projDesc"><strong>I make wearable robots less robotic.</strong></p>
@@ -145,8 +147,8 @@
 <!-- P1-1: News timeline with tags -->
 <section class="section reveal" id="news">
   <div class="sectionHead">
-    <h2 data-i18n="section.news">Recent News</h2>
-    <div class="small" data-i18n="small.latest">Latest updates</div>
+    <h2>Recent News</h2>
+    <div class="small">Latest updates</div>
   </div>
 
   <div class="card">
@@ -245,20 +247,21 @@
 <!-- P1-2: Projects with filter chips -->
 <section class="section" id="projects">
 <div class="sectionHead reveal">
-<h2 data-i18n="section.projects">Featured Projects</h2>
+<h2>Featured Projects</h2>
 <div class="small">Wearable Robotics • Human-Robot Interaction</div>
 </div>
-<div class="filterRow reveal" role="tablist" aria-label="Filter projects">
-  <button class="filterChip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-  <button class="filterChip" data-filter="intent" role="tab" aria-selected="false">Intent Recognition</button>
-  <button class="filterChip" data-filter="gait" role="tab" aria-selected="false">Gait &amp; Locomotion</button>
-  <button class="filterChip" data-filter="ml" role="tab" aria-selected="false">Machine Learning</button>
-  <button class="filterChip" data-filter="estimation" role="tab" aria-selected="false">State Estimation</button>
-  <button class="filterChip" data-filter="software" role="tab" aria-selected="false">Software &amp; App</button>
+<div class="filterRow reveal" role="group" aria-label="Filter projects">
+  <button class="filterChip is-active" data-filter="all" aria-pressed="true">All</button>
+  <button class="filterChip" data-filter="intent" aria-pressed="false">Intent Recognition</button>
+  <button class="filterChip" data-filter="gait" aria-pressed="false">Gait &amp; Locomotion</button>
+  <button class="filterChip" data-filter="ml" aria-pressed="false">Machine Learning</button>
+  <button class="filterChip" data-filter="estimation" aria-pressed="false">State Estimation</button>
+  <button class="filterChip" data-filter="software" aria-pressed="false">Software &amp; App</button>
+  <button class="filterChip" data-filter="safety" aria-pressed="false">Safety</button>
 </div>
 <div class="grid">
 <a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
-<div class="projMedia"><img alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="760" height="500" alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Moonwalkers Control System (ShiftOS)</p>
 <span class="tag">Industry</span>
@@ -272,7 +275,7 @@
 </ul>
 </a>
 <a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
-<div class="projMedia"><img alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p>
 <span class="tag">Research</span>
@@ -285,7 +288,7 @@
 </ul>
 </a>
 <a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
-<div class="projMedia"><img alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Continuous Transition Control (TNSRE 2024)</p>
 <span class="tag">Research</span>
@@ -298,7 +301,7 @@
 </ul>
 </a>
 <a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
-<div class="projMedia"><img alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p>
 <span class="tag">Research</span>
@@ -311,7 +314,7 @@
 </ul>
 </a>
 <a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
-<div class="projMedia"><img alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Ambilateral Activity Recognition (TRO 2025)</p>
 <span class="tag">Research</span>
@@ -324,7 +327,7 @@
 </ul>
 </a>
 <a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
-<div class="projMedia"><img alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/></div>
+<div class="projMedia"><img loading="lazy" width="1017" height="750" alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Smartwatch Gesture Control (EMBC 2025)</p>
 <span class="tag">Research</span>
@@ -337,7 +340,7 @@
 </ul>
 </a>
 </div>
-<div class="linkRow reveal" style="margin-top:18px;">
+<div class="linkRow reveal u-mt-18">
   <a class="btn" href="projects/index.html">All Projects →</a>
 </div>
 </section>
@@ -364,8 +367,8 @@
 
 <section class="section reveal" id="experience">
 <div class="sectionHead">
-<h2 data-i18n="section.experience">Experience</h2>
-<div class="small" data-i18n="small.selected_roles">Selected roles</div>
+<h2>Experience</h2>
+<div class="small">Selected roles</div>
 </div>
 <div class="split">
 <div class="card">
@@ -394,11 +397,12 @@
 </ul>
 </div>
 </div>
+</section>
 
 <section class="section reveal" id="education">
   <div class="sectionHead">
-    <h2 data-i18n="section.education">Education</h2>
-    <div class="small" data-i18n="small.degrees">Degrees</div>
+    <h2>Education</h2>
+    <div class="small">Degrees</div>
   </div>
   <div class="card">
     <ul class="projList">
@@ -409,12 +413,10 @@
   </div>
 </section>
 
-</section>
-
 <section class="section reveal" id="contact">
 <div class="sectionHead">
-<h2 data-i18n="section.contact">Contact</h2>
-<div class="small" data-i18n="small.lets_connect">Let's connect</div>
+<h2>Contact</h2>
+<div class="small">Let's connect</div>
 </div>
 <div class="contactGrid">
   <a class="contactItem" href="mailto:chengsh@umich.edu">

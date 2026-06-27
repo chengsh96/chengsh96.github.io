@@ -1,41 +1,41 @@
 #!/usr/bin/env node
 // Bilingual structure check.
 //
-//   1. Page-set parity: every English page has a matching zh/ mirror and every
-//      zh/ page has an English original. Catches "added a project in EN but
-//      forgot the Chinese version" (or vice versa).
-//   2. lang attribute: zh/ pages declare a Chinese lang (zh*), all others "en".
+// 1. Page-set parity: every English page has a matching zh/ mirror and every
+//    zh/ page has an English original.
+// 2. lang attribute: zh/ pages declare a Chinese lang (zh*), all others "en".
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
-const IGN = new Set([".git", ".claude", "node_modules", "scripts"]);
+const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts"]);
 
-function walk(d, a = []) {
-  for (const e of readdirSync(d, { withFileTypes: true })) {
-    if (e.isDirectory()) { if (!IGN.has(e.name)) walk(join(d, e.name), a); }
-    else if (e.name.endsWith(".html")) a.push(join(d, e.name));
+function walk(dir, files = []) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      if (!IGNORE_DIRS.has(entry.name)) walk(join(dir, entry.name), files);
+    } else if (entry.name.endsWith(".html")) {
+      files.push(join(dir, entry.name));
+    }
   }
-  return a;
+  return files;
 }
 
 const pages = walk(ROOT).map((p) => relative(ROOT, p).split(sep).join("/"));
-const set = new Set(pages);
+const pageSet = new Set(pages);
 const errors = [];
 
-// 1. parity
 for (const rel of pages) {
   if (rel.startsWith("zh/")) {
     const en = rel.slice(3);
-    if (!set.has(en)) errors.push(`${rel}: no English original at ${en}`);
+    if (!pageSet.has(en)) errors.push(`${rel}: no English original at ${en}`);
   } else {
     const zh = `zh/${rel}`;
-    if (!set.has(zh)) errors.push(`${rel}: no Chinese mirror at ${zh}`);
+    if (!pageSet.has(zh)) errors.push(`${rel}: no Chinese mirror at ${zh}`);
   }
 }
 
-// 2. lang attribute
 for (const rel of pages) {
   const m = readFileSync(join(ROOT, rel), "utf8").match(/<html[^>]*\blang="([^"]*)"/);
   const lang = m ? m[1] : null;
@@ -48,7 +48,7 @@ for (const rel of pages) {
 console.log(`Checked bilingual structure across ${pages.length} page(s).`);
 if (errors.length) {
   console.error(`\n${errors.length} i18n issue(s):`);
-  for (const e of errors) console.error("  ✗ " + e);
+  for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
-console.log("EN/ZH page sets mirror and lang attributes are correct. ✓");
+console.log("EN/ZH page sets mirror and lang attributes are correct.");

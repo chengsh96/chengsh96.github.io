@@ -386,6 +386,26 @@ h2{
   padding: 16px;
 }
 
+.card--flat{
+  box-shadow: none;
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.u-mt-8{ margin-top: 8px !important; }
+.u-mt-10{ margin-top: 10px !important; }
+.u-mt-12{ margin-top: 12px !important; }
+.u-mt-14{ margin-top: 14px !important; }
+.u-mt-16{ margin-top: 16px !important; }
+.u-mt-18{ margin-top: 18px !important; }
+.u-mt-section{ margin-top: 1.5rem !important; }
+.u-heading-tight{ margin: 0 0 8px !important; }
+.u-heading-flush{ margin-top: 0 !important; }
+.u-font-medium{ font-weight: 500 !important; }
+.u-media-full{
+  width: 100% !important;
+  border-radius: var(--radius) !important;
+}
+
 
 /* ===========================
    PROJECT MEDIA (thumbnails + hero)
@@ -538,9 +558,17 @@ h2{
   overflow: hidden;
   border: 1px solid rgba(15,23,42,0.08);
 }
+.shiftosPhotos figure:nth-child(-n + 2){
+  aspect-ratio: 760 / 500;
+}
+.shiftosPhotos figure:nth-child(3){
+  aspect-ratio: 1672 / 941;
+}
 .shiftosPhotos img{
   width: 100%;
+  height: 100%;
   display: block;
+  object-fit: contain;
 }
 .shiftosPhotos .mediaCaption{
   position: absolute;
@@ -635,9 +663,37 @@ h2{
   display: block;
 }
 @media (max-width: 640px){
-  .shiftosMediaRow{ flex-direction: column; }
-  .shiftosPhotos{ flex-direction: row; flex: none; width: 100%; }
-  .shiftosPhotos img{ flex: 1; }
+  .shiftosMediaRow{
+    flex-direction: column;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .shiftosPhotos{
+    flex-direction: column;
+    gap: 8px;
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+  .shiftosPhotos figure,
+  .shiftosVideo,
+  .shiftosVideoItem{
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .shiftosPhotos img,
+  .shiftosVideo img,
+  .shiftosVideo video{
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .shiftosVideo img,
+  .shiftosVideo video{
+    height: auto;
+  }
 }
 
 @media (max-width: 920px){
@@ -1389,6 +1445,9 @@ a.stat{ display: block; color: inherit; text-decoration: none; }
   background: var(--card);
   border-color: var(--border);
 }
+:root[data-theme="dark"] .card--flat{
+  border-color: rgba(255,255,255,0.10);
+}
 :root[data-theme="dark"] .heroCard{
   background: rgba(17,26,46,0.9);
 }
@@ -1903,7 +1962,17 @@ a.stat{ display: block; color: inherit; text-decoration: none; }
   .stepDetail{ grid-template-columns: 1fr; gap: 1rem; padding: 1.2rem; }
   .signalWaves{ flex-direction: column; gap: 8px; }
   .factGrid{ grid-template-columns: 1fr; }
-  .sePhase{ flex: 0 0 96px; }
+  .stepTimeline{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    overflow: visible;
+  }
+  .sePhase{
+    min-width: 0;
+    width: 100%;
+  }
+  .sePhaseConn{ display: none; }
 }
 @media (prefers-reduced-motion: reduce){
   .sePhase, .seFactCard, .timelineProgressFill{ transition: none; }
@@ -2162,6 +2231,24 @@ a.stat{ display: block; color: inherit; text-decoration: none; }
 
 .mwGenCard--future{
   opacity: 0.7;
+}
+
+.mwTone--blue{
+  --gc: #2b6cff;
+  --tn: #2b6cff;
+  --ec: #2b6cff;
+}
+
+.mwTone--magenta{
+  --gc: #8B1A4A;
+  --tn: #8B1A4A;
+  --ec: #8B1A4A;
+}
+
+.mwTone--green{
+  --gc: #2D6A2D;
+  --tn: #2D6A2D;
+  --ec: #2D6A2D;
 }
 
 .mwGenName{

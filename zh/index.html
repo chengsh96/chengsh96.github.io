@@ -11,12 +11,14 @@
 <meta property="og:title" content="程世浩 博士"/>
 <meta property="og:description" content="我编写控制可穿戴机器人行走的代码。"/>
 <meta property="og:url" content="https://chengsh96.github.io/zh/"/>
+<meta property="og:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <!-- P1-3: Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=11" rel="stylesheet"/>
+<link href="../assets/site.css?v=13" rel="stylesheet"/>
 </head>
 <body>
 <header class="nav">
@@ -73,14 +75,14 @@
     <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">谷歌学术</a>
   </div>
   <div class="heroByline">
-    <img class="avatarSm" src="../assets/img/profile.jpg" alt="程世浩"/>
+    <img width="500" height="500" class="avatarSm" src="../assets/img/profile.jpg" alt="程世浩"/>
     <span>密歇根大学机器人博士 | Shift Robotics 首席控制工程师</span>
   </div>
 </div>
 
 <div class="heroRight reveal">
   <figure class="heroVideo">
-    <video autoplay muted loop playsinline preload="metadata"
+    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
       poster="../assets/video/shiftos_demo_poster.jpg"
       aria-label="ShiftOS Moonwalkers 演示">
       <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
@@ -248,19 +250,20 @@
 <h2>精选项目</h2>
 <div class="small">可穿戴机器人 • 人机交互</div>
 </div>
-<div class="filterRow reveal" role="tablist" aria-label="筛选项目">
-  <button class="filterChip is-active" data-filter="all" role="tab" aria-selected="true">全部</button>
-  <button class="filterChip" data-filter="intent" role="tab" aria-selected="false">意图识别</button>
-  <button class="filterChip" data-filter="gait" role="tab" aria-selected="false">步态与运动</button>
-  <button class="filterChip" data-filter="ml" role="tab" aria-selected="false">机器学习</button>
-  <button class="filterChip" data-filter="estimation" role="tab" aria-selected="false">状态估计</button>
-  <button class="filterChip" data-filter="software" role="tab" aria-selected="false">软件与应用</button>
+<div class="filterRow reveal" role="group" aria-label="筛选项目">
+  <button class="filterChip is-active" data-filter="all" aria-pressed="true">全部</button>
+  <button class="filterChip" data-filter="intent" aria-pressed="false">意图识别</button>
+  <button class="filterChip" data-filter="gait" aria-pressed="false">步态与运动</button>
+  <button class="filterChip" data-filter="ml" aria-pressed="false">机器学习</button>
+  <button class="filterChip" data-filter="estimation" aria-pressed="false">状态估计</button>
+  <button class="filterChip" data-filter="software" aria-pressed="false">软件与应用</button>
+  <button class="filterChip" data-filter="safety" aria-pressed="false">安全</button>
 </div>
 <div class="grid">
 
 <a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
 <div class="projMedia">
-<img src="../assets/img/projects/shiftos_aero.jpg" alt="shiftos_aero"/>
+<img loading="lazy" width="760" height="500" src="../assets/img/projects/shiftos_aero.jpg" alt="shiftos_aero"/>
 </div>
 <div class="projTop">
 <p class="projTitle">Moonwalkers 控制系统（ShiftOS）</p>
@@ -279,7 +282,7 @@
 
 <a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
 <div class="projMedia">
-<img src="../assets/img/projects/tbme2024_concept.jpg" alt="tbme2024"/>
+<img loading="lazy" width="2539" height="1791" src="../assets/img/projects/tbme2024_concept.jpg" alt="tbme2024"/>
 </div>
 <div class="projTop">
 <p class="projTitle">安全关键绊脚规避（TBME 2024）</p>
@@ -297,7 +300,7 @@
 
 <a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
 <div class="projMedia">
-<img src="../assets/img/projects/tnsre2024_exp.jpg" alt="tnsre2024_exp"/>
+<img loading="lazy" width="1023" height="760" src="../assets/img/projects/tnsre2024_exp.jpg" alt="tnsre2024_exp"/>
 </div>
 <div class="projTop">
 <p class="projTitle">连续转换控制（TNSRE 2024）</p>
@@ -315,7 +318,7 @@
 
 <a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
 <div class="projMedia">
-<img src="../assets/img/projects/ral2024_concept.jpg" alt="ral2024_concept"/>
+<img loading="lazy" width="1379" height="1254" src="../assets/img/projects/ral2024_concept.jpg" alt="ral2024_concept"/>
 </div>
 <div class="projTop">
 <p class="projTitle">迁移学习意图预测（RA-L 2024）</p>
@@ -333,7 +336,7 @@
 
 <a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
 <div class="projMedia">
-<img src="../assets/img/projects/icf_concept.jpg" alt="基于 ICF 的意图识别概念图"/>
+<img loading="lazy" width="4000" height="2250" src="../assets/img/projects/icf_concept.jpg" alt="基于 ICF 的意图识别概念图"/>
 </div>
 <div class="projTop">
 <p class="projTitle">双侧活动识别（TRO 2025）</p>
@@ -351,7 +354,7 @@
 
 <a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
 <div class="projMedia">
-<img src="../assets/img/projects/embc2025_watch.jpg" alt="用于假肢模式切换的智能手表界面"/>
+<img loading="lazy" width="1017" height="750" src="../assets/img/projects/embc2025_watch.jpg" alt="用于假肢模式切换的智能手表界面"/>
 </div>
 <div class="projTop">
 <p class="projTitle">智能手表手势控制（EMBC 2025）</p>
@@ -368,7 +371,7 @@
 </a>
 
 </div>
-<div class="linkRow reveal" style="margin-top:18px;">
+<div class="linkRow reveal u-mt-18">
   <a class="btn" href="projects/index.html">全部项目 →</a>
 </div>
 </section>
