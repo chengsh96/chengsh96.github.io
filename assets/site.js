@@ -258,6 +258,13 @@ if (lightboxTargets.length) {
   }
 
   btn.addEventListener("click", () => {
+    // Prefer the build-time paired href from the route registry when present
+    // (generated pages); fall back to runtime path mapping for any page without it.
+    const explicit = btn.getAttribute("data-lang-href");
+    if (explicit) {
+      window.location.href = explicit + window.location.search;
+      return;
+    }
     const { prefix, isZh, rest } = parsePath();
     const nextIsZh = !isZh;
 

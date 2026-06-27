@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -6,7 +6,7 @@
 <title>Shihao Cheng</title>
 <meta property="og:type" content="website"/>
 <link rel="canonical" href="https://chengsh96.github.io/"/>
-<!-- P3-4: Social meta -->
+<!-- Social meta -->
 <meta name="description" content="Shihao Cheng — Robotics &amp; Controls Engineer. Lead Control Engineer at Shift Robotics. Real-time systems, sensor fusion, and ML for wearable robots."/>
 <meta property="og:title" content="Shihao Cheng, Ph.D."/>
 <meta property="og:description" content="I write the control code that makes wearable robots walk."/>
@@ -14,7 +14,11 @@
 <meta property="og:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
-<!-- P1-3: Google Fonts -->
+<!-- hreflang alternates -->
+<link rel="alternate" hreflang="en" href="https://chengsh96.github.io/"/>
+<link rel="alternate" hreflang="zh-CN" href="https://chengsh96.github.io/zh/"/>
+<link rel="alternate" hreflang="x-default" href="https://chengsh96.github.io/"/>
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
@@ -39,7 +43,7 @@
 <a href="projects/index.html">All Projects</a>
 </nav>
 <button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
-<button class="langBtn" type="button" data-lang-toggle aria-label="Switch language">中文</button>
+<button class="langBtn" type="button" data-lang-toggle data-lang-href="zh/index.html" aria-label="Switch language">中文</button>
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
@@ -54,10 +58,9 @@
 <a href="projects/index.html">All Projects</a>
 </div>
 </header>
-
 <main class="container">
 
-<!-- P0-2: Hero with ShiftOS video -->
+<!-- Hero with ShiftOS video -->
 <section class="hero">
 <div class="heroGrid">
 <div class="heroLeft reveal">
@@ -65,9 +68,7 @@
   <h1>Shihao Cheng, <span class="nameAccent">Ph.D.</span></h1>
   <p class="heroRole">A <span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
   <p class="sub heroLead">
-    I build real-time control systems for wearable robots — from
-    <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to
-    <a href="#projects">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.
+    I build real-time control systems for wearable robots — from <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to <a href="#projects">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.
   </p>
   <div class="ctaRow">
     <a class="btn btnPrimary" href="projects/index.html">View Projects</a>
@@ -94,7 +95,7 @@
 </div>
 </section>
 
-<!-- P0-3: Stat card row -->
+<!-- Stat card row -->
 <section class="section statRow reveal" aria-label="Career highlights">
 <div class="statRowHead">
   <h3 class="statRowTitle">Deployment &amp; Recognition</h3>
@@ -111,7 +112,7 @@
     <div class="statBadge">Top Research Award</div>
     <div class="statLabel">Best Student Paper Award · IEEE/RSJ IROS 2023</div>
   </a>
-  <a class="stat statSupport" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&hl=en" target="_blank" rel="noopener">
+  <a class="stat statSupport" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">
     <div class="statNum statText">10+</div>
     <div class="statLabel">Peer-reviewed publications</div>
   </a>
@@ -133,18 +134,12 @@
 </div>
 <div class="aboutText">
 <p class="projDesc"><strong>I make wearable robots less robotic.</strong></p>
-<p class="projDesc">
-  My work blends control, embedded systems, and machine learning to help robotic devices understand
-  human movement intent in milliseconds. I focus on taking algorithms from simulation to production —
-  where safety, reliability, and real-world messiness matter most.
-</p>
-<p class="projDesc">
-  I like building systems that feel simple to the user because the engineering underneath is anything but.
-</p>
+<p class="projDesc">My work blends control, embedded systems, and machine learning to help robotic devices understand human movement intent in milliseconds. I focus on taking algorithms from simulation to production — where safety, reliability, and real-world messiness matter most.</p>
+<p class="projDesc">I like building systems that feel simple to the user because the engineering underneath is anything but.</p>
 </div>
 </section>
 
-<!-- P1-1: News timeline with tags -->
+<!-- News timeline -->
 <section class="section reveal" id="news">
   <div class="sectionHead">
     <h2>Recent News</h2>
@@ -244,20 +239,20 @@
   </div>
 </section>
 
-<!-- P1-2: Projects with filter chips -->
+<!-- Featured projects -->
 <section class="section" id="projects">
 <div class="sectionHead reveal">
 <h2>Featured Projects</h2>
 <div class="small">Wearable Robotics • Human-Robot Interaction</div>
 </div>
-<div class="filterRow reveal" role="group" aria-label="Filter projects">
-  <button class="filterChip is-active" data-filter="all" aria-pressed="true">All</button>
-  <button class="filterChip" data-filter="intent" aria-pressed="false">Intent Recognition</button>
-  <button class="filterChip" data-filter="gait" aria-pressed="false">Gait &amp; Locomotion</button>
-  <button class="filterChip" data-filter="ml" aria-pressed="false">Machine Learning</button>
-  <button class="filterChip" data-filter="estimation" aria-pressed="false">State Estimation</button>
-  <button class="filterChip" data-filter="software" aria-pressed="false">Software &amp; App</button>
-  <button class="filterChip" data-filter="safety" aria-pressed="false">Safety</button>
+<div class="filterRow reveal" role="tablist" aria-label="Filter projects">
+  <button class="filterChip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+  <button class="filterChip" data-filter="intent" role="tab" aria-selected="false">Intent Recognition</button>
+  <button class="filterChip" data-filter="gait" role="tab" aria-selected="false">Gait &amp; Locomotion</button>
+  <button class="filterChip" data-filter="ml" role="tab" aria-selected="false">Machine Learning</button>
+  <button class="filterChip" data-filter="estimation" role="tab" aria-selected="false">State Estimation</button>
+  <button class="filterChip" data-filter="software" role="tab" aria-selected="false">Software &amp; App</button>
+  <button class="filterChip" data-filter="safety" role="tab" aria-selected="false">Safety</button>
 </div>
 <div class="grid">
 <a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
@@ -436,17 +431,9 @@
 </div>
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
-
 </main>
 <script src="assets/site.js"></script>
 <script src="assets/widgets/step-engineering.js"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
-
-
-
-
-
-
-

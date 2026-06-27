@@ -3,6 +3,7 @@
 // Run with: npm run content:check
 
 import { routes, navItems } from "../src/content/routes.js";
+import { chrome, homeContent } from "../src/content/site.js";
 import { projects } from "../src/content/projects.js";
 import { news } from "../src/content/news.js";
 import { experience } from "../src/content/experience.js";
@@ -84,6 +85,10 @@ checkLocalized(projects, "projects");
 checkLocalized(news, "news");
 checkLocalized(experience, "experience");
 checkLocalized(education, "education");
+
+// --- homepage content (site.ts) ---
+checkLocalized(homeContent, "homeContent");
+checkLocalized(chrome, "chrome");
 
 for (const p of projects) {
   if (!p.slug || p.slug.trim() === "") fail(`project "${p.id}" is missing a slug`);

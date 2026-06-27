@@ -25,6 +25,11 @@ export function homeRootPath(locale: Locale): string {
   return routeRootPath("home", locale);
 }
 
+// Output root path of a project detail page (URL preserved via slug/filename).
+export function projectRootPath(slug: string, locale: Locale): string {
+  return locale === "zh" ? `zh/projects/${slug}.html` : `projects/${slug}.html`;
+}
+
 // Relative href from one page to another (both root paths).
 export function relHref(fromRootPath: string, toRootPath: string): string {
   const fromDir = posix.dirname(fromRootPath);

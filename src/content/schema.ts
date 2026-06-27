@@ -81,14 +81,17 @@ export type Project = {
   slug: string; // filename stem; output is projects/<slug>.html (URL preservation)
   category: LocalizedString; // "Industry" / "Research"
   tags: string[]; // internal filter tags, shared across locales
-  image: string; // card/hero image, site-root-relative
+  image: string; // homepage card image, site-root-relative
   imageDims: { w: number; h: number };
-  featured: boolean; // shown in homepage Featured Projects grid
+  alt: LocalizedString; // card image alt text
+  listOrder: number; // order on the projects listing page
+  featuredOrder?: number; // position in homepage Featured grid; absent = not featured
+  ogImage?: string; // detail-page social image; defaults to image
   title: LocalizedString;
   summary: LocalizedString;
-  alt: LocalizedString;
-  outcome?: LocalizedString; // short result line on cards
-  body: Block[]; // detail page content
+  outcome?: LocalizedString; // short result line on the homepage card
+  highlights: LocalizedString[]; // homepage card bullet list
+  body: Block[]; // detail page content (Phase 3)
 };
 
 export type NewsItem = {
