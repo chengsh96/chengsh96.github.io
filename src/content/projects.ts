@@ -1,13 +1,14 @@
 import type { Project } from "./schema.js";
 
 // Single shared project list (no separate EN/ZH arrays). `slug` = existing
-// filename stem so output URLs are preserved. Card fields are populated now;
-// detail `body` blocks are added in Phase 3. The remaining (non-featured)
-// projects are added in Phase 2 with the listing page.
+// filename stem so output URLs are preserved. Card fields are typed; the detail
+// page body is a verbatim bilingual snapshot in src/content/detail/<slug>.<locale>.html
+// (see ProjectDetail in schema.ts). `detail.seo` drives the detail <head>.
 //
-// NOTE: a few card strings already differ between EN and ZH in the live site
-// (e.g. the RA-L 2024 highlights, the tbme2024 alt). They are preserved here
-// verbatim per language; reconcile later if desired.
+// NOTE: a few card strings already differ between EN and ZH, and between the
+// homepage and listing, in the live site (e.g. RA-L 2024 highlights, the icf
+// title, several ZH summaries). They are preserved verbatim via per-language and
+// listTitle/listSummary overrides; reconcile later if desired.
 export const projects: Project[] = [
   {
     id: "shiftos",
@@ -37,7 +38,16 @@ export const projects: Project[] = [
       { en: "Low-latency transitions and safety constraints", zh: "低延迟状态切换与安全约束" },
       { en: "RTOS integration and reliability hardening", zh: "RTOS 集成与可靠性加固" },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "ShiftOS | Shihao Cheng", zh: "ShiftOS | 程世浩" },
+        description: {
+          en: "ShiftOS: the production control system for Shift Robotics' Moonwalkers robotic shoes — gait control, intent recognition, terrain adaptation, and embedded deployment across global IKEA warehouses.",
+          zh: "ShiftOS：Shift Robotics Moonwalkers 机器人鞋的生产级控制系统，涵盖步态控制、意图识别、地形自适应与嵌入式部署，已在全球 IKEA 仓库量产落地。",
+        },
+      },
+      ogImage: "assets/img/projects/shiftos_orig.jpg",
+    },
   },
   {
     id: "tbme2024",
@@ -63,7 +73,16 @@ export const projects: Project[] = [
       { en: "Safety intervention compatible with continuous control", zh: "与连续控制兼容的安全干预" },
       { en: "Multi-sensor inputs (kinematics + ranging)", zh: "多传感器输入（运动学 + 距离）" },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "Stub Avoidance (TBME 2024) | Shihao Cheng", zh: "绊脚规避（TBME 2024） | 程世浩" },
+        description: {
+          en: "Reactive safety layer for powered prosthetic legs that predicts and prevents toe stubbing on stairs and obstacles using minimum-jerk trajectory corrections, reducing stub risk from 49% to 5%. IEEE TBME 2024.",
+          zh: "动力假肢在楼梯与障碍物行走中的趾部碰撞预测与主动规避，采用最小加加速度轨迹修正将碰撞风险从 49% 降至 5%。IEEE TBME 2024。",
+        },
+      },
+      ogImage: "assets/img/projects/tbme2024_exp_demo.jpg",
+    },
   },
   {
     id: "tnsre2024",
@@ -89,7 +108,19 @@ export const projects: Project[] = [
       { en: "Phase-aligned reference generation", zh: "相位对齐的参考轨迹生成" },
       { en: "Robust across inter-leg transition cases", zh: "覆盖多种跨腿转换场景" },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: {
+          en: "Continuous Transition Control (TNSRE 2024) | Shihao Cheng",
+          zh: "连续转换控制（TNSRE 2024） | 程世浩",
+        },
+        description: {
+          en: "Continuous phase-based control for smooth transitions between level walking and stair ascent/descent in powered knee-ankle prostheses — IROS 2023 Best Student Paper Award winner. IEEE TNSRE 2024.",
+          zh: "动力膝踝假肢平地行走与楼梯升降之间的连续相位过渡控制，荣获 IROS 2023 最佳学生论文奖。IEEE TNSRE 2024。",
+        },
+      },
+      ogImage: "assets/img/projects/iros_best.jpg",
+    },
   },
   {
     id: "ral2024",
@@ -118,7 +149,16 @@ export const projects: Project[] = [
       { en: "Cross-user generalization", zh: "预训练 + 微调策略" },
       { en: "Reduced subject-specific data requirements", zh: "跨用户泛化与传感器分析" },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "RA-L 2024 | Shihao Cheng", zh: "RA-L 2024 | 程世浩" },
+        description: {
+          en: "Transfer learning pipeline for locomotion intent prediction in powered prostheses: fine-tuning pre-trained CNNs with minimal data from new transfemoral amputee users. IEEE RA-L 2024.",
+          zh: "基于迁移学习的假肢步态意图预测方法，利用少量新用户数据微调预训练 CNN 模型，提升临床部署效率。IEEE RA-L 2024。",
+        },
+      },
+      ogImage: "assets/img/projects/ral2024_concept.jpg",
+    },
   },
   {
     id: "icf",
@@ -134,7 +174,6 @@ export const projects: Project[] = [
       zh: "基于 ICF 的意图识别概念图",
     },
     title: { en: "Ambilateral Activity Recognition (TRO 2025)", zh: "双侧活动识别（TRO 2025）" },
-    // Listing uses a different title/summary than the homepage in the live site.
     listTitle: { en: "Automatic Activity Recognition (TRO 2025)", zh: "自动活动识别（TRO 2025）" },
     outcome: {
       en: "IEEE Transactions on Robotics · TNSRE 2021",
@@ -158,7 +197,16 @@ export const projects: Project[] = [
         zh: "实时分类（<5 ms），双侧步态估计",
       },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "ICF-Based Intent Recognition | Shihao Cheng", zh: "基于 ICF 的意图识别 | 程世浩" },
+        description: {
+          en: "Instantaneous Characteristic Features (ICFs) from thigh kinematics enable fast, reliable, and explainable activity recognition and continuous adaptation for powered prosthesis control. IEEE Transactions on Robotics 2025.",
+          zh: "基于大腿运动学的瞬时特征（ICF）实现动力假肢的快速、可靠且可解释的活动意图识别与连续自适应控制。IEEE Transactions on Robotics 2025。",
+        },
+      },
+      ogImage: "assets/img/projects/icf_concept.jpg",
+    },
   },
   {
     id: "embc2025",
@@ -190,7 +238,16 @@ export const projects: Project[] = [
         zh: "振动触觉确认反馈，TCP 通信连接假肢控制器",
       },
     ],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "EMBC 2025 | Shihao Cheng", zh: "EMBC 2025 | 程世浩" },
+        description: {
+          en: "Smartwatch gesture interface and vibrotactile feedback for powered knee-ankle prosthesis control, enabling intuitive locomotion mode transitions in real-world use. IEEE EMBC 2025.",
+          zh: "基于智能手表手势与振触觉反馈的动力膝踝假肢人机交互接口，支持真实环境下直觉式步态模式切换。IEEE EMBC 2025。",
+        },
+      },
+      ogImage: "assets/img/projects/embc2025_watch.jpg",
+    },
   },
 
   // --- Non-featured projects (listing only; not on the homepage grid) ---
@@ -209,7 +266,19 @@ export const projects: Project[] = [
       zh: "在站立相内连续混合阻抗，实现步行–楼梯假肢过渡的平滑控制。",
     },
     highlights: [],
-    body: [],
+    detail: {
+      seo: {
+        title: {
+          en: "Continuous Impedance Transition (TNSRE 2026) | Shihao Cheng",
+          zh: "连续阻抗过渡控制（TNSRE 2026）| 程世浩",
+        },
+        description: {
+          en: "Continuous impedance blending during walk-stair transitions for powered prosthetic legs, extending phase-based control from swing kinematics to stance-phase torque and compliance. IEEE TNSRE 2026.",
+          zh: "步行–楼梯过渡中的连续阻抗混合控制，将相位控制从摆动相运动学延伸至支撑相力矩与柔顺性。IEEE TNSRE 2026。",
+        },
+      },
+      ogImage: "assets/img/projects/tnsre-gagraphic-3683020.jpg",
+    },
   },
   {
     id: "tmrb2022",
@@ -226,125 +295,18 @@ export const projects: Project[] = [
       zh: "统一建模步行与楼梯运动及其过渡过程的运动学表示。",
     },
     highlights: [],
-    seo: {
-      title: {
-        en: "Transitional Kinematics Model (TMRB 2022) | Shihao Cheng",
-        zh: "过渡运动学模型（TMRB 2022） | 程世浩",
-      },
-      description: {
-        en: "Unified continuous gait framework modeling leg kinematics as convex combinations of steady-state behaviors, enabling smooth activity transitions without discrete mode switching. IEEE TMRB 2022.",
-        zh: "将稳态运动学组合为凸组合的统一连续步态框架，实现无离散模式切换的多活动平滑过渡。IEEE TMRB 2022。",
-      },
-    },
-    body: [
-      {
-        kind: "linkRow",
-        links: [
-          {
-            href: "https://ieeexplore.ieee.org/abstract/document/9803191",
-            label: { en: "TMRB 2022 Paper", zh: "TMRB 2022 论文" },
-          },
-        ],
-      },
-      {
-        kind: "mediaGrid",
-        items: [
-          {
-            image: "assets/img/projects/tmrb2022_concept.jpg",
-            w: 2750,
-            h: 1230,
-            alt: {
-              en: "Conceptual formulation of the transitional kinematics model",
-              zh: "过渡运动学模型的概念性构建",
-            },
-            caption: {
-              en: "Conceptual formulation of the transitional kinematics model using convex combinations of steady-state gait behaviors.",
-              zh: "通过对稳态步态行为进行凸组合，构建统一的过渡运动学模型的概念性示意。",
-            },
-          },
-          {
-            image: "assets/img/projects/tmrb2022_model.jpg",
-            w: 1605,
-            h: 772,
-            alt: {
-              en: "Trained transitional kinematics model (TMRB 2022)",
-              zh: "训练后的过渡运动学模型（TMRB 2022）",
-            },
-            caption: {
-              en: "Learned kinematic trajectories generated by the trained transitional model, demonstrating smooth inter-activity blending.",
-              zh: "由训练得到的过渡模型生成的运动学轨迹，展示了不同活动之间平滑、连续的过渡效果。",
-            },
-          },
-        ],
-      },
-      {
-        kind: "paragraph",
-        cls: "projDesc u-mt-14",
-        text: {
-          en: "The Transitional Kinematics Model unifies gait and transitional movements in a single continuous framework by expressing the leg’s kinematics as a convex combination of steady-state behaviors. This enables smooth transitions between locomotor activities (e.g., level walking ↔ stairs) without requiring discrete mode switches, which are prone to timing error and user discomfort.",
-          zh: "过渡运动学模型通过将下肢运动学表示为多个稳态步态行为的<strong>凸组合</strong>，在单一连续框架中统一描述步态与活动转换过程。该方法能够在不依赖离散模式切换的情况下，实现不同运动活动之间（如平地行走 ↔ 上下楼梯）的平滑过渡，避免了传统切换方法中常见的时序误差与用户不适。",
+    detail: {
+      seo: {
+        title: {
+          en: "Transitional Kinematics Model (TMRB 2022) | Shihao Cheng",
+          zh: "过渡运动学模型（TMRB 2022） | 程世浩",
+        },
+        description: {
+          en: "Unified continuous gait framework modeling leg kinematics as convex combinations of steady-state behaviors, enabling smooth activity transitions without discrete mode switching. IEEE TMRB 2022.",
+          zh: "将稳态运动学组合为凸组合的统一连续步态框架，实现无离散模式切换的多活动平滑过渡。IEEE TMRB 2022。",
         },
       },
-      {
-        kind: "paragraph",
-        text: {
-          en: "The model bridges classical gait characterization and transition behavior by leveraging mathematical constraints on smoothness and continuity, ultimately enabling a more robust control architecture for prosthetic and exoskeletal applications.",
-          zh: "该模型在经典步态表征与活动转换行为之间建立了桥梁，通过引入对平滑性与连续性的数学约束，为假肢与外骨骼系统提供了一种更加鲁棒、可推广的控制建模基础。",
-        },
-      },
-      { kind: "hr" },
-      { kind: "heading", text: { en: "What I built", zh: "本人贡献" } },
-      {
-        kind: "list",
-        items: [
-          {
-            en: "A convex-combination kinematics model that generates transitional motion between level walking and stair ascent/descent by blending steady-state reference curves.",
-            zh: "构建基于<strong>凸组合</strong>的运动学模型，通过融合平地行走与楼梯运动的稳态参考轨迹，生成活动转换过程中的连续运动。",
-          },
-          {
-            en: "A formulation that respects differentiability and smoothness constraints, ensuring jerk-limited trajectories across all phases of gait.",
-            zh: "提出满足可微性与平滑性约束的数学表述，确保整个步态周期内的轨迹连续性与跃度受限特性。",
-          },
-          {
-            en: "An experimental validation pipeline showing kinematic reconstruction accuracy across multiple subjects and motion scenarios.",
-            zh: "搭建实验验证流程，在多名受试者与多种运动场景下验证运动学重构精度。",
-          },
-        ],
-      },
-      { kind: "hr" },
-      { kind: "heading", text: { en: "Why it matters", zh: "研究意义" } },
-      {
-        kind: "list",
-        items: [
-          {
-            en: "Provides a principled alternative to mode-switching for transitions, reducing abrupt changes and improving predictability in controller behavior.",
-            zh: "为活动转换提供了不同于离散模式切换的<strong>理论化连续建模方法</strong>，显著减少控制行为中的突变与不可预测性。",
-          },
-          {
-            en: "Supports a variety of transition contexts (walking ↔ stairs), enabling more natural locomotion in assistive devices.",
-            zh: "支持多种转换情形（平地行走 ↔ 楼梯），为辅助行走设备实现更加自然的运动模式奠定基础。",
-          },
-          {
-            en: "Demonstrates the potential for **continuous transition models** to improve comfort and stability compared with hybrid or finite-state approaches.",
-            zh: "从理论与实验层面展示了<strong>连续转换模型</strong>相较于混合或有限状态方法在舒适性与稳定性方面的潜在优势。",
-          },
-        ],
-      },
-      { kind: "hr" },
-      { kind: "heading", text: { en: "Skills highlighted", zh: "技术要点" } },
-      {
-        kind: "pills",
-        items: [
-          { en: "Biomechanics modeling", zh: "生物力学建模" },
-          { en: "Trajectory smoothing", zh: "轨迹平滑" },
-          { en: "Convex combination strategies", zh: "凸组合策略" },
-          { en: "Smooth transition frameworks", zh: "连续转换建模" },
-        ],
-      },
-    ],
-    affil: {
-      en: 'Ph.D. research conducted in the <a href="https://locolab.robotics.umich.edu/index.html" target="_blank" rel="noopener">LocoLab</a> at the University of Michigan, advised by Prof. Robert D. Gregg.',
-      zh: '本研究于密歇根大学 <a href="https://locolab.robotics.umich.edu/index.html" target="_blank" rel="noopener">LocoLab</a> 开展，导师为 Robert D. Gregg 教授。',
+      ogImage: "assets/img/projects/tmrb2022_concept.jpg",
     },
   },
   {
@@ -362,7 +324,16 @@ export const projects: Project[] = [
       zh: "在疲劳与耐力约束下评估控制器的长期鲁棒性。",
     },
     highlights: [],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "IROS 2023 | Shihao Cheng", zh: "IROS 2023 | 程世浩" },
+        description: {
+          en: "Continuous phase-based mid-level control doubles powered prosthesis user endurance over demanding daily activities — a benefit invisible to traditional timed metrics. IEEE/RSJ IROS 2023.",
+          zh: "连续相位控制使动力膝踝假肢在日常多活动中的耐力倍增，传统计时指标难以反映这一优势。IEEE/RSJ IROS 2023。",
+        },
+      },
+      ogImage: "assets/img/projects/iros2023_exp.jpg",
+    },
   },
   {
     id: "sim2real",
@@ -379,7 +350,16 @@ export const projects: Project[] = [
       zh: "结合 MuJoCo 数字孪生与强化学习，实现安全的个性化控制参数优化。",
     },
     highlights: [],
-    body: [],
+    detail: {
+      seo: {
+        title: { en: "Sim-to-Real Personalization | Shihao Cheng", zh: "仿真到现实的个性化控制 | 程世浩" },
+        description: {
+          en: "Sim-to-real personalization for wearable robot impedance control using digital twins and learning-based methods to adapt controllers safely without increasing risk to real users.",
+          zh: "利用数字孪生与学习方法实现可穿戴机器人阻抗控制的仿真到现实个性化，在不增加真实用户风险的前提下提升控制适配性。",
+        },
+      },
+      ogImage: "assets/img/projects/placeholder.svg",
+    },
   },
 ];
 

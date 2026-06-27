@@ -2,6 +2,8 @@
 // Validates the shared content model so EN and ZH cannot drift apart.
 // Run with: npm run content:check
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { routes, navItems } from "../src/content/routes.js";
 import { chrome, homeContent } from "../src/content/site.js";
 import { projects } from "../src/content/projects.js";
@@ -9,6 +11,7 @@ import { news } from "../src/content/news.js";
 import { experience } from "../src/content/experience.js";
 import { education } from "../src/content/education.js";
 
+const ROOT = process.cwd();
 const errors: string[] = [];
 const fail = (msg: string) => errors.push(msg);
 
@@ -95,6 +98,13 @@ for (const p of projects) {
   if (!p.title) fail(`project "${p.id}" is missing a localized title`);
   if (!p.summary) fail(`project "${p.id}" is missing a localized summary`);
   if (!p.alt) fail(`project "${p.id}" is missing localized alt text`);
+  // Detail body must exist (non-empty) for BOTH locales so they cannot drift.
+  for (const loc of ["en", "zh"] as const) {
+    const file = join(ROOT, "src/content/detail", `${p.slug}.${loc}.html`);
+    let body = "";
+    try { body = readFileSync(file, "utf8"); } catch { /* missing */ }
+    if (body.trim() === "") fail(`project "${p.id}" detail body missing/empty: src/content/detail/${p.slug}.${loc}.html`);
+  }
 }
 
 const counts = `routes=${routes.length} nav=${navItems.length} projects=${projects.length} news=${news.length} experience=${experience.length} education=${education.length}`;

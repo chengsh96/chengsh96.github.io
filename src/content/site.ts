@@ -56,7 +56,9 @@ export const homeContent = {
     rolePrefix: { en: "A ", zh: "一位 " } as LocalizedString,
     lead: {
       en: 'I build real-time control systems for wearable robots — from <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to <a href="#projects">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.',
-      zh: '我为可穿戴机器人构建实时控制系统——从 <a href="projects/shiftos.html">仓库地面的 Moonwalkers</a>，到<a href="#projects">能自适应楼梯、坡道与复杂地形的智能假肢</a>。',
+      // The space in "， 到" matches the original page's rendered whitespace
+      // (the source wrapped this line); kept for pixel-identical output.
+      zh: '我为可穿戴机器人构建实时控制系统——从 <a href="projects/shiftos.html">仓库地面的 Moonwalkers</a>， 到<a href="#projects">能自适应楼梯、坡道与复杂地形的智能假肢</a>。',
     } as LocalizedRichText,
     cta: {
       viewProjects: { en: "View Projects", zh: "查看项目" } as LocalizedString,
@@ -140,7 +142,7 @@ export const homeContent = {
       },
       {
         en: "My work blends control, embedded systems, and machine learning to help robotic devices understand human movement intent in milliseconds. I focus on taking algorithms from simulation to production — where safety, reliability, and real-world messiness matter most.",
-        zh: "我的工作融合控制、嵌入式系统与机器学习，帮助机器人设备在毫秒内理解人体运动意图。我专注于将算法从仿真推向量产——在那里，安全、可靠与真实世界的复杂性才是最终考验。",
+        zh: "我的工作融合控制、嵌入式系统与机器学习，帮助机器人设备在毫秒内理解人体运动意图。 我专注于将算法从仿真推向量产——在那里，安全、可靠与真实世界的复杂性才是最终考验。",
       },
       {
         en: "I like building systems that feel simple to the user because the engineering underneath is anything but.",
@@ -205,12 +207,6 @@ export const homeContent = {
   },
 
   footerName: { en: "Shihao Cheng", zh: "程世浩" } as LocalizedString,
-};
-
-// Project detail page footer nav labels.
-export const projectDetail = {
-  backToProjects: { en: "← Back to All Projects", zh: "← 返回全部项目" } as LocalizedString,
-  featuredProjects: { en: "Featured Projects", zh: "精选项目" } as LocalizedString,
 };
 
 // Projects listing page (projects/index.html) UI strings.

@@ -50,28 +50,20 @@ export type NavItem = {
 };
 
 // ---------------------------------------------------------------------------
-// Project detail bodies (typed blocks)
+// Project detail pages
 // ---------------------------------------------------------------------------
-
-export type MediaItem = {
-  image: string; // path relative to site root, e.g. "assets/img/projects/x.jpg"
-  w: number;
-  h: number;
-  alt: LocalizedString;
-  caption?: LocalizedRichText;
+//
+// Detail page bodies are long-form and bespoke per project (award badges,
+// custom media layouts, the ShiftOS evolution timeline, …). Forcing them into a
+// generic typed-block schema would either lose fidelity or over-engineer the
+// model, so each body is kept as a verbatim bilingual snapshot in
+// src/content/detail/<slug>.<locale>.html. The generator wraps it with the
+// shared (typed, registry-driven) <head>, <nav>, and scripts. Parity is still
+// enforced: both language files must exist and be non-empty (check-content-parity).
+export type ProjectDetail = {
+  seo: { title: LocalizedString; description: LocalizedString };
+  ogImage: string; // site-root-relative
 };
-
-export type Block =
-  | { kind: "paragraph"; text: LocalizedRichText; cls?: string } // default class "projDesc"
-  | { kind: "heading"; text: LocalizedString }
-  | { kind: "list"; items: LocalizedRichText[] }
-  | { kind: "pills"; items: LocalizedString[] }
-  | { kind: "linkRow"; links: { href: string; label: LocalizedString }[] }
-  | { kind: "mediaGrid"; items: MediaItem[] }
-  | { kind: "hr" }
-  // Escape hatch for bespoke layouts (e.g. shiftos). Still bilingual, so the
-  // parity checker enforces both languages exist and are non-empty.
-  | { kind: "raw"; html: LocalizedRichText };
 
 // ---------------------------------------------------------------------------
 // Content collections
@@ -87,7 +79,6 @@ export type Project = {
   alt: LocalizedString; // card image alt text
   listOrder: number; // order on the projects listing page
   featuredOrder?: number; // position in homepage Featured grid; absent = not featured
-  ogImage?: string; // detail-page social image; defaults to image
   title: LocalizedString;
   summary: LocalizedString;
   // Listing-page card overrides — some projects show different title/summary on
@@ -96,11 +87,8 @@ export type Project = {
   listSummary?: LocalizedString;
   outcome?: LocalizedString; // short result line on the homepage card
   highlights: LocalizedString[]; // homepage card bullet list
-  // Detail page. `body` empty = detail page not yet migrated (still hand-authored).
-  detailTitle?: LocalizedString; // detail <h1>; defaults to title
-  seo?: { title: LocalizedString; description: LocalizedString }; // detail <head>
-  body: Block[]; // detail page card content
-  affil?: LocalizedRichText; // trailing <p class="affil"> after the card
+  // Detail page metadata; body comes from src/content/detail/<slug>.<locale>.html.
+  detail: ProjectDetail;
 };
 
 export type NewsItem = {

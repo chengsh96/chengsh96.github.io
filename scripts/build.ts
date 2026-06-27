@@ -3,8 +3,9 @@
 // writing files in place. `--check` regenerates and diffs against the committed
 // HTML (CI gate: fails if HTML was hand-edited or a locale drifted).
 //
-// Pages migrated to the content model so far: homepage (EN + ZH).
-// Later phases register the projects listing and project detail pages here.
+// Pages: homepage, projects listing, and every project detail page. Detail page
+// bodies are verbatim bilingual snapshots under src/content/detail/; everything
+// else is rendered from the typed content model.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -16,7 +17,6 @@ import { homeRootPath, projectRootPath, routeRootPath } from "../src/lib/localiz
 import { renderPage, type HeadMeta } from "../src/render/layout.js";
 import { renderHome } from "../src/render/home.js";
 import { renderProjectsIndex } from "../src/render/projects-index.js";
-import { renderProjectDetail } from "../src/render/project-detail.js";
 
 const ROOT = process.cwd();
 const CHECK = process.argv.includes("--check");
@@ -32,6 +32,10 @@ function routeMeta(routeId: string, locale: Locale): HeadMeta {
     ogDescription: (route.ogDescription ?? route.description)[locale],
     ogImage: route.ogImage,
   };
+}
+
+function detailBody(slug: string, locale: Locale): string {
+  return readFileSync(join(ROOT, "src/content/detail", `${slug}.${locale}.html`), "utf8").replace(/\s+$/, "");
 }
 
 function buildPages(): Page[] {
@@ -64,26 +68,23 @@ function buildPages(): Page[] {
       }),
     });
 
-    // Project detail pages — only those migrated to the content model (body set).
+    // Project detail pages (verbatim bilingual body + generated head/nav/scripts)
     for (const project of projects) {
-      if (project.body.length === 0) continue;
       const detailPath = projectRootPath(project.slug, locale);
-      const og = project.ogImage ?? project.image;
-      const seoTitle = project.seo?.title[locale] ?? project.title[locale];
-      const seoDesc = project.seo?.description[locale] ?? project.summary[locale];
+      const seo = project.detail.seo;
       pages.push({
         rootPath: detailPath,
         html: renderPage({
           locale,
           rootPath: detailPath,
           meta: {
-            title: seoTitle,
-            description: seoDesc,
-            ogTitle: seoTitle,
-            ogDescription: seoDesc,
-            ogImage: og,
+            title: seo.title[locale],
+            description: seo.description[locale],
+            ogTitle: seo.title[locale],
+            ogDescription: seo.description[locale],
+            ogImage: project.detail.ogImage,
           },
-          main: renderProjectDetail(project, locale),
+          main: `<main class="container">\n${detailBody(project.slug, locale)}\n</main>`,
           scripts: ["assets/site.js"],
         }),
       });
@@ -115,6 +116,6 @@ if (CHECK) {
 } else {
   for (const page of pages) {
     writeFileSync(join(ROOT, page.rootPath), page.html);
-    console.log("wrote", page.rootPath);
   }
+  console.log(`build — wrote ${pages.length} page(s).`);
 }
