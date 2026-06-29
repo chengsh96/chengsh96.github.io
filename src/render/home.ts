@@ -4,6 +4,7 @@ import { featuredProjects } from "../content/projects.js";
 import { news } from "../content/news.js";
 import { experience } from "../content/experience.js";
 import { education } from "../content/education.js";
+import { journey } from "../content/journey.js";
 import {
   homeRootPath,
   projectRootPath,
@@ -42,7 +43,7 @@ export function renderHome(locale: Locale): string {
   </div>
 </div>
 
-<div class="heroRight reveal">
+<div class="heroRight reveal reveal-right">
   <figure class="heroVideo">
     <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
       poster="${a("assets/video/shiftos_demo_poster.jpg")}"
@@ -57,16 +58,18 @@ export function renderHome(locale: Locale): string {
 </section>`;
 
   const stats = c.recognition.stats
-    .map((s) => {
+    .map((s, i) => {
       const badge = s.badge ? `\n    <div class="statBadge">${esc(s.badge[locale])}</div>` : "";
       const inner = `\n    <div class="statNum statText">${esc(s.num)}</div>${badge}\n    <div class="statLabel">${esc(s.label[locale])}</div>\n  `;
-      if (s.ref.kind === "none") return `  <div class="${s.classes}">${inner}</div>`;
+      const cls = `${s.classes} reveal`;
+      const d = ` style="--d:${i * 90}ms"`;
+      if (s.ref.kind === "none") return `  <div class="${cls}"${d}>${inner}</div>`;
       const href =
         s.ref.kind === "project"
           ? relHref(root, projectRootPath(s.ref.slug, locale))
           : s.ref.url;
       const extern = s.ref.kind === "external" ? ' target="_blank" rel="noopener"' : "";
-      return `  <a class="${s.classes}" href="${escUrl(href)}"${extern}>${inner}</a>`;
+      return `  <a class="${cls}" href="${escUrl(href)}"${extern}${d}>${inner}</a>`;
     })
     .join("\n");
 
@@ -136,10 +139,10 @@ ${newsItems}
     .join("\n");
 
   const cards = featuredProjects()
-    .map((p) => {
+    .map((p, i) => {
       const href = relHref(root, projectRootPath(p.slug, locale));
       const bullets = p.highlights.map((h) => `<li>${esc(h[locale])}</li>`).join("\n");
-      return `<a class="card proj reveal" href="${escUrl(href)}" data-tags="${p.tags.join(" ")}">
+      return `<a class="card proj reveal reveal-left" style="--d:${i * 90}ms" href="${escUrl(href)}" data-tags="${p.tags.join(" ")}">
 <div class="projMedia"><img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" alt="${esc(p.alt[locale])}" src="${a(p.image)}"/></div>
 <div class="projTop">
 <p class="projTitle">${esc(p.title[locale])}</p>
@@ -194,7 +197,7 @@ ${cards}
 </section>`;
 
   const orgCards = experience
-    .map((org) => {
+    .map((org, i) => {
       const roles = org.roles
         .map(
           (r) => `<p class="small"><strong>${esc(r.role[locale])}</strong>${esc(r.dates[locale])}</p>
@@ -203,12 +206,45 @@ ${r.bullets.map((b) => `<li>${esc(b[locale])}</li>`).join("\n")}
 </ul>`,
         )
         .join("\n<hr/>\n");
-      return `<div class="card">
+      return `<div class="card expCard reveal" style="--d:${i * 120}ms">
 <h3>${esc(org.org[locale])}</h3>
 ${roles}
 </div>`;
     })
     .join("\n");
+
+  const tlNodes = journey
+    .map((n, i) => {
+      const kindLabel =
+        n.kind === "research" ? c.journeySection.researchLabel[locale] : c.journeySection.industryLabel[locale];
+      const current = i === journey.length - 1 ? " tl-current" : "";
+      return `  <div class="tlNode tl-${n.kind}${current} reveal" style="--d:${i * 100}ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">${esc(n.year)}</div>
+    <div class="tlCard">
+      <div class="tlKind">${esc(kindLabel)}</div>
+      <div class="tlTitle">${esc(n.title[locale])}</div>
+      <div class="tlOrg">${esc(n.org[locale])}</div>
+      <div class="tlDetail">${esc(n.detail[locale])}</div>
+    </div>
+  </div>`;
+    })
+    .join("\n");
+
+  const journeySection = `
+<!-- Research-to-product timeline -->
+<section class="section reveal" id="journey">
+<div class="sectionHead">
+<h2>${esc(c.journeySection.heading[locale])}</h2>
+<div class="small">${esc(c.journeySection.small[locale])}</div>
+</div>
+<div class="timelineWrap reveal">
+  <div class="timelineTrack" data-timeline>
+    <div class="timelineLine" aria-hidden="true"></div>
+${tlNodes}
+  </div>
+</div>
+</section>`;
 
   const experienceSection = `
 <section class="section reveal" id="experience">
@@ -266,6 +302,7 @@ ${about}
 ${newsSection}
 ${projectsSection}
 ${stepEngineering}
+${journeySection}
 ${experienceSection}
 ${educationSection}
 ${contactSection}

@@ -189,6 +189,16 @@ export const homeContent = {
     timelineAria: { en: "Gait phases", zh: "步态阶段" } as LocalizedString,
   },
 
+  journeySection: {
+    heading: { en: "Research → Product", zh: "从研究到产品" } as LocalizedString,
+    small: {
+      en: "From the lab to real-world deployment",
+      zh: "从实验室走向真实场景",
+    } as LocalizedString,
+    researchLabel: { en: "Research", zh: "科研" } as LocalizedString,
+    industryLabel: { en: "Industry", zh: "产业" } as LocalizedString,
+  },
+
   experienceSection: {
     heading: { en: "Experience", zh: "经历" } as LocalizedString,
     small: { en: "Selected roles", zh: "精选岗位" } as LocalizedString,

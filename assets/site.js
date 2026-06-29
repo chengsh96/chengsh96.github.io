@@ -401,3 +401,52 @@ if (lightboxTargets.length) {
     wire(btn);
   });
 })();
+
+
+// ===========================
+// Scroll progress bar + sticky-nav shadow
+// ===========================
+(function initScrollChrome(){
+  const bar = document.querySelector('.scrollProgress');
+  const nav = document.querySelector('.nav');
+  if (!bar && !nav) return;
+  let ticking = false;
+  function update(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+    if (bar) bar.style.transform = 'scaleX(' + p + ')';
+    if (nav) nav.classList.toggle('scrolled', h.scrollTop > 8);
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+
+
+// ===========================
+// Drag-to-scroll for the research -> product timeline
+// ===========================
+(function initTimelineDrag(){
+  const track = document.querySelector('[data-timeline]');
+  if (!track) return;
+  let down = false, startX = 0, startScroll = 0, moved = false;
+  track.addEventListener('pointerdown', (e) => {
+    down = true; moved = false; startX = e.clientX; startScroll = track.scrollLeft;
+    track.classList.add('dragging');
+    track.setPointerCapture && track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    track.scrollLeft = startScroll - dx;
+  });
+  function end(){ down = false; track.classList.remove('dragging'); }
+  track.addEventListener('pointerup', end);
+  track.addEventListener('pointercancel', end);
+  // Suppress accidental click navigation after a drag
+  track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+})();

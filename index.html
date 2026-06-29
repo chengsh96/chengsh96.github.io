@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=13" rel="stylesheet"/>
+<link href="assets/site.css?v=14" rel="stylesheet"/>
 </head>
 <body>
+<div class="scrollProgress" aria-hidden="true"></div>
 <header class="nav">
 <div class="navInner">
 <div class="brand">
@@ -81,7 +82,7 @@
   </div>
 </div>
 
-<div class="heroRight reveal">
+<div class="heroRight reveal reveal-right">
   <figure class="heroVideo">
     <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
       poster="assets/video/shiftos_demo_poster.jpg"
@@ -102,25 +103,25 @@
   <p class="statRowSub">Robotics systems deployed in the real world, with research recognized at top venues.</p>
 </div>
 <div class="statGrid">
-  <a class="stat stat--featured statHero" href="projects/shiftos.html">
+  <a class="stat stat--featured statHero reveal" href="projects/shiftos.html" style="--d:0ms">
     <div class="statNum statText">IKEA</div>
     <div class="statBadge">Real-World Deployment</div>
     <div class="statLabel">Moonwalkers deployed across global IKEA warehouses</div>
   </a>
-  <a class="stat stat--award statHero" href="projects/tnsre2024.html">
+  <a class="stat stat--award statHero reveal" href="projects/tnsre2024.html" style="--d:90ms">
     <div class="statNum statText">IROS '23</div>
     <div class="statBadge">Top Research Award</div>
     <div class="statLabel">Best Student Paper Award · IEEE/RSJ IROS 2023</div>
   </a>
-  <a class="stat statSupport" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+  <a class="stat statSupport reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
     <div class="statNum statText">10+</div>
     <div class="statLabel">Peer-reviewed publications</div>
   </a>
-  <a class="stat statSupport" href="projects/icf.html">
+  <a class="stat statSupport reveal" href="projects/icf.html" style="--d:270ms">
     <div class="statNum statText">T-RO '25</div>
     <div class="statLabel">First-author · Flagship robotics journal</div>
   </a>
-  <div class="stat statSupport">
+  <div class="stat statSupport reveal" style="--d:360ms">
     <div class="statNum statText">50+</div>
     <div class="statLabel">Journal &amp; Conference Reviews</div>
   </div>
@@ -255,7 +256,7 @@
   <button class="filterChip" data-filter="safety" role="tab" aria-selected="false">Safety</button>
 </div>
 <div class="grid">
-<a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
+<a class="card proj reveal reveal-left" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
 <div class="projMedia"><img loading="lazy" width="760" height="500" alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Moonwalkers Control System (ShiftOS)</p>
@@ -269,7 +270,7 @@
 <li>RTOS integration and reliability hardening</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
+<a class="card proj reveal reveal-left" style="--d:90ms" href="projects/tbme2024.html" data-tags="safety estimation">
 <div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p>
@@ -282,7 +283,7 @@
 <li>Multi-sensor inputs (kinematics + ranging)</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
+<a class="card proj reveal reveal-left" style="--d:180ms" href="projects/tnsre2024.html" data-tags="gait">
 <div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Continuous Transition Control (TNSRE 2024)</p>
@@ -295,7 +296,7 @@
 <li>Robust across inter-leg transition cases</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
+<a class="card proj reveal reveal-left" style="--d:270ms" href="projects/ral2024.html" data-tags="intent ml">
 <div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p>
@@ -308,7 +309,7 @@
 <li>Reduced subject-specific data requirements</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
+<a class="card proj reveal reveal-left" style="--d:360ms" href="projects/icf.html" data-tags="intent ml">
 <div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Ambilateral Activity Recognition (TRO 2025)</p>
@@ -321,7 +322,7 @@
 <li>Real-time classifier (&lt;5 ms), ambilateral gait estimation</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
+<a class="card proj reveal reveal-left" style="--d:450ms" href="projects/embc2025.html" data-tags="software intent">
 <div class="projMedia"><img loading="lazy" width="1017" height="750" alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Smartwatch Gesture Control (EMBC 2025)</p>
@@ -360,13 +361,86 @@
   <p class="stepRef"></p>
 </section>
 
+<!-- Research-to-product timeline -->
+<section class="section reveal" id="journey">
+<div class="sectionHead">
+<h2>Research → Product</h2>
+<div class="small">From the lab to real-world deployment</div>
+</div>
+<div class="timelineWrap reveal">
+  <div class="timelineTrack" data-timeline>
+    <div class="timelineLine" aria-hidden="true"></div>
+  <div class="tlNode tl-research reveal" style="--d:0ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2018</div>
+    <div class="tlCard">
+      <div class="tlKind">Research</div>
+      <div class="tlTitle">B.S. Mechanical Engineering</div>
+      <div class="tlOrg">Purdue University</div>
+      <div class="tlDetail">Graduated with Distinction — foundations in dynamics and controls.</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:100ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2019</div>
+    <div class="tlCard">
+      <div class="tlKind">Research</div>
+      <div class="tlTitle">Ph.D. Robotics</div>
+      <div class="tlOrg">University of Michigan</div>
+      <div class="tlDetail">Joined LocoLab to research control for wearable robots.</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:200ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2020–2024</div>
+    <div class="tlCard">
+      <div class="tlKind">Research</div>
+      <div class="tlTitle">Powered Prosthesis Control</div>
+      <div class="tlOrg">Knee-ankle prostheses</div>
+      <div class="tlDetail">Continuous, interpretable control across activities and transitions.</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:300ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2023</div>
+    <div class="tlCard">
+      <div class="tlKind">Research</div>
+      <div class="tlTitle">IROS Best Student Paper</div>
+      <div class="tlOrg">IEEE/RSJ IROS 2023</div>
+      <div class="tlDetail">Recognized for continuous transition control of powered prostheses.</div>
+    </div>
+  </div>
+  <div class="tlNode tl-industry reveal" style="--d:400ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2024</div>
+    <div class="tlCard">
+      <div class="tlKind">Industry</div>
+      <div class="tlTitle">Lead Control Engineer</div>
+      <div class="tlOrg">Shift Robotics</div>
+      <div class="tlDetail">Leading control &amp; sensing for Moonwalkers robotic footwear.</div>
+    </div>
+  </div>
+  <div class="tlNode tl-industry tl-current reveal" style="--d:500ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2026</div>
+    <div class="tlCard">
+      <div class="tlKind">Industry</div>
+      <div class="tlTitle">IKEA Deployment</div>
+      <div class="tlOrg">Moonwalkers Aero</div>
+      <div class="tlDetail">Moonwalkers deployed across global IKEA warehouses.</div>
+    </div>
+  </div>
+  </div>
+</div>
+</section>
+
 <section class="section reveal" id="experience">
 <div class="sectionHead">
 <h2>Experience</h2>
 <div class="small">Selected roles</div>
 </div>
 <div class="split">
-<div class="card">
+<div class="card expCard reveal" style="--d:0ms">
 <h3>Shift Robotics</h3>
 <p class="small"><strong>Lead Control Engineer</strong> (2025–Present)</p>
 <ul class="projList">
@@ -381,7 +455,7 @@
 <li>EKF-based terrain estimation and low-latency user-intent recognition</li>
 </ul>
 </div>
-<div class="card">
+<div class="card expCard reveal" style="--d:120ms">
 <h3>University of Michigan</h3>
 <p class="small"><strong>Ph.D. Researcher</strong> (2019–2024)</p>
 <ul class="projList">

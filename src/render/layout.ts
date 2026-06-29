@@ -9,7 +9,7 @@ import {
 } from "../lib/localized.js";
 import { asset, esc, escUrl } from "./html.js";
 
-const CSS_VERSION = "v=13";
+const CSS_VERSION = "v=14";
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap";
 
@@ -105,6 +105,7 @@ export function renderPage(opts: PageOptions): string {
     `<html lang="${htmlLang[locale]}">`,
     renderHead(locale, rootPath, meta),
     "<body>",
+    '<div class="scrollProgress" aria-hidden="true"></div>',
     renderHeader(locale, rootPath),
     main,
     scriptTags,

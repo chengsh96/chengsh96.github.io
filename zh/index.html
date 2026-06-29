@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=13" rel="stylesheet"/>
+<link href="../assets/site.css?v=14" rel="stylesheet"/>
 </head>
 <body>
+<div class="scrollProgress" aria-hidden="true"></div>
 <header class="nav">
 <div class="navInner">
 <div class="brand">
@@ -81,7 +82,7 @@
   </div>
 </div>
 
-<div class="heroRight reveal">
+<div class="heroRight reveal reveal-right">
   <figure class="heroVideo">
     <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
       poster="../assets/video/shiftos_demo_poster.jpg"
@@ -102,25 +103,25 @@
   <p class="statRowSub">机器人系统落地真实场景，研究成果获顶级学术认可。</p>
 </div>
 <div class="statGrid">
-  <a class="stat stat--featured statHero" href="projects/shiftos.html">
+  <a class="stat stat--featured statHero reveal" href="projects/shiftos.html" style="--d:0ms">
     <div class="statNum statText">IKEA</div>
     <div class="statBadge">实地量产部署</div>
     <div class="statLabel">Moonwalkers 已在全球 IKEA 仓库部署</div>
   </a>
-  <a class="stat stat--award statHero" href="projects/tnsre2024.html">
+  <a class="stat stat--award statHero reveal" href="projects/tnsre2024.html" style="--d:90ms">
     <div class="statNum statText">IROS '23</div>
     <div class="statBadge">顶级科研奖项</div>
     <div class="statLabel">最佳学生论文奖 · IEEE/RSJ IROS 2023</div>
   </a>
-  <a class="stat statSupport" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+  <a class="stat statSupport reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
     <div class="statNum statText">10+</div>
     <div class="statLabel">同行评审论文</div>
   </a>
-  <a class="stat statSupport" href="projects/icf.html">
+  <a class="stat statSupport reveal" href="projects/icf.html" style="--d:270ms">
     <div class="statNum statText">T-RO '25</div>
     <div class="statLabel">第一作者 · 旗舰机器人期刊</div>
   </a>
-  <div class="stat statSupport">
+  <div class="stat statSupport reveal" style="--d:360ms">
     <div class="statNum statText">50+</div>
     <div class="statLabel">期刊与会议审稿</div>
   </div>
@@ -255,7 +256,7 @@
   <button class="filterChip" data-filter="safety" role="tab" aria-selected="false">安全</button>
 </div>
 <div class="grid">
-<a class="card proj reveal" href="projects/shiftos.html" data-tags="gait estimation intent software">
+<a class="card proj reveal reveal-left" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
 <div class="projMedia"><img loading="lazy" width="760" height="500" alt="shiftos_aero" src="../assets/img/projects/shiftos_aero.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">Moonwalkers 控制系统（ShiftOS）</p>
@@ -269,7 +270,7 @@
 <li>RTOS 集成与可靠性加固</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tbme2024.html" data-tags="safety estimation">
+<a class="card proj reveal reveal-left" style="--d:90ms" href="projects/tbme2024.html" data-tags="safety estimation">
 <div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024" src="../assets/img/projects/tbme2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">安全关键绊脚规避（TBME 2024）</p>
@@ -282,7 +283,7 @@
 <li>多传感器输入（运动学 + 距离）</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/tnsre2024.html" data-tags="gait">
+<a class="card proj reveal reveal-left" style="--d:180ms" href="projects/tnsre2024.html" data-tags="gait">
 <div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="../assets/img/projects/tnsre2024_exp.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">连续转换控制（TNSRE 2024）</p>
@@ -295,7 +296,7 @@
 <li>覆盖多种跨腿转换场景</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/ral2024.html" data-tags="intent ml">
+<a class="card proj reveal reveal-left" style="--d:270ms" href="projects/ral2024.html" data-tags="intent ml">
 <div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="../assets/img/projects/ral2024_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">迁移学习意图预测（RA-L 2024）</p>
@@ -308,7 +309,7 @@
 <li>跨用户泛化与传感器分析</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/icf.html" data-tags="intent ml">
+<a class="card proj reveal reveal-left" style="--d:360ms" href="projects/icf.html" data-tags="intent ml">
 <div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="基于 ICF 的意图识别概念图" src="../assets/img/projects/icf_concept.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">双侧活动识别（TRO 2025）</p>
@@ -321,7 +322,7 @@
 <li>实时分类（&lt;5 ms），双侧步态估计</li>
 </ul>
 </a>
-<a class="card proj reveal" href="projects/embc2025.html" data-tags="software intent">
+<a class="card proj reveal reveal-left" style="--d:450ms" href="projects/embc2025.html" data-tags="software intent">
 <div class="projMedia"><img loading="lazy" width="1017" height="750" alt="用于假肢模式切换的智能手表界面" src="../assets/img/projects/embc2025_watch.jpg"/></div>
 <div class="projTop">
 <p class="projTitle">智能手表手势控制（EMBC 2025）</p>
@@ -360,13 +361,86 @@
   <p class="stepRef"></p>
 </section>
 
+<!-- Research-to-product timeline -->
+<section class="section reveal" id="journey">
+<div class="sectionHead">
+<h2>从研究到产品</h2>
+<div class="small">从实验室走向真实场景</div>
+</div>
+<div class="timelineWrap reveal">
+  <div class="timelineTrack" data-timeline>
+    <div class="timelineLine" aria-hidden="true"></div>
+  <div class="tlNode tl-research reveal" style="--d:0ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2018</div>
+    <div class="tlCard">
+      <div class="tlKind">科研</div>
+      <div class="tlTitle">机械工程学士</div>
+      <div class="tlOrg">普渡大学</div>
+      <div class="tlDetail">以 Distinction 荣誉毕业，奠定动力学与控制基础。</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:100ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2019</div>
+    <div class="tlCard">
+      <div class="tlKind">科研</div>
+      <div class="tlTitle">机器人学博士</div>
+      <div class="tlOrg">密歇根大学</div>
+      <div class="tlDetail">加入 LocoLab，研究可穿戴机器人控制。</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:200ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2020–2024</div>
+    <div class="tlCard">
+      <div class="tlKind">科研</div>
+      <div class="tlTitle">动力假肢控制</div>
+      <div class="tlOrg">膝踝假肢</div>
+      <div class="tlDetail">面向多活动与连续转换的可解释控制。</div>
+    </div>
+  </div>
+  <div class="tlNode tl-research reveal" style="--d:300ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2023</div>
+    <div class="tlCard">
+      <div class="tlKind">科研</div>
+      <div class="tlTitle">IROS 最佳学生论文奖</div>
+      <div class="tlOrg">IEEE/RSJ IROS 2023</div>
+      <div class="tlDetail">凭借动力假肢连续转换控制研究获奖。</div>
+    </div>
+  </div>
+  <div class="tlNode tl-industry reveal" style="--d:400ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2024</div>
+    <div class="tlCard">
+      <div class="tlKind">产业</div>
+      <div class="tlTitle">首席控制工程师</div>
+      <div class="tlOrg">Shift Robotics</div>
+      <div class="tlDetail">主导 Moonwalkers 机器人鞋的控制与传感。</div>
+    </div>
+  </div>
+  <div class="tlNode tl-industry tl-current reveal" style="--d:500ms">
+    <div class="tlDot" aria-hidden="true"></div>
+    <div class="tlYear">2026</div>
+    <div class="tlCard">
+      <div class="tlKind">产业</div>
+      <div class="tlTitle">IKEA 部署落地</div>
+      <div class="tlOrg">Moonwalkers Aero</div>
+      <div class="tlDetail">Moonwalkers 在全球 IKEA 仓库部署。</div>
+    </div>
+  </div>
+  </div>
+</div>
+</section>
+
 <section class="section reveal" id="experience">
 <div class="sectionHead">
 <h2>经历</h2>
 <div class="small">精选岗位</div>
 </div>
 <div class="split">
-<div class="card">
+<div class="card expCard reveal" style="--d:0ms">
 <h3>Shift Robotics</h3>
 <p class="small"><strong>首席控制工程师</strong>（2025–至今）</p>
 <ul class="projList">
@@ -381,7 +455,7 @@
 <li>基于 EKF 的地形估计与低延迟用户意图识别</li>
 </ul>
 </div>
-<div class="card">
+<div class="card expCard reveal" style="--d:120ms">
 <h3>密歇根大学</h3>
 <p class="small"><strong>博士研究员</strong>（2019–2024）</p>
 <ul class="projList">

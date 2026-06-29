@@ -13,7 +13,8 @@ HTML.
 ```
 src/
   content/   schema.ts · routes.ts (routes + nav) · site.ts · projects.ts ·
-             news.ts · experience.ts · education.ts · detail/<slug>.<locale>.html
+             news.ts · experience.ts · education.ts · journey.ts ·
+             detail/<slug>.<locale>.html
   lib/       i18n.ts · localized.ts (nav builder, language switcher, canonical/og/hreflang)
   render/    html.ts · layout.ts · home.ts · projects-index.ts
 scripts/     build.ts (generator) · check-content-parity.ts
