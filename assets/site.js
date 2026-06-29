@@ -237,7 +237,8 @@ if (lightboxTargets.length) {
   }
 
   function setBtnLabel(isZhNow) {
-    btn.textContent = isZhNow ? "EN" : "中文";
+    btn.textContent = isZhNow ? "English" : "\u4e2d\u6587";
+    btn.setAttribute("aria-label", isZhNow ? "Switch to English" : "Switch to Chinese");
   }
 
   function normalizePath(path) {
@@ -272,10 +273,10 @@ if (lightboxTargets.length) {
     window.location.href = target + window.location.search;
   });
 
-  // URL is authoritative for language — no auto-redirect.
-  // The toggle button label reflects the current page's language.
+  // The generated page language is authoritative; URL parsing is only a fallback.
+  const pageIsZh = (document.documentElement.lang || "").toLowerCase().startsWith("zh");
   const { isZh } = parsePath();
-  setBtnLabel(isZh);
+  setBtnLabel(pageIsZh || isZh);
 })();
 
 
@@ -339,8 +340,8 @@ if (lightboxTargets.length) {
 
   const isZh = window.location.pathname.includes('/zh/');
   const roles = isZh
-    ? ['机器人工程师', '控制工程师', '研究科学家', '传感融合工程师', '可穿戴机器人开发者', '人体运动调试员']
-    : ['Robotics Engineer', 'Control Engineer', 'Research Scientist', 'Sensor Fusion Engineer', 'Wearable Robotics Builder', 'Human-Motion Debugger'];
+    ? ['控制工程师', '机器人研究者', '可穿戴机器人工程师', '人体运动研究者']
+    : ['Control Engineer', 'Robotics Researcher', 'Wearable Robotics Engineer', 'Human Locomotion Researcher'];
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     el.textContent = roles[0]; return;
@@ -515,4 +516,50 @@ if (lightboxTargets.length) {
     if (!raf) raf = requestAnimationFrame(apply);
   });
   scene.addEventListener('pointerleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+})();
+
+
+// ===========================
+// Homepage left section rail
+// ===========================
+(function initHomeSectionNav(){
+  const links = Array.from(document.querySelectorAll('.homeSectionNav a[data-section-link]'));
+  const sections = links
+    .map((link) => document.getElementById(link.dataset.sectionLink || ''))
+    .filter(Boolean);
+  if (!links.length || !sections.length) return;
+
+  const activate = (id) => {
+    links.forEach((link) => {
+      const active = link.dataset.sectionLink === id;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  let ticking = false;
+  const update = () => {
+    const marker = window.scrollY + Math.min(window.innerHeight * 0.24, 220);
+    let current = sections[0].id;
+    sections.forEach((section) => {
+      if (section.offsetTop <= marker) current = section.id;
+    });
+    const snapshot = sections.find((section) => section.id === 'snapshot');
+    if (snapshot && current === snapshot.id && window.scrollY < snapshot.offsetTop - 80) {
+      current = sections[0].id;
+    }
+    activate(current);
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  update();
 })();

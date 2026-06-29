@@ -1,10 +1,9 @@
-import type { Locale } from "../content/schema.js";
+import type { Locale, Project } from "../content/schema.js";
 import { homeContent, links } from "../content/site.js";
-import { featuredProjects } from "../content/projects.js";
+import { projectBySlug } from "../content/projects.js";
 import { news } from "../content/news.js";
 import { experience } from "../content/experience.js";
 import { education } from "../content/education.js";
-import { journey } from "../content/journey.js";
 import {
   homeRootPath,
   projectRootPath,
@@ -13,108 +12,131 @@ import {
 } from "../lib/localized.js";
 import { asset, esc, escUrl } from "./html.js";
 
+function mustProject(slug: string): Project {
+  const project = projectBySlug(slug);
+  if (!project) throw new Error(`Unknown homepage project slug: ${slug}`);
+  return project;
+}
+
 // Render the homepage <main>…</main> for a locale. Every visible string comes
-// from the content model via [locale]; structure mirrors the original markup.
+// from the content model via [locale]; structure mirrors the generated site.
 export function renderHome(locale: Locale): string {
   const root = homeRootPath(locale);
   const c = homeContent;
   const projectsHref = relHref(root, routeRootPath("projects", locale));
   const a = (p: string) => asset(p, root);
 
-  const cm = c.hero.cockpit.metrics;
-  const readoutRows = (
-    [
-      ["phase", cm.gaitPhase],
-      ["intent", cm.intent],
-      ["terrain", cm.terrain],
-      ["mode", cm.mode],
-      ["latency", cm.latency],
-    ] as const
+  const sideNav = `
+<aside class="homeSectionNav" aria-label="${esc(c.sectionNav.aria[locale])}">
+  <nav>
+${c.sectionNav.items
+  .map(
+    (item, i) =>
+      `    <a${i === 0 ? ' class="active"' : ""} href="#${escUrl(item.anchor)}" data-section-link="${esc(item.anchor)}">${esc(item.label[locale])}</a>`,
   )
-    .map(
-      ([k, label]) => `      <div class="cockpitRow">
-        <span class="cockpitLabel">${esc(label[locale])}</span>
-        <span class="cockpitValue" data-metric="${k}">—</span>
-      </div>`,
-    )
-    .join("\n");
+  .join("\n")}
+  </nav>
+</aside>`;
+
+  const heroTags = [
+    { en: "Gait control", zh: "步态控制" },
+    { en: "Embedded systems", zh: "嵌入式系统" },
+    { en: "Human locomotion", zh: "人体运动" },
+    { en: "ML intent recognition", zh: "机器学习意图识别" },
+  ] as const;
 
   const hero = `
-<!-- Hero: split-screen control cockpit -->
-<section class="hero" data-parallax-scene>
-<div class="heroBg" aria-hidden="true" data-parallax></div>
-<div class="heroGrid">
-<div class="heroLeft reveal">
+<!-- Intro / Hero -->
+<section class="hero homeHero" id="intro">
+<div class="heroGrid homeHeroGrid">
+<div class="heroLeft">
   <span class="kicker">${esc(c.hero.kicker[locale])}</span>
   <h1>${c.hero.name[locale]}</h1>
-  <p class="heroRole">${esc(c.hero.rolePrefix[locale])}<span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+  <p class="heroRole homeHeroRole">${esc(c.hero.rolePrefix[locale])}<span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
   <p class="sub heroLead">
     ${c.hero.lead[locale]}
   </p>
   <div class="ctaRow">
-    <a class="btn btnPrimary" href="${escUrl(projectsHref)}">${esc(c.hero.cta.viewProjects[locale])}</a>
-    <a class="btn" href="${escUrl(links.linkedin)}" target="_blank" rel="noopener">${esc(c.hero.cta.linkedin[locale])}</a>
+    <a class="btn btnPrimary" href="#projects">${esc(c.hero.cta.viewProjects[locale])}</a>
     <a class="btn" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.hero.cta.scholar[locale])}</a>
+    <a class="btn" href="#contact">${esc(c.hero.cta.linkedin[locale])}</a>
+    <a class="btn" href="${escUrl(projectsHref)}">${esc(c.projectsSection.allProjectsCta[locale])}</a>
   </div>
-  <div class="heroByline">
-    <img width="500" height="500" class="avatarSm" src="${a("assets/img/profile.jpg")}" alt="${esc(c.hero.avatarAlt[locale])}"/>
-    <span>${esc(c.hero.byline[locale])}</span>
+  <div class="homeHeroTags" aria-label="${esc(c.projectsSection.filterAria[locale])}">
+${heroTags.map((tag) => `    <span>${esc(tag[locale])}</span>`).join("\n")}
   </div>
 </div>
 
-<div class="heroRight reveal reveal-right">
-  <div class="cockpit" data-tilt>
-    <div class="cockpitHead">
-      <span class="cockpitLive"><span class="cockpitLiveDot" aria-hidden="true"></span>${esc(c.hero.cockpit.live[locale])}</span>
-      <span class="cockpitTitle">${esc(c.hero.cockpit.title[locale])}</span>
-    </div>
-    <figure class="cockpitFeed">
-      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-        poster="${a("assets/video/shiftos_demo_poster.jpg")}"
-        aria-label="${esc(c.hero.videoAria[locale])}">
-        <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
-        <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
-      </video>
-      <span class="cockpitScan" aria-hidden="true"></span>
-      <figcaption class="cockpitFeedCap">${c.hero.videoCaption[locale]}</figcaption>
-    </figure>
-    <div class="cockpitWave" aria-hidden="true">
-      <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0,20 C20,20 28,6 40,6 C52,6 60,34 76,34 C92,34 98,12 112,12 C126,12 134,28 150,28 C166,28 172,10 188,10 C204,10 212,32 228,32 C244,32 252,16 268,16 C282,16 290,20 300,20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </div>
-    <div class="cockpitReadout">
-${readoutRows}
-    </div>
-    <p class="cockpitCaption">${esc(c.hero.cockpit.caption[locale])}</p>
-  </div>
+<div class="heroRight">
+  <figure class="heroVideo homeVideoCard">
+    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+      poster="${a("assets/video/shiftos_demo_poster.jpg")}"
+      aria-label="${esc(c.hero.videoAria[locale])}">
+      <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
+      <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
+    </video>
+    <figcaption>${c.hero.videoCaption[locale]}</figcaption>
+  </figure>
 </div>
 </div>
 </section>`;
 
-  const stats = c.recognition.stats
-    .map((s, i) => {
-      const badge = s.badge ? `\n    <div class="statBadge">${esc(s.badge[locale])}</div>` : "";
-      const inner = `\n    <span class="statGhost" aria-hidden="true">${esc(s.num)}</span>\n    <div class="statNum statText">${esc(s.num)}</div>${badge}\n    <div class="statLabel">${esc(s.label[locale])}</div>\n  `;
-      const cls = `${s.classes} statTile reveal`;
-      const d = ` style="--d:${i * 90}ms"`;
-      if (s.ref.kind === "none") return `  <div class="${cls}"${d}>${inner}</div>`;
-      const href =
-        s.ref.kind === "project"
-          ? relHref(root, projectRootPath(s.ref.slug, locale))
-          : s.ref.url;
-      const extern = s.ref.kind === "external" ? ' target="_blank" rel="noopener"' : "";
-      return `  <a class="${cls}" href="${escUrl(href)}"${extern}${d}>${inner}</a>`;
-    })
+  const glanceChips = c.recognition.leadCard.chips
+    .map((chip) => `      <span class="chip">${esc(chip[locale])}</span>`)
+    .join("\n");
+
+  const miniStats = c.recognition.miniStats
+    .map(
+      (stat, i) => `    <article class="homeCard miniStatCard reveal" style="--d:${i * 55}ms">
+      <div class="miniStatValue">${esc(stat.value)}</div>
+      <p>${esc(stat.label[locale])}</p>
+    </article>`,
+    )
+    .join("\n");
+
+  const proofHref = (tone: string): string => {
+    if (tone === "deployment") return relHref(root, projectRootPath("shiftos", locale));
+    if (tone === "award") return relHref(root, projectRootPath("tnsre2024", locale));
+    return relHref(root, projectRootPath("icf", locale));
+  };
+
+  const proofCards = c.recognition.proofCards
+    .map(
+      (card, i) => `    <a class="homeCard glanceProofCard glanceProof-${esc(card.tone)} reveal" style="--d:${i * 70}ms" href="${escUrl(proofHref(card.tone))}">
+      <h3>${esc(card.title[locale])}</h3>
+      <div class="glanceProofMeta">${esc(card.meta[locale])}</div>
+      <p>${esc(card.body[locale])}</p>
+      <div class="chipRow">
+${card.chips.map((chip) => `        <span class="chip">${esc(chip[locale])}</span>`).join("\n")}
+      </div>
+    </a>`,
+    )
     .join("\n");
 
   const recognition = `
-<!-- Stat card row -->
-<section class="section statRow reveal" aria-label="${esc(c.recognition.sectionAria[locale])}">
-<div class="statRowHead">
-  <h3 class="statRowTitle">${esc(c.recognition.title[locale])}</h3>
-  <p class="statRowSub">${esc(c.recognition.subtitle[locale])}</p>
+<!-- Credibility Snapshot -->
+<section class="section statRow atAGlance reveal" id="snapshot" aria-label="${esc(c.recognition.sectionAria[locale])}">
+<div class="sectionHead statRowHead">
+  <div>
+    <h2>${esc(c.recognition.title[locale])}</h2>
+  </div>
 </div>
-<div class="statGrid">
-${stats}
+<div class="homeCard glancePanel">
+  <div class="glanceTop">
+    <article class="glanceLeadCard">
+      <h3>${esc(c.recognition.leadCard.headline[locale])}</h3>
+      <p>${esc(c.recognition.leadCard.body[locale])}</p>
+      <div class="chipRow glanceChipRow">
+${glanceChips}
+      </div>
+    </article>
+    <div class="miniStatGrid" aria-label="${esc(c.recognition.subtitle[locale])}">
+${miniStats}
+    </div>
+  </div>
+  <div class="glanceProofGrid">
+${proofCards}
+  </div>
 </div>
 </section>`;
 
@@ -124,14 +146,188 @@ ${stats}
 <h2>${esc(c.about.heading[locale])}</h2>
 <div class="small">${esc(c.about.small[locale])}</div>
 </div>
-<div class="aboutText">
+<div class="aboutPanel">
+  <div class="aboutText">
 ${c.about.paragraphs.map((p) => `<p class="projDesc">${p[locale]}</p>`).join("\n")}
+  </div>
+  <div class="focusGrid" aria-label="${esc(c.about.small[locale])}">
+${c.about.focusAreas
+  .map(
+    (focus) => `    <div class="focusCard">
+      <h3>${esc(focus.title[locale])}</h3>
+      <p>${esc(focus.text[locale])}</p>
+    </div>`,
+  )
+  .join("\n")}
+  </div>
 </div>
 </section>`;
 
-  const newsItems = news
+  const publicationBySlug = new Map(c.publicationsSection.items.map((pub) => [pub.slug, pub]));
+
+  const workCards = c.featuredWork.cards
+    .map((card, i) => {
+      const p = mustProject(card.slug);
+      const href = relHref(root, projectRootPath(p.slug, locale));
+      const pub = publicationBySlug.get(card.slug);
+      const compact = card.slug === "ral2024";
+      const cardClass = `homeCard workCard selectedWorkCard reveal${i === 0 ? " workCardLarge" : ""}${compact ? " workCardCompact" : ""}`;
+      const publicationMeta = pub
+        ? `<div class="workPublication">${esc(pub.venue)}${p.outcome?.en && card.slug === "tnsre2024" ? ` · ${esc(p.outcome[locale])}` : ""}</div>`
+        : "";
+      const media = compact
+        ? ""
+        : `  <div class="workCardMedia">
+    <img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" src="${a(p.image)}" alt="${esc(p.alt[locale])}"/>
+  </div>
+`;
+      return `<article class="${cardClass}" style="--d:${i * 80}ms">
+${media}  <div class="workCardBody">
+    <span class="workMeta">${esc(p.category[locale])}</span>
+    <h3><a href="${escUrl(href)}">${esc(p.title[locale])}</a></h3>
+    ${publicationMeta}
+    <p class="workSummary">${esc(pub?.contribution[locale] ?? p.summary[locale])}</p>
+    <p class="workRole"><strong>${esc(c.featuredWork.roleLabel[locale])}:</strong> ${esc(card.role[locale])}</p>
+    <div class="chipRow">
+${card.keywords.map((k) => `      <span class="chip">${esc(k[locale])}</span>`).join("\n")}
+    </div>
+    <div class="workLinks">
+      <a href="${escUrl(href)}">${esc(c.publicationsSection.projectLabel[locale])}</a>
+${pub ? `      <a href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.publicationsSection.scholarLabel[locale])}</a>` : ""}
+    </div>
+  </div>
+</article>`;
+    })
+    .join("\n");
+
+  const featuredWorkSection = `
+<!-- Selected work and publications -->
+<section class="section reveal" id="projects">
+<span class="anchorAlias" id="publications" aria-hidden="true"></span>
+<div class="sectionHead">
+<h2>${esc(c.featuredWork.heading[locale])}</h2>
+<div class="small">${esc(c.featuredWork.small[locale])}</div>
+</div>
+<p class="sectionIntro">${esc(c.featuredWork.intro[locale])}</p>
+<div class="workGrid selectedWorkGrid">
+${workCards}
+</div>
+<div class="linkRow reveal u-mt-18 selectedWorkActions">
+  <a class="btn" href="${escUrl(projectsHref)}">${esc(c.projectsSection.allProjectsCta[locale])}</a>
+  <a class="btn" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.publicationsSection.scholarLabel[locale])}</a>
+</div>
+</section>`;
+
+  const orgCards = experience
+    .flatMap((org) =>
+      org.roles.map((role) => ({
+        org,
+        role,
+      })),
+    )
+    .map(({ org, role }, i) => {
+      const bullets = role.bullets.slice(0, 3).map((b) => `<li>${esc(b[locale])}</li>`).join("\n");
+      return `<article class="timelineItem reveal" style="--d:${i * 90}ms">
+  <div class="timelineDot" aria-hidden="true"></div>
+  <div class="homeCard timelineCard">
+    <div class="timelineMeta">${esc(role.dates[locale])}</div>
+    <h3>${esc(org.org[locale])}</h3>
+    <p class="timelineRole">${esc(role.role[locale])}</p>
+    <ul class="projList">
+${bullets}
+    </ul>
+  </div>
+</article>`;
+    })
+    .join("\n");
+
+  const experienceSection = `
+<section class="section reveal" id="experience">
+<div class="sectionHead">
+<h2>${esc(c.experienceSection.heading[locale])}</h2>
+<div class="small">${esc(c.experienceSection.small[locale])}</div>
+</div>
+<div class="experienceTimeline">
+${orgCards}
+</div>
+</section>`;
+
+  const philosophySteps = c.stepEngineering.loopSteps
     .map(
-      (n) => `      <li data-tag="${n.tag}">
+      (step, i) => `<article class="philosophyStep">
+  <span class="philosophyIndex">${String(i + 1).padStart(2, "0")}</span>
+  <h3>${esc(step.title[locale])}</h3>
+  <p>${esc(step.text[locale])}</p>
+</article>`,
+    )
+    .join("\n");
+
+  const fallbackPhases = [
+    { en: "Heel Strike", zh: "脚跟触地" },
+    { en: "Loading", zh: "负重期" },
+    { en: "Mid-Stance", zh: "站立中期" },
+    { en: "Push-Off", zh: "蹬地期" },
+    { en: "Swing", zh: "摆动期" },
+    { en: "Next Heel Strike", zh: "下次脚跟触地" },
+  ] as const;
+  const fallbackDetail = {
+    human: { en: "Human", zh: "人体动作" },
+    senses: { en: "Robot senses", zh: "机器人感知" },
+    ctrl: { en: "Controller asks", zh: "控制器决策" },
+    footPitch: { en: "Foot Pitch", zh: "脚部俯仰角" },
+    vgrf: { en: "vGRF", zh: "垂直地反力" },
+    humanText: {
+      en: "The foot contacts the ground. Body weight begins transferring onto the leading leg.",
+      zh: "脚接触地面，体重开始向前腿转移。",
+    },
+    sensesText: {
+      en: "Impact timing, rapid force rise, foot orientation, and angular velocity from the IMU.",
+      zh: "冲击时序、力的快速上升、脚部朝向以及 IMU 角速度。",
+    },
+    ctrlText: {
+      en: '"Has stance begun? Is this a normal step, a sudden stop, or an uneven surface?"',
+      zh: '"是否进入支撑相？这是正常步伐、突然停止，还是不平整地面？"',
+    },
+  };
+
+  const stepEngineering = `
+<!-- Technical philosophy / Hidden Engineering Behind a Step -->
+<section class="section reveal" id="step-engineering">
+  <div class="sectionHead">
+    <h2>${esc(c.stepEngineering.heading[locale])}</h2>
+    <div class="small">${esc(c.stepEngineering.small[locale])}</div>
+  </div>
+  <div class="homeCard stepEngineeringPanel">
+    <p class="stepEngIntro">${esc(c.stepEngineering.intro[locale])}</p>
+    <div class="controlLoop fallbackLoop" aria-label="${esc(c.stepEngineering.controlLoopAria[locale])}">
+${philosophySteps}
+    </div>
+    <div class="stepTimeline fallbackTimeline" role="tablist" aria-label="${esc(c.stepEngineering.timelineAria[locale])}">
+${fallbackPhases.map((p, i) => `      <button class="sePhase" type="button" role="tab" aria-selected="${i === 0 ? "true" : "false"}">${esc(p[locale])}</button>`).join("\n")}
+    </div>
+    <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill" style="width: 16.6667%"></div></div>
+    <div class="seCenter">
+      <div class="seStage" aria-hidden="true"></div>
+      <div class="stepDetail homeCard" role="tabpanel" aria-live="polite">
+        <div id="seHuman"><h4>${esc(fallbackDetail.human[locale])}</h4><p>${esc(fallbackDetail.humanText[locale])}</p></div>
+        <div id="seSenses"><h4>${esc(fallbackDetail.senses[locale])}</h4><p>${esc(fallbackDetail.sensesText[locale])}</p></div>
+        <div id="seCtrl"><h4>${esc(fallbackDetail.ctrl[locale])}</h4><p><em>${esc(fallbackDetail.ctrlText[locale])}</em></p></div>
+      </div>
+    </div>
+    <div class="signalWaves" aria-hidden="true">
+      <div class="fallbackSignals">
+        <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.footPitch[locale])}</strong><span>deg</span></div>
+        <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.vgrf[locale])}</strong><span>%BW</span></div>
+      </div>
+    </div>
+    <div class="factGrid"></div>
+    <p class="stepRef"></p>
+  </div>
+</section>`;
+
+  const newsItems = news.slice(0, 5)
+    .map(
+      (n, i) => `      <li class="homeCard reveal" style="--d:${i * 45}ms" data-tag="${n.tag}">
         <span class="newsTag newsTag-${n.tag}">${esc(n.tagLabel[locale])}</span>
         <span class="newsDate">${esc(n.date[locale])}</span>
         <span class="newsText">
@@ -142,161 +338,25 @@ ${c.about.paragraphs.map((p) => `<p class="projDesc">${p[locale]}</p>`).join("\n
     .join("\n\n");
 
   const newsSection = `
-<!-- News timeline -->
+<!-- Recent updates -->
 <section class="section reveal" id="news">
   <div class="sectionHead">
     <h2>${esc(c.newsSection.heading[locale])}</h2>
     <div class="small">${esc(c.newsSection.small[locale])}</div>
   </div>
 
-  <div class="card">
-    <ul class="newsList">
+  <div class="updatesCard">
+    <ul class="newsList compactNewsList">
 
 ${newsItems}
 
     </ul>
-
-    <div class="newsControls">
-      <button class="btn newsToggle" id="newsToggleBtn" type="button" aria-expanded="false">
-        ${esc(c.newsSection.showMore[locale])}
-      </button>
-    </div>
   </div>
 </section>`;
 
-  const chips = c.projectsSection.filters
-    .map((f, i) => {
-      const active = i === 0;
-      return `  <button class="filterChip${active ? " is-active" : ""}" data-filter="${f.key}" role="tab" aria-selected="${active ? "true" : "false"}">${esc(f.label[locale])}</button>`;
-    })
+  const awardItems = c.educationSection.awards
+    .map((award) => `<li>${esc(award[locale])}</li>`)
     .join("\n");
-
-  const cards = featuredProjects()
-    .map((p, i) => {
-      const href = relHref(root, projectRootPath(p.slug, locale));
-      const bullets = p.highlights.map((h) => `<li>${esc(h[locale])}</li>`).join("\n");
-      const outcome = p.outcome ? `<p class="csOutcome">${esc(p.outcome[locale])}</p>` : "";
-      return `<a class="caseStudy proj reveal" style="--d:${i * 80}ms" href="${escUrl(href)}" data-tags="${p.tags.join(" ")}">
-  <div class="csVisual">
-    <img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" alt="${esc(p.alt[locale])}" src="${a(p.image)}"/>
-    <span class="csIndex" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
-    <span class="csTagFloat">${esc(p.category[locale])}</span>
-  </div>
-  <div class="csText">
-    ${outcome}
-    <h3 class="csTitle">${esc(p.title[locale])}</h3>
-    <p class="csDesc">${esc(p.summary[locale])}</p>
-    <ul class="csList">
-${bullets}
-    </ul>
-    <span class="csArrow" aria-hidden="true">${esc(c.projectsSection.caseStudyCta[locale])} →</span>
-  </div>
-</a>`;
-    })
-    .join("\n");
-
-  const projectsSection = `
-<!-- Featured projects -->
-<section class="section" id="projects">
-<div class="sectionHead reveal">
-<h2>${esc(c.projectsSection.heading[locale])}</h2>
-<div class="small">${esc(c.projectsSection.small[locale])}</div>
-</div>
-<div class="filterRow reveal" role="tablist" aria-label="${esc(c.projectsSection.filterAria[locale])}">
-${chips}
-</div>
-<div class="caseStudies">
-${cards}
-</div>
-<div class="linkRow reveal u-mt-18">
-  <a class="btn" href="${escUrl(projectsHref)}">${esc(c.projectsSection.allProjectsCta[locale])}</a>
-</div>
-</section>`;
-
-  const stepEngineering = `
-<!-- The Hidden Engineering in a Step -->
-<section class="section reveal" id="step-engineering">
-  <div class="sectionHead">
-    <h2>${esc(c.stepEngineering.heading[locale])}</h2>
-    <div class="small">${esc(c.stepEngineering.small[locale])}</div>
-  </div>
-  <p class="stepEngIntro"></p>
-  <div class="controlLoop" aria-label="${esc(c.stepEngineering.controlLoopAria[locale])}"></div>
-  <div class="stepTimeline" role="tablist" aria-label="${esc(c.stepEngineering.timelineAria[locale])}"></div>
-  <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
-  <div class="seCenter">
-    <div class="seStage" aria-hidden="true"></div>
-    <div class="stepDetail card" role="tabpanel" aria-live="polite">
-      <div id="seHuman"></div>
-      <div id="seSenses"></div>
-      <div id="seCtrl"></div>
-    </div>
-  </div>
-  <div class="signalWaves" aria-hidden="true"></div>
-  <div class="factGrid"></div>
-  <p class="stepRef"></p>
-</section>`;
-
-  const orgCards = experience
-    .map((org, i) => {
-      const roles = org.roles
-        .map(
-          (r) => `<p class="small"><strong>${esc(r.role[locale])}</strong>${esc(r.dates[locale])}</p>
-<ul class="projList">
-${r.bullets.map((b) => `<li>${esc(b[locale])}</li>`).join("\n")}
-</ul>`,
-        )
-        .join("\n<hr/>\n");
-      return `<div class="card expCard reveal" style="--d:${i * 120}ms">
-<h3>${esc(org.org[locale])}</h3>
-${roles}
-</div>`;
-    })
-    .join("\n");
-
-  const tlNodes = journey
-    .map((n, i) => {
-      const kindLabel =
-        n.kind === "research" ? c.journeySection.researchLabel[locale] : c.journeySection.industryLabel[locale];
-      const current = i === journey.length - 1 ? " tl-current" : "";
-      return `  <div class="tlNode tl-${n.kind}${current} reveal" style="--d:${i * 100}ms">
-    <div class="tlDot" aria-hidden="true"></div>
-    <div class="tlYear">${esc(n.year)}</div>
-    <div class="tlCard">
-      <div class="tlKind">${esc(kindLabel)}</div>
-      <div class="tlTitle">${esc(n.title[locale])}</div>
-      <div class="tlOrg">${esc(n.org[locale])}</div>
-      <div class="tlDetail">${esc(n.detail[locale])}</div>
-    </div>
-  </div>`;
-    })
-    .join("\n");
-
-  const journeySection = `
-<!-- Research-to-product timeline -->
-<section class="section reveal" id="journey">
-<div class="sectionHead">
-<h2>${esc(c.journeySection.heading[locale])}</h2>
-<div class="small">${esc(c.journeySection.small[locale])}</div>
-</div>
-<div class="timelineWrap reveal">
-  <div class="timelineTrack" data-timeline>
-    <div class="timelineLine" aria-hidden="true"></div>
-${tlNodes}
-  </div>
-</div>
-</section>`;
-
-  const experienceSection = `
-<section class="section reveal" id="experience">
-<div class="sectionHead">
-<h2>${esc(c.experienceSection.heading[locale])}</h2>
-<div class="small">${esc(c.experienceSection.small[locale])}</div>
-</div>
-<div class="split">
-${orgCards}
-</div>
-</section>`;
 
   const educationSection = `
 <section class="section reveal" id="education">
@@ -304,10 +364,19 @@ ${orgCards}
     <h2>${esc(c.educationSection.heading[locale])}</h2>
     <div class="small">${esc(c.educationSection.small[locale])}</div>
   </div>
-  <div class="card">
-    <ul class="projList">
-${education.map((e) => `      <li>${e.degree[locale]}</li>`).join("\n")}
-    </ul>
+  <div class="educationGrid">
+    <article class="homeCard educationCard">
+      <h3>${esc(c.educationSection.heading[locale])}</h3>
+      <ul class="projList">
+${education.map((e) => `        <li>${e.degree[locale]}</li>`).join("\n")}
+      </ul>
+    </article>
+    <article class="homeCard educationCard">
+      <h3>${esc(c.educationSection.awardsTitle[locale])}</h3>
+      <ul class="projList">
+${awardItems}
+      </ul>
+    </article>
   </div>
 </section>`;
 
@@ -317,12 +386,21 @@ ${education.map((e) => `      <li>${e.degree[locale]}</li>`).join("\n")}
 <h2>${esc(c.contactSection.heading[locale])}</h2>
 <div class="small">${esc(c.contactSection.small[locale])}</div>
 </div>
+<div class="homeCard contactPanel">
+<p class="contactIntro">${esc(c.contactSection.intro[locale])}</p>
 <div class="contactGrid">
   <a class="contactItem" href="mailto:${escUrl(links.email)}">
     <div class="contactIcon">@</div>
     <div class="contactDetails">
       <span class="contactLabel">${esc(c.contactSection.emailLabel[locale])}</span>
       <span class="contactUrl">${esc(links.email)}</span>
+    </div>
+  </a>
+  <a class="contactItem" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">
+    <div class="contactIcon">G</div>
+    <div class="contactDetails">
+      <span class="contactLabel">${esc(c.contactSection.scholarLabel[locale])}</span>
+      <span class="contactUrl">scholar.google.com</span>
     </div>
   </a>
   <a class="contactItem" href="${escUrl(links.linkedin)}" target="_blank" rel="noopener">
@@ -332,20 +410,30 @@ ${education.map((e) => `      <li>${e.degree[locale]}</li>`).join("\n")}
       <span class="contactUrl">${esc(links.linkedinDisplay)}</span>
     </div>
   </a>
+  <a class="contactItem" href="${escUrl(projectsHref)}">
+    <div class="contactIcon">↗</div>
+    <div class="contactDetails">
+      <span class="contactLabel">${esc(c.contactSection.projectsLabel[locale])}</span>
+      <span class="contactUrl">${esc(c.projectsSection.heading[locale])}</span>
+    </div>
+  </a>
+</div>
 </div>
 <div class="footer">© <span id="y"></span> ${esc(c.footerName[locale])}</div>
 </section>`;
 
-  return `<main class="container">
+  return `<div class="homeShell">
+${sideNav}
+<main class="container homeMain">
 ${hero}
 ${recognition}
 ${about}
-${newsSection}
-${projectsSection}
-${stepEngineering}
-${journeySection}
+${featuredWorkSection}
 ${experienceSection}
+${stepEngineering}
+${newsSection}
 ${educationSection}
 ${contactSection}
-</main>`;
+</main>
+</div>`;
 }

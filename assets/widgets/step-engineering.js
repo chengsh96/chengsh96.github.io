@@ -179,6 +179,11 @@
   var refEl    = section.querySelector('.stepRef');
   var stageEl  = section.querySelector('.seStage');
 
+  if (loopEl) loopEl.innerHTML = '';
+  if (tlEl) tlEl.innerHTML = '';
+  if (wavesEl) wavesEl.innerHTML = '';
+  if (factGrid) factGrid.innerHTML = '';
+
   // ─── INTRO ────────────────────────────────────────────────────────────────
   if (introEl) introEl.textContent = d.intro;
 
