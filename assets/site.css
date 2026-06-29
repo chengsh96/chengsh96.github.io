@@ -19,7 +19,7 @@
   --primaryDark:#1f55cc;
 
   --radius:18px;
-  --maxw:1100px;
+  --maxw:1340px;
 }
 
 /* hide mobile menu by default */
@@ -28,7 +28,7 @@
 }
 
 *{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; scroll-padding-top: 78px; }
 
 body{
   margin:0;
@@ -114,8 +114,8 @@ a:hover{ color: var(--primaryDark); }
   font-weight: 800;
 }
 
-/* mobile nav */
-@media (max-width: 820px){
+/* mobile nav — full horizontal bar only when the section links fit */
+@media (max-width: 1300px){
   .navLinks{ display:none; }
   .navBtn{ display:inline-flex; }
 
@@ -3071,7 +3071,7 @@ body::before{
    ================================================================= */
 
 .homeShell{
-  width: min(1380px, 100%);
+  width: min(1480px, 100%);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -3081,10 +3081,9 @@ body::before{
 
 .homeMain.container{
   width: 100%;
-  max-width: 1120px;
-  margin: 0;
-  padding-left: 0;
-  padding-right: 0;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 18px 40px;
 }
 
 .homeSectionNav{
@@ -3428,13 +3427,6 @@ body::before{
     display: none;
   }
 
-  .homeMain.container{
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   .snapshotGrid{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3574,9 +3566,9 @@ body::before{
 }
 
 .homeShell{
-  grid-template-columns: 118px minmax(0, 1fr);
+  grid-template-columns: 150px minmax(0, 1fr);
   gap: 24px;
-  max-width: 1340px;
+  max-width: 1480px;
 }
 
 .homeSectionNav{
@@ -4892,25 +4884,29 @@ body::before{
 }
 
 .selectedWorkGrid .workCardLarge{
-  grid-column: span 6;
-  grid-template-columns: 1fr;
-}
-
-.selectedWorkGrid .workCardCompact{
-  grid-column: span 12;
-  grid-template-columns: 1fr;
-  min-height: 0;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .selectedWorkGrid .workCardMedia{
   min-height: 0;
   aspect-ratio: 4 / 3;
+  background: #ffffff;
+}
+
+.selectedWorkGrid .workCardMedia img{
+  padding: 14px;
 }
 
 .selectedWorkGrid .workCardLarge .workCardMedia{
-  aspect-ratio: 16 / 9;
-  border-right: 0;
-  border-bottom: 1px solid var(--border);
+  aspect-ratio: auto;
+  min-height: 300px;
+  border-right: 1px solid var(--border);
+  border-bottom: 0;
+}
+
+:root[data-theme="dark"] .selectedWorkGrid .workCardMedia{
+  background: #eef3fa;
 }
 
 .selectedWorkGrid .workCardBody{
@@ -5014,8 +5010,10 @@ body::before{
     grid-template-columns: 1fr;
   }
 
-  .selectedWorkGrid .workCardMedia{
+  .selectedWorkGrid .workCardMedia,
+  .selectedWorkGrid .workCardLarge .workCardMedia{
     aspect-ratio: 16 / 9;
+    min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--border);
   }
@@ -5505,4 +5503,396 @@ body::before{
   .homeMain > #snapshot{
     padding-top: 16px;
   }
+}
+
+/* =================================================================
+   Selected Highlights — four stat blocks in one full-width row
+   ================================================================= */
+.miniStatRow{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 820px){
+  .miniStatRow{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 460px){
+  .miniStatRow{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================================================
+   ABOUT — editorial statement + principles (matches home card scene)
+   ================================================================= */
+.homeMain .aboutPanel{
+  display: block;
+  padding: clamp(22px, 3vw, 40px);
+  background: rgba(255,255,255,0.86);
+}
+
+.aboutStatement{
+  position: relative;
+}
+
+.aboutStatementText{
+  margin: 0;
+  max-width: 40ch;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: clamp(24px, 3.1vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+
+.aboutStatementText em{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--primary);
+}
+
+.aboutDivider{
+  height: 1px;
+  margin: clamp(22px, 3vw, 36px) 0;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.homeMain .aboutBody{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3.4vw, 52px);
+  align-items: start;
+}
+
+.homeMain .aboutPanel .aboutText{
+  padding: 0;
+  max-width: none;
+  gap: 0.9em;
+}
+
+.aboutLead{
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+.aboutLead strong{ font-weight: 800; }
+
+.aboutPrinciples{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.aboutPrinciple{
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+.aboutPrinciple:first-child{ border-top: 0; padding-top: 0; }
+.aboutPrinciple:last-child{ padding-bottom: 0; }
+
+.aboutPrincipleNum{
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: .8rem;
+  letter-spacing: .04em;
+  color: var(--primary);
+  padding-top: 3px;
+}
+
+.aboutPrinciple h3{
+  margin: 0 0 5px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.aboutPrinciple p{
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+:root[data-theme="dark"] .aboutPanel{
+  background: rgba(17,26,46,0.82);
+}
+
+@media (max-width: 860px){
+  .homeMain .aboutBody{ grid-template-columns: 1fr; gap: 26px; }
+  .aboutStatementText{ max-width: none; }
+}
+
+/* =================================================================
+   HERO — identity byline strip (avatar + role line)
+   ================================================================= */
+.heroBylineText{
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.heroBylineSep{
+  color: var(--primary);
+  font-weight: 700;
+  opacity: .55;
+}
+.heroByline .avatarSm{
+  box-shadow: 0 6px 16px rgba(2,6,23,0.14);
+}
+
+/* =================================================================
+   CARD BLOCKS — two accent proof cards (deployment + award)
+   ================================================================= */
+.glanceProof-award{
+  background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(255,255,255,0.74) 62%), rgba(255,255,255,0.74);
+  border-color: rgba(245,158,11,0.24);
+}
+.glanceProof-award .glanceProofMeta{ color: #b45309; }
+
+/* Dark theme tints */
+:root[data-theme="dark"] .glanceProof-award{
+  background: linear-gradient(135deg, rgba(245,158,11,0.18), rgba(17,26,46,0.68) 62%), rgba(17,26,46,0.68);
+  border-color: rgba(245,158,11,0.28);
+}
+:root[data-theme="dark"] .glanceProof-award .glanceProofMeta{ color: #fbbf24; }
+
+/* =================================================================
+   Featured work — vertical cards (full-width media, roomier text)
+   for the 2x2 grid below the Moonwalkers feature row.
+   ================================================================= */
+.selectedWorkGrid .selectedWorkCard:not(.workCardLarge){
+  display: flex;
+  flex-direction: column;
+}
+.selectedWorkGrid .selectedWorkCard:not(.workCardLarge) .workCardMedia{
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-right: 0;
+  border-bottom: 1px solid var(--border);
+}
+.selectedWorkGrid .selectedWorkCard:not(.workCardLarge) .workCardMedia img{
+  padding: 18px 20px;
+}
+.selectedWorkGrid .selectedWorkCard:not(.workCardLarge) .workCardBody{
+  flex: 1;
+  padding: 22px 24px 20px;
+  gap: 12px;
+}
+.selectedWorkGrid .workCard h3{
+  font-size: clamp(1.18rem, 1.7vw, 1.42rem);
+  line-height: 1.18;
+}
+.selectedWorkGrid .workSummary,
+.selectedWorkGrid .workRole{
+  display: block;
+  overflow: visible;
+}
+.selectedWorkGrid .workSummary{
+  font-size: .94rem;
+  line-height: 1.55;
+}
+.selectedWorkGrid .workRole{
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.selectedWorkGrid .workCard .chipRow{
+  margin-top: 2px;
+  gap: 8px;
+}
+.selectedWorkGrid .workLinks{
+  margin-top: 14px;
+  gap: 14px;
+}
+
+/* =================================================================
+   Side section nav — premium numbered index rail
+   ================================================================= */
+.homeShell{ padding-left: 18px; }
+
+.homeSectionNav{
+  top: 64px;
+  padding-top: 42px;
+}
+
+.homeSectionNav nav{
+  counter-reset: secnav;
+  display: grid;
+  gap: 1px;
+  border-left: 0;
+  padding-left: 0;
+}
+
+.homeSectionNav a{
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: baseline;
+  gap: 9px;
+  padding: 9px 10px 9px 14px;
+  border-radius: 10px;
+  color: var(--muted2);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  background: transparent;
+  transition: color .18s ease, background .18s ease;
+}
+
+.homeSectionNav a::before{
+  counter-increment: secnav;
+  content: counter(secnav, decimal-leading-zero);
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted2);
+  opacity: .65;
+  transition: color .18s ease, opacity .18s ease;
+}
+
+.homeSectionNav a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--primary), var(--primary2));
+  transform: translateY(-50%) scaleY(0);
+  transform-origin: center;
+  transition: transform .2s ease;
+}
+
+.homeSectionNav a:hover{
+  color: var(--text);
+  background: rgba(43,108,255,0.06);
+}
+
+.homeSectionNav a:hover::before{
+  color: var(--text);
+  opacity: 1;
+}
+
+.homeSectionNav a.active{
+  color: var(--primaryDark);
+  background: rgba(43,108,255,0.08);
+}
+
+.homeSectionNav a.active::before{
+  color: var(--primary);
+  background: none;
+  box-shadow: none;
+  opacity: 1;
+}
+
+.homeSectionNav a.active::after{
+  transform: translateY(-50%) scaleY(1);
+}
+
+:root[data-theme="dark"] .homeSectionNav a:hover,
+:root[data-theme="dark"] .homeSectionNav a.active{
+  background: rgba(77,143,255,0.12);
+}
+
+/* =================================================================
+   Width alignment + whitespace polish after widening
+   ================================================================= */
+/* Experience: use the wider row — meta on the left, bullets fill the right. */
+.experienceTimeline .timelineCard{
+  display: grid;
+  grid-template-columns: minmax(170px, 230px) minmax(0, 1fr);
+  column-gap: 32px;
+  row-gap: 2px;
+  align-items: start;
+}
+.experienceTimeline .timelineCard .timelineMeta{ grid-column: 1; grid-row: 1; }
+.experienceTimeline .timelineCard h3{ grid-column: 1; grid-row: 2; }
+.experienceTimeline .timelineCard .timelineRole{ grid-column: 1; grid-row: 3; }
+.experienceTimeline .timelineCard .projList{
+  grid-column: 2;
+  grid-row: 1 / 4;
+  margin: 0;
+  align-self: center;
+}
+
+@media (max-width: 760px){
+  .experienceTimeline .timelineCard{
+    grid-template-columns: 1fr;
+  }
+  .experienceTimeline .timelineCard .timelineMeta,
+  .experienceTimeline .timelineCard h3,
+  .experienceTimeline .timelineCard .timelineRole,
+  .experienceTimeline .timelineCard .projList{
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* =================================================================
+   Top nav — spread links across the wider bar
+   ================================================================= */
+.navInner{
+  gap: clamp(10px, 1vw, 20px);
+}
+.brand{
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.themeBtn,
+.langBtn,
+.navBtn{
+  flex-shrink: 0;
+}
+.navLinks{
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: center;
+  gap: clamp(4px, 0.7vw, 14px);
+}
+.navLinks a{
+  padding: 6px 8px;
+  font-size: .87rem;
+  white-space: nowrap;
+}
+
+/* =================================================================
+   Nav — page-jump links (Home, All Projects) vs in-page section links
+   ================================================================= */
+.navLinks a.navLinkJump,
+.mobileMenu a.navLinkJump{
+  color: var(--primaryDark);
+  font-weight: 850;
+}
+.navLinks a.navLinkJump:hover,
+.mobileMenu a.navLinkJump:hover{
+  color: var(--primary);
+  background: rgba(43,108,255,0.10);
+}
+:root[data-theme="dark"] .navLinks a.navLinkJump,
+:root[data-theme="dark"] .mobileMenu a.navLinkJump{
+  color: #8fb6ff;
+}
+:root[data-theme="dark"] .navLinks a.navLinkJump:hover,
+:root[data-theme="dark"] .mobileMenu a.navLinkJump:hover{
+  color: #b9d1ff;
+  background: rgba(77,143,255,0.16);
 }

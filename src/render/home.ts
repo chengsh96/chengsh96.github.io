@@ -26,17 +26,6 @@ export function renderHome(locale: Locale): string {
   const projectsHref = relHref(root, routeRootPath("projects", locale));
   const a = (p: string) => asset(p, root);
 
-  const sideNav = `
-<aside class="homeSectionNav" aria-label="${esc(c.sectionNav.aria[locale])}">
-  <nav>
-${c.sectionNav.items
-  .map(
-    (item, i) =>
-      `    <a${i === 0 ? ' class="active"' : ""} href="#${escUrl(item.anchor)}" data-section-link="${esc(item.anchor)}">${esc(item.label[locale])}</a>`,
-  )
-  .join("\n")}
-  </nav>
-</aside>`;
 
   const heroTags = [
     { en: "Gait control", zh: "步态控制" },
@@ -56,6 +45,10 @@ ${c.sectionNav.items
   <p class="sub heroLead">
     ${c.hero.lead[locale]}
   </p>
+  <div class="heroByline">
+    <img class="avatarSm" src="${a("assets/img/profile.jpg")}" width="36" height="36" loading="lazy" alt="${esc(c.hero.avatarAlt[locale])}"/>
+    <span class="heroBylineText">${c.hero.byline.map((p) => `<span>${esc(p[locale])}</span>`).join('<span class="heroBylineSep" aria-hidden="true">|</span>')}</span>
+  </div>
   <div class="ctaRow">
     <a class="btn btnPrimary" href="#projects">${esc(c.hero.cta.viewProjects[locale])}</a>
     <a class="btn" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.hero.cta.scholar[locale])}</a>
@@ -80,10 +73,6 @@ ${heroTags.map((tag) => `    <span>${esc(tag[locale])}</span>`).join("\n")}
 </div>
 </div>
 </section>`;
-
-  const glanceChips = c.recognition.leadCard.chips
-    .map((chip) => `      <span class="chip">${esc(chip[locale])}</span>`)
-    .join("\n");
 
   const miniStats = c.recognition.miniStats
     .map(
@@ -122,17 +111,8 @@ ${card.chips.map((chip) => `        <span class="chip">${esc(chip[locale])}</spa
   </div>
 </div>
 <div class="homeCard glancePanel">
-  <div class="glanceTop">
-    <article class="glanceLeadCard">
-      <h3>${esc(c.recognition.leadCard.headline[locale])}</h3>
-      <p>${esc(c.recognition.leadCard.body[locale])}</p>
-      <div class="chipRow glanceChipRow">
-${glanceChips}
-      </div>
-    </article>
-    <div class="miniStatGrid" aria-label="${esc(c.recognition.subtitle[locale])}">
+  <div class="miniStatGrid miniStatRow" aria-label="${esc(c.recognition.subtitle[locale])}">
 ${miniStats}
-    </div>
   </div>
   <div class="glanceProofGrid">
 ${proofCards}
@@ -140,25 +120,37 @@ ${proofCards}
 </div>
 </section>`;
 
+  const aboutPrinciples = c.about.principles
+    .map(
+      (p, i) => `    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+      <div class="aboutPrincipleBody">
+        <h3>${esc(p.title[locale])}</h3>
+        <p>${esc(p.text[locale])}</p>
+      </div>
+    </li>`,
+    )
+    .join("\n");
+
   const about = `
 <section class="section reveal" id="about">
 <div class="sectionHead">
 <h2>${esc(c.about.heading[locale])}</h2>
 <div class="small">${esc(c.about.small[locale])}</div>
 </div>
-<div class="aboutPanel">
-  <div class="aboutText">
-${c.about.paragraphs.map((p) => `<p class="projDesc">${p[locale]}</p>`).join("\n")}
+<div class="homeCard aboutPanel">
+  <div class="aboutStatement">
+    <p class="aboutStatementText">${c.about.statement[locale]}</p>
   </div>
-  <div class="focusGrid" aria-label="${esc(c.about.small[locale])}">
-${c.about.focusAreas
-  .map(
-    (focus) => `    <div class="focusCard">
-      <h3>${esc(focus.title[locale])}</h3>
-      <p>${esc(focus.text[locale])}</p>
-    </div>`,
-  )
-  .join("\n")}
+  <div class="aboutDivider" aria-hidden="true"></div>
+  <div class="aboutBody">
+    <div class="aboutText">
+      <p class="aboutLead">${c.about.lead[locale]}</p>
+${c.about.paragraphs.map((p) => `      <p class="projDesc">${p[locale]}</p>`).join("\n")}
+    </div>
+    <ol class="aboutPrinciples" aria-label="${esc(c.about.small[locale])}">
+${aboutPrinciples}
+    </ol>
   </div>
 </div>
 </section>`;
@@ -170,14 +162,14 @@ ${c.about.focusAreas
       const p = mustProject(card.slug);
       const href = relHref(root, projectRootPath(p.slug, locale));
       const pub = publicationBySlug.get(card.slug);
-      const compact = card.slug === "ral2024";
-      const cardClass = `homeCard workCard selectedWorkCard reveal${i === 0 ? " workCardLarge" : ""}${compact ? " workCardCompact" : ""}`;
+      const cardClass = `homeCard workCard selectedWorkCard reveal${i === 0 ? " workCardLarge" : ""}`;
+      const metaExtras: string[] = [];
+      if (card.slug === "tnsre2024" && p.outcome?.en) metaExtras.push(esc(p.outcome[locale]));
+      if ("badge" in card && card.badge?.en) metaExtras.push(esc(card.badge[locale]));
       const publicationMeta = pub
-        ? `<div class="workPublication">${esc(pub.venue)}${p.outcome?.en && card.slug === "tnsre2024" ? ` · ${esc(p.outcome[locale])}` : ""}</div>`
+        ? `<div class="workPublication">${esc(pub.venue)}${metaExtras.length ? ` · ${metaExtras.join(" · ")}` : ""}</div>`
         : "";
-      const media = compact
-        ? ""
-        : `  <div class="workCardMedia">
+      const media = `  <div class="workCardMedia">
     <img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" src="${a(p.image)}" alt="${esc(p.alt[locale])}"/>
   </div>
 `;
@@ -191,10 +183,6 @@ ${media}  <div class="workCardBody">
     <div class="chipRow">
 ${card.keywords.map((k) => `      <span class="chip">${esc(k[locale])}</span>`).join("\n")}
     </div>
-    <div class="workLinks">
-      <a href="${escUrl(href)}">${esc(c.publicationsSection.projectLabel[locale])}</a>
-${pub ? `      <a href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.publicationsSection.scholarLabel[locale])}</a>` : ""}
-    </div>
   </div>
 </article>`;
     })
@@ -206,9 +194,7 @@ ${pub ? `      <a href="${escUrl(links.scholar)}" target="_blank" rel="noopener"
 <span class="anchorAlias" id="publications" aria-hidden="true"></span>
 <div class="sectionHead">
 <h2>${esc(c.featuredWork.heading[locale])}</h2>
-<div class="small">${esc(c.featuredWork.small[locale])}</div>
 </div>
-<p class="sectionIntro">${esc(c.featuredWork.intro[locale])}</p>
 <div class="workGrid selectedWorkGrid">
 ${workCards}
 </div>
@@ -325,7 +311,7 @@ ${fallbackPhases.map((p, i) => `      <button class="sePhase" type="button" role
   </div>
 </section>`;
 
-  const newsItems = news.slice(0, 5)
+  const newsItems = news
     .map(
       (n, i) => `      <li class="homeCard reveal" style="--d:${i * 45}ms" data-tag="${n.tag}">
         <span class="newsTag newsTag-${n.tag}">${esc(n.tagLabel[locale])}</span>
@@ -351,6 +337,9 @@ ${fallbackPhases.map((p, i) => `      <button class="sePhase" type="button" role
 ${newsItems}
 
     </ul>
+    <div class="newsControls">
+      <button class="btn newsToggle" id="newsToggleBtn" type="button" aria-expanded="false">${esc(c.newsSection.showMore[locale])}</button>
+    </div>
   </div>
 </section>`;
 
@@ -422,9 +411,7 @@ ${awardItems}
 <div class="footer">© <span id="y"></span> ${esc(c.footerName[locale])}</div>
 </section>`;
 
-  return `<div class="homeShell">
-${sideNav}
-<main class="container homeMain">
+  return `<main class="container homeMain">
 ${hero}
 ${recognition}
 ${about}
@@ -434,6 +421,5 @@ ${stepEngineering}
 ${newsSection}
 ${educationSection}
 ${contactSection}
-</main>
-</div>`;
+</main>`;
 }

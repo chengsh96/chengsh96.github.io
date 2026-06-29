@@ -51,13 +51,13 @@ export const homeContent = {
     } as LocalizedString,
     items: [
       { anchor: "intro", label: { en: "Intro", zh: "介绍" } },
-      { anchor: "snapshot", label: { en: "Snapshot", zh: "速览" } },
+      { anchor: "snapshot", label: { en: "Highlights", zh: "亮点" } },
       { anchor: "about", label: { en: "About", zh: "关于" } },
-      { anchor: "projects", label: { en: "Work & Publications", zh: "工作与论文" } },
+      { anchor: "projects", label: { en: "Selected Work", zh: "精选工作" } },
       { anchor: "experience", label: { en: "Experience", zh: "经历" } },
-      { anchor: "step-engineering", label: { en: "Step", zh: "步态" } },
+      { anchor: "step-engineering", label: { en: "Hidden Engineering", zh: "隐藏工程" } },
       { anchor: "news", label: { en: "Updates", zh: "动态" } },
-      { anchor: "education", label: { en: "Education", zh: "教育" } },
+      { anchor: "education", label: { en: "Education & Awards", zh: "教育与奖项" } },
       { anchor: "contact", label: { en: "Contact", zh: "联系" } },
     ],
   },
@@ -74,8 +74,8 @@ export const homeContent = {
     } as LocalizedRichText,
     rolePrefix: { en: "A ", zh: "一位 " } as LocalizedString,
     lead: {
-      en: 'I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear products used in the real world</a>.',
-      zh: '我为可穿戴机器人构建实时控制与传感系统，从动力假肢研究到<a href="projects/shiftos.html">真实场景中使用的机器人鞋履产品</a>。',
+      en: 'I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear deployed in real-world environments</a>.',
+      zh: '我开发面向可穿戴机器人的实时控制与感知系统，研究对象从动力假肢延伸到<a href="projects/shiftos.html">已在真实场景中部署的 Moonwalkers（轮式机器人鞋）</a>。',
     } as LocalizedRichText,
     cta: {
       viewProjects: { en: "View Work", zh: "查看工作" } as LocalizedString,
@@ -83,17 +83,17 @@ export const homeContent = {
       scholar: { en: "Google Scholar", zh: "谷歌学术" } as LocalizedString,
     },
     avatarAlt: { en: "Shihao Cheng", zh: "程世浩" } as LocalizedString,
-    byline: {
-      en: "Robotics Ph.D. building control systems for human movement",
-      zh: "机器人学博士，构建面向人体运动的控制系统",
-    } as LocalizedString,
+    byline: [
+      { en: "Robotics PhD @ UMich", zh: "机器人学博士 @ 密歇根大学" },
+      { en: "Lead Control Engineer @ Shift Robotics", zh: "首席控制工程师 @ Shift Robotics" },
+    ] as LocalizedString[],
     videoAria: {
       en: "ShiftOS Moonwalkers demonstration",
       zh: "ShiftOS Moonwalkers 演示",
     } as LocalizedString,
     videoCaption: {
       en: 'Robotic footwear in real-world walking environments · <a href="projects/shiftos.html">See the system →</a>',
-      zh: '真实步行环境中的机器人鞋履 · <a href="projects/shiftos.html">查看系统 →</a>',
+      zh: '真实步行环境中的机器人鞋 · <a href="projects/shiftos.html">查看系统 →</a>',
     } as LocalizedRichText,
     // Hero "cockpit" telemetry panel. Labels are localized + server-rendered;
     // the animated values cycle client-side (site.js initCockpit).
@@ -121,22 +121,6 @@ export const homeContent = {
       en: "Training, current role, deployed product work, and research recognition.",
       zh: "训练背景、当前角色、产品落地工作与科研认可。",
     } as LocalizedString,
-    leadCard: {
-      headline: {
-        en: "From prosthetics research to deployed robotic footwear.",
-        zh: "从假肢研究到落地的机器人鞋履。",
-      } as LocalizedString,
-      body: {
-        en: "A compact summary of the same story: robotics training, control engineering role, recognized research, and product deployment.",
-        zh: "一段简洁的概括：机器人学训练、控制工程岗位、受到认可的研究，以及产品落地。",
-      } as LocalizedString,
-      chips: [
-        { en: "Gait control", zh: "步态控制" },
-        { en: "Embedded systems", zh: "嵌入式系统" },
-        { en: "Human locomotion", zh: "人体运动" },
-        { en: "ML intent recognition", zh: "机器学习意图识别" },
-      ] as LocalizedString[],
-    },
     miniStats: [
       {
         value: "Ph.D.",
@@ -161,11 +145,11 @@ export const homeContent = {
         title: { en: "IKEA deployment", zh: "IKEA 部署" },
         meta: { en: "Moonwalkers · warehouse environments", zh: "Moonwalkers · 仓储环境" },
         body: {
-          en: "Real-world robotic footwear systems in operational settings.",
-          zh: "真实运营场景中的机器人鞋履系统。",
+          en: "Robotic footwear deployed in warehouse operations.",
+          zh: "在仓储运营中部署的机器人鞋。",
         },
         chips: [
-          { en: "Robotic footwear", zh: "机器人鞋履" },
+          { en: "Robotic footwear", zh: "机器人鞋" },
           { en: "Validation", zh: "验证" },
         ] as LocalizedString[],
       },
@@ -237,7 +221,7 @@ export const homeContent = {
         num: "Product",
         ref: { kind: "project", slug: "shiftos" },
         badge: { en: "Deployment", zh: "产品部署" },
-        label: { en: "Real-world robotic footwear systems", zh: "真实场景机器人鞋履系统" },
+        label: { en: "Real-world robotic footwear systems", zh: "真实场景中的机器人鞋系统" },
       },
     ] as Stat[],
   },
@@ -245,57 +229,69 @@ export const homeContent = {
   about: {
     heading: { en: "About", zh: "关于" } as LocalizedString,
     small: { en: "Research → deployment", zh: "研究 → 落地" } as LocalizedString,
+    statement: {
+      en: "I build systems that feel <em>simple</em> because the engineering underneath is not.",
+      zh: "我构建的系统让人觉得<em>简单</em>，是因为底层的工程并不简单。",
+    } as LocalizedRichText,
+    lead: {
+      en: "<strong>I make wearable robots less robotic.</strong>",
+      zh: "<strong>我的目标是让可穿戴机器人的交互更自然、更少打扰用户。</strong>",
+    } as LocalizedRichText,
     paragraphs: [
       {
-        en: "<strong>I make wearable robots less robotic.</strong>",
-        zh: '<strong>我让可穿戴机器人不那么"像机器人"。</strong>',
+        en: "I work on control and sensing for wearable robots. The hard part isn't making them move — it's making them respond naturally to people.",
+        zh: "我研究可穿戴机器人的控制与传感。难点不在于让它动起来，而在于让它自然地回应人。",
       },
       {
-        en: "My work blends control, embedded systems, and machine learning to help robotic devices understand human movement intent in milliseconds. I focus on taking algorithms from simulation to production — where safety, reliability, and real-world messiness matter most.",
-        zh: "我的工作融合控制、嵌入式系统与机器学习，帮助机器人设备在毫秒内理解人体运动意图。 我专注于将算法从仿真推向量产——在那里，安全、可靠与真实世界的复杂性才是最终考验。",
+        en: "Most of my work lives in the gap between lab prototype and daily use: delivering assistance at the right moment, handling noisy sensors and rough terrain, and validating the whole system, not isolated algorithms.",
+        zh: "我的工作大多处在实验室原型与日常使用之间：在正确时刻提供辅助、应对噪声传感器与复杂地面，并验证完整系统，而非孤立算法。",
       },
       {
-        en: "I like building systems that feel simple to the user because the engineering underneath is anything but.",
-        zh: "我喜欢构建这样的系统：用户感觉简单，是因为底层工程远不简单。",
+        en: "The goal is for users to notice the robot less, not more.",
+        zh: "目标是让用户更少察觉到机器人，而不是更多。",
       },
     ] as LocalizedRichText[],
-    focusAreas: [
+    principles: [
       {
-        title: { en: "Control systems", zh: "控制系统" },
-        text: { en: "Real-time assistance synchronized to human motion.", zh: "与人体运动同步的实时辅助控制。" },
+        title: { en: "Read the situation, not just the sensors", zh: "读懂情境，而不只是传感器" },
+        text: {
+          en: "Human movement is noisy and context-dependent. Intent has to be inferred from motion, contact, terrain, and timing together.",
+          zh: "人体运动充满噪声且依赖情境。意图必须从动作、接触、地形与时序中共同推断。",
+        },
       },
       {
-        title: { en: "Human locomotion", zh: "人体运动" },
-        text: { en: "Gait phase, terrain, intent, and safety-aware behavior.", zh: "步态相位、地形、意图与安全感知行为。" },
+        title: { en: "Assist only when it helps", zh: "仅在有益时介入" },
+        text: {
+          en: "Assistance should arrive at the right moment, and stay unobtrusive when the user is already moving well.",
+          zh: "辅助应在恰当时刻到来，并在用户本已动作流畅时保持低存在感。",
+        },
       },
       {
-        title: { en: "Product validation", zh: "产品验证" },
-        text: { en: "Lab-to-field testing for wearable robotics products.", zh: "面向可穿戴机器人产品的实验室到现场验证。" },
+        title: { en: "Design for the full system", zh: "面向完整系统设计" },
+        text: {
+          en: "Control logic, embedded constraints, hardware behavior, and safety checks have to work together.",
+          zh: "控制逻辑、嵌入式约束、硬件行为与安全校验必须协同工作。",
+        },
       },
       {
-        title: { en: "Embedded sensing", zh: "嵌入式传感" },
-        text: { en: "Sensor fusion and low-latency deployment constraints.", zh: "传感融合与低延迟嵌入式部署约束。" },
+        title: { en: "Prove it outside the lab", zh: "在实验室之外验证" },
+        text: {
+          en: "Models and bench tests are starting points. The real question is whether the behavior stays reliable across users, surfaces, and use cases.",
+          zh: "模型与台架测试只是起点。真正的问题是行为能否在不同用户、不同地面与不同场景下保持可靠。",
+        },
       },
     ],
   },
 
   featuredWork: {
     heading: { en: "Selected Work & Publications", zh: "精选工作与论文" } as LocalizedString,
-    small: {
-      en: "Product systems and peer-reviewed research, without repeating the same contribution twice",
-      zh: "产品系统与同行评审研究，避免重复展示同一项贡献",
-    } as LocalizedString,
-    intro: {
-      en: "Each card connects a work area with the relevant publication record when there is one.",
-      zh: "每张卡片把一个工作方向与相关论文记录合并呈现。",
-    } as LocalizedString,
     roleLabel: { en: "Role", zh: "角色" } as LocalizedString,
     cards: [
       {
         slug: "shiftos",
         role: {
-          en: "Lead / Gait Control Engineer.",
-          zh: "首席 / 步态控制工程师。",
+          en: "Lead Control Engineer / Gait Control Engineer.",
+          zh: "首席控制工程师 / 步态控制工程师。",
         },
         keywords: [
           { en: "ShiftOS", zh: "ShiftOS" },
@@ -330,6 +326,7 @@ export const homeContent = {
       },
       {
         slug: "tbme2024",
+        badge: { en: "Featured Article", zh: "特色文章" } as LocalizedString,
         role: {
           en: "Safety-aware prosthesis control with sensing and real-time trajectory reshaping.",
           zh: "融合传感与实时轨迹重塑的安全感知假肢控制。",
@@ -338,6 +335,18 @@ export const homeContent = {
           { en: "Safety", zh: "安全" },
           { en: "Obstacle avoidance", zh: "障碍规避" },
           { en: "Biomechanics", zh: "生物力学" },
+        ],
+      },
+      {
+        slug: "ral2024",
+        role: {
+          en: "Built the CNN intent classifier and transfer-learning strategy for cross-user adaptation.",
+          zh: "构建 CNN 意图分类器与面向跨用户自适应的迁移学习策略。",
+        },
+        keywords: [
+          { en: "Transfer learning", zh: "迁移学习" },
+          { en: "Intent prediction", zh: "意图预测" },
+          { en: "Cross-user", zh: "跨用户" },
         ],
       },
     ],
@@ -430,10 +439,10 @@ export const homeContent = {
   },
 
   stepEngineering: {
-    heading: { en: "The Hidden Engineering in a Step", zh: "步行中的隐藏工程" } as LocalizedString,
+    heading: { en: "The Hidden Engineering in a Step", zh: "每一步背后的隐形工程" } as LocalizedString,
     small: {
-      en: "Tap a phase to see what the robot thinks.",
-      zh: "点击阶段，看机器人如何思考。",
+      en: "Tap a phase to see what the controller is estimating.",
+      zh: "点击步态阶段，看看控制器正在判断什么。",
     } as LocalizedString,
     intro: {
       en: "A single step contains more information than it seems. For wearable robots, each stride is a stream of clues: intent, terrain, balance, timing, and safety. My work focuses on turning those clues into real-time control decisions that feel natural outside the lab.",
@@ -450,7 +459,7 @@ export const homeContent = {
       },
       {
         title: { en: "Assist", zh: "辅助" },
-        text: { en: "Apply support at the right moment under real-time limits.", zh: "在实时约束下，于正确时刻提供辅助。" },
+        text: { en: "Deliver assistance at the right moment under real-time limits.", zh: "在实时约束下，于正确时刻提供辅助。" },
       },
       {
         title: { en: "Recover", zh: "恢复" },

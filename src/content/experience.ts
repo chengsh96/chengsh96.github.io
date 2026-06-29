@@ -62,7 +62,7 @@ export const experience: ExperienceOrg[] = [
             zh: "基于可解释机器学习的意图识别与跨用户自适应",
           },
           {
-            en: "Environmental sensing for safety interventions for obstacle avoidance",
+            en: "Environmental sensing for obstacle-avoidance safety interventions",
             zh: "面向障碍规避的环境感知与安全干预机制",
           },
           {

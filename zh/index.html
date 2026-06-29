@@ -7,9 +7,9 @@
 <meta property="og:type" content="website"/>
 <link rel="canonical" href="https://chengsh96.github.io/zh/"/>
 <!-- Social meta -->
-<meta name="description" content="程世浩 — 机器人学博士，Shift Robotics 首席控制工程师，专注于可穿戴机器人、机器人鞋履与动力假肢的实时控制、传感与机器学习系统。"/>
+<meta name="description" content="程世浩 — 机器人学博士，Shift Robotics 首席控制工程师，专注于可穿戴机器人、机器人鞋与动力假肢的实时控制、传感与机器学习系统。"/>
 <meta property="og:title" content="程世浩 博士"/>
-<meta property="og:description" content="面向可穿戴机器人的实时控制与传感系统，从动力假肢研究到 Moonwalkers 机器人鞋履产品。"/>
+<meta property="og:description" content="面向可穿戴机器人的实时控制与传感系统，从动力假肢研究到 Moonwalkers 轮式机器人鞋。"/>
 <meta property="og:url" content="https://chengsh96.github.io/zh/"/>
 <meta property="og:image" content="https://chengsh96.github.io/assets/img/profile.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
@@ -22,58 +22,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=19" rel="stylesheet"/>
+<link href="../assets/site.css?v=25" rel="stylesheet"/>
 </head>
-<body>
+<body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
 <header class="nav">
 <div class="navInner">
-<div class="brand">
+<a class="brand" href="index.html" aria-label="程世浩">
 <span class="dot"></span>
 <span>程世浩</span>
-</div>
+</a>
 <nav class="navLinks">
-<a href="index.html">首页</a>
-<a href="#about">关于</a>
-<a href="#projects">工作与论文</a>
-<a href="#experience">经历</a>
-<a href="#step-engineering">控制思路</a>
-<a href="#news">动态</a>
-<a href="#education">教育</a>
-<a href="#contact">联系</a>
-<a href="projects/index.html">全部项目</a>
+<a class="navLink" href="#intro">亮点</a>
+<a class="navLink" href="#about">关于</a>
+<a class="navLink" href="#projects">精选工作</a>
+<a class="navLink" href="#experience">经历</a>
+<a class="navLink" href="#step-engineering">隐藏工程</a>
+<a class="navLink" href="#news">动态</a>
+<a class="navLink" href="#education">教育与奖项</a>
+<a class="navLink" href="#contact">联系</a>
+<a class="navLink navLinkJump" href="projects/index.html">全部项目</a>
 </nav>
 <button class="themeBtn" type="button" data-theme-toggle aria-label="切换暗色模式">深色</button>
 <button class="langBtn" type="button" data-lang-toggle data-lang-href="../index.html" aria-label="Switch to English">English</button>
 <button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="index.html">首页</a>
-<a href="#about">关于</a>
-<a href="#projects">工作与论文</a>
-<a href="#experience">经历</a>
-<a href="#step-engineering">控制思路</a>
-<a href="#news">动态</a>
-<a href="#education">教育</a>
-<a href="#contact">联系</a>
-<a href="projects/index.html">全部项目</a>
+<a class="navLink" href="#intro">亮点</a>
+<a class="navLink" href="#about">关于</a>
+<a class="navLink" href="#projects">精选工作</a>
+<a class="navLink" href="#experience">经历</a>
+<a class="navLink" href="#step-engineering">隐藏工程</a>
+<a class="navLink" href="#news">动态</a>
+<a class="navLink" href="#education">教育与奖项</a>
+<a class="navLink" href="#contact">联系</a>
+<a class="navLink navLinkJump" href="projects/index.html">全部项目</a>
 </div>
 </header>
-<div class="homeShell">
-
-<aside class="homeSectionNav" aria-label="首页章节导航">
-  <nav>
-    <a class="active" href="#intro" data-section-link="intro">介绍</a>
-    <a href="#snapshot" data-section-link="snapshot">速览</a>
-    <a href="#about" data-section-link="about">关于</a>
-    <a href="#projects" data-section-link="projects">工作与论文</a>
-    <a href="#experience" data-section-link="experience">经历</a>
-    <a href="#step-engineering" data-section-link="step-engineering">步态</a>
-    <a href="#news" data-section-link="news">动态</a>
-    <a href="#education" data-section-link="education">教育</a>
-    <a href="#contact" data-section-link="contact">联系</a>
-  </nav>
-</aside>
 <main class="container homeMain">
 
 <!-- Intro / Hero -->
@@ -84,8 +69,12 @@
   <h1>程世浩 — <span class="nameAccent">博士</span></h1>
   <p class="heroRole homeHeroRole">一位 <span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
   <p class="sub heroLead">
-    我为可穿戴机器人构建实时控制与传感系统，从动力假肢研究到<a href="projects/shiftos.html">真实场景中使用的机器人鞋履产品</a>。
+    我开发面向可穿戴机器人的实时控制与感知系统，研究对象从动力假肢延伸到<a href="projects/shiftos.html">已在真实场景中部署的 Moonwalkers（轮式机器人鞋）</a>。
   </p>
+  <div class="heroByline">
+    <img class="avatarSm" src="../assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="程世浩"/>
+    <span class="heroBylineText"><span>机器人学博士 @ 密歇根大学</span><span class="heroBylineSep" aria-hidden="true">|</span><span>首席控制工程师 @ Shift Robotics</span></span>
+  </div>
   <div class="ctaRow">
     <a class="btn btnPrimary" href="#projects">查看工作</a>
     <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">谷歌学术</a>
@@ -108,7 +97,7 @@
       <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
       <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
     </video>
-    <figcaption>真实步行环境中的机器人鞋履 · <a href="projects/shiftos.html">查看系统 →</a></figcaption>
+    <figcaption>真实步行环境中的机器人鞋 · <a href="projects/shiftos.html">查看系统 →</a></figcaption>
   </figure>
 </div>
 </div>
@@ -122,18 +111,7 @@
   </div>
 </div>
 <div class="homeCard glancePanel">
-  <div class="glanceTop">
-    <article class="glanceLeadCard">
-      <h3>从假肢研究到落地的机器人鞋履。</h3>
-      <p>一段简洁的概括：机器人学训练、控制工程岗位、受到认可的研究，以及产品落地。</p>
-      <div class="chipRow glanceChipRow">
-      <span class="chip">步态控制</span>
-      <span class="chip">嵌入式系统</span>
-      <span class="chip">人体运动</span>
-      <span class="chip">机器学习意图识别</span>
-      </div>
-    </article>
-    <div class="miniStatGrid" aria-label="训练背景、当前角色、产品落地工作与科研认可。">
+  <div class="miniStatGrid miniStatRow" aria-label="训练背景、当前角色、产品落地工作与科研认可。">
     <article class="homeCard miniStatCard reveal" style="--d:0ms">
       <div class="miniStatValue">Ph.D.</div>
       <p>机器人学 · 密歇根大学</p>
@@ -150,15 +128,14 @@
       <div class="miniStatValue">50+</div>
       <p>期刊与会议审稿</p>
     </article>
-    </div>
   </div>
   <div class="glanceProofGrid">
     <a class="homeCard glanceProofCard glanceProof-deployment reveal" style="--d:0ms" href="projects/shiftos.html">
       <h3>IKEA 部署</h3>
       <div class="glanceProofMeta">Moonwalkers · 仓储环境</div>
-      <p>真实运营场景中的机器人鞋履系统。</p>
+      <p>在仓储运营中部署的机器人鞋。</p>
       <div class="chipRow">
-        <span class="chip">机器人鞋履</span>
+        <span class="chip">机器人鞋</span>
         <span class="chip">验证</span>
       </div>
     </a>
@@ -189,29 +166,48 @@
 <h2>关于</h2>
 <div class="small">研究 → 落地</div>
 </div>
-<div class="aboutPanel">
-  <div class="aboutText">
-<p class="projDesc"><strong>我让可穿戴机器人不那么"像机器人"。</strong></p>
-<p class="projDesc">我的工作融合控制、嵌入式系统与机器学习，帮助机器人设备在毫秒内理解人体运动意图。 我专注于将算法从仿真推向量产——在那里，安全、可靠与真实世界的复杂性才是最终考验。</p>
-<p class="projDesc">我喜欢构建这样的系统：用户感觉简单，是因为底层工程远不简单。</p>
+<div class="homeCard aboutPanel">
+  <div class="aboutStatement">
+    <p class="aboutStatementText">我构建的系统让人觉得<em>简单</em>，是因为底层的工程并不简单。</p>
   </div>
-  <div class="focusGrid" aria-label="研究 → 落地">
-    <div class="focusCard">
-      <h3>控制系统</h3>
-      <p>与人体运动同步的实时辅助控制。</p>
+  <div class="aboutDivider" aria-hidden="true"></div>
+  <div class="aboutBody">
+    <div class="aboutText">
+      <p class="aboutLead"><strong>我的目标是让可穿戴机器人的交互更自然、更少打扰用户。</strong></p>
+      <p class="projDesc">我研究可穿戴机器人的控制与传感。难点不在于让它动起来，而在于让它自然地回应人。</p>
+      <p class="projDesc">我的工作大多处在实验室原型与日常使用之间：在正确时刻提供辅助、应对噪声传感器与复杂地面，并验证完整系统，而非孤立算法。</p>
+      <p class="projDesc">目标是让用户更少察觉到机器人，而不是更多。</p>
     </div>
-    <div class="focusCard">
-      <h3>人体运动</h3>
-      <p>步态相位、地形、意图与安全感知行为。</p>
-    </div>
-    <div class="focusCard">
-      <h3>产品验证</h3>
-      <p>面向可穿戴机器人产品的实验室到现场验证。</p>
-    </div>
-    <div class="focusCard">
-      <h3>嵌入式传感</h3>
-      <p>传感融合与低延迟嵌入式部署约束。</p>
-    </div>
+    <ol class="aboutPrinciples" aria-label="研究 → 落地">
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">01</span>
+      <div class="aboutPrincipleBody">
+        <h3>读懂情境，而不只是传感器</h3>
+        <p>人体运动充满噪声且依赖情境。意图必须从动作、接触、地形与时序中共同推断。</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">02</span>
+      <div class="aboutPrincipleBody">
+        <h3>仅在有益时介入</h3>
+        <p>辅助应在恰当时刻到来，并在用户本已动作流畅时保持低存在感。</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">03</span>
+      <div class="aboutPrincipleBody">
+        <h3>面向完整系统设计</h3>
+        <p>控制逻辑、嵌入式约束、硬件行为与安全校验必须协同工作。</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">04</span>
+      <div class="aboutPrincipleBody">
+        <h3>在实验室之外验证</h3>
+        <p>模型与台架测试只是起点。真正的问题是行为能否在不同用户、不同地面与不同场景下保持可靠。</p>
+      </div>
+    </li>
+    </ol>
   </div>
 </div>
 </section>
@@ -221,9 +217,7 @@
 <span class="anchorAlias" id="publications" aria-hidden="true"></span>
 <div class="sectionHead">
 <h2>精选工作与论文</h2>
-<div class="small">产品系统与同行评审研究，避免重复展示同一项贡献</div>
 </div>
-<p class="sectionIntro">每张卡片把一个工作方向与相关论文记录合并呈现。</p>
 <div class="workGrid selectedWorkGrid">
 <article class="homeCard workCard selectedWorkCard reveal workCardLarge" style="--d:0ms">
   <div class="workCardMedia">
@@ -233,17 +227,13 @@
     <span class="workMeta">量产</span>
     <h3><a href="projects/shiftos.html">Moonwalkers 控制系统（ShiftOS）</a></h3>
     
-    <p class="workSummary">为可穿戴动力鞋打造实时运动控制系统，并完成嵌入式量产部署。</p>
-    <p class="workRole"><strong>角色:</strong> 首席 / 步态控制工程师。</p>
+    <p class="workSummary">为机器人鞋打造实时步态控制系统，并完成嵌入式量产部署。</p>
+    <p class="workRole"><strong>角色:</strong> 首席控制工程师 / 步态控制工程师。</p>
     <div class="chipRow">
       <span class="chip">ShiftOS</span>
       <span class="chip">步态传感</span>
       <span class="chip">嵌入式控制</span>
       <span class="chip">验证</span>
-    </div>
-    <div class="workLinks">
-      <a href="projects/shiftos.html">项目</a>
-
     </div>
   </div>
 </article>
@@ -262,10 +252,6 @@
       <span class="chip">楼梯</span>
       <span class="chip">人体实验</span>
     </div>
-    <div class="workLinks">
-      <a href="projects/tnsre2024.html">项目</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">学术主页</a>
-    </div>
   </div>
 </article>
 <article class="homeCard workCard selectedWorkCard reveal" style="--d:160ms">
@@ -274,7 +260,7 @@
   </div>
   <div class="workCardBody">
     <span class="workMeta">科研</span>
-    <h3><a href="projects/icf.html">双侧活动识别（TRO 2025）</a></h3>
+    <h3><a href="projects/icf.html">双侧活动识别（T-RO 2025）</a></h3>
     <div class="workPublication">IEEE T-RO 2025</div>
     <p class="workSummary">面向动力假肢控制的可解释意图识别与连续自适应。</p>
     <p class="workRole"><strong>角色:</strong> 第一作者研究，面向可解释活动识别与连续自适应。</p>
@@ -282,10 +268,6 @@
       <span class="chip">意图识别</span>
       <span class="chip">ICF</span>
       <span class="chip">实时机器学习</span>
-    </div>
-    <div class="workLinks">
-      <a href="projects/icf.html">项目</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">学术主页</a>
     </div>
   </div>
 </article>
@@ -296,7 +278,7 @@
   <div class="workCardBody">
     <span class="workMeta">科研</span>
     <h3><a href="projects/tbme2024.html">安全关键绊脚规避（TBME 2024）</a></h3>
-    <div class="workPublication">IEEE TBME 2024</div>
+    <div class="workPublication">IEEE TBME 2024 · 特色文章</div>
     <p class="workSummary">通过实时传感与轨迹重塑降低绊脚风险。</p>
     <p class="workRole"><strong>角色:</strong> 融合传感与实时轨迹重塑的安全感知假肢控制。</p>
     <div class="chipRow">
@@ -304,9 +286,22 @@
       <span class="chip">障碍规避</span>
       <span class="chip">生物力学</span>
     </div>
-    <div class="workLinks">
-      <a href="projects/tbme2024.html">项目</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">学术主页</a>
+  </div>
+</article>
+<article class="homeCard workCard selectedWorkCard reveal" style="--d:320ms">
+  <div class="workCardMedia">
+    <img loading="lazy" width="1379" height="1254" src="../assets/img/projects/ral2024_concept.jpg" alt="ral2024_concept"/>
+  </div>
+  <div class="workCardBody">
+    <span class="workMeta">科研</span>
+    <h3><a href="projects/ral2024.html">意图识别的迁移学习（RA-L 2024）</a></h3>
+    <div class="workPublication">IEEE RA-L 2024</div>
+    <p class="workSummary">面向实际假肢意图识别的低样本跨用户适配。</p>
+    <p class="workRole"><strong>角色:</strong> 构建 CNN 意图分类器与面向跨用户自适应的迁移学习策略。</p>
+    <div class="chipRow">
+      <span class="chip">迁移学习</span>
+      <span class="chip">意图预测</span>
+      <span class="chip">跨用户</span>
     </div>
   </div>
 </article>
@@ -367,8 +362,8 @@
 <!-- Technical philosophy / Hidden Engineering Behind a Step -->
 <section class="section reveal" id="step-engineering">
   <div class="sectionHead">
-    <h2>步行中的隐藏工程</h2>
-    <div class="small">点击阶段，看机器人如何思考。</div>
+    <h2>每一步背后的隐形工程</h2>
+    <div class="small">点击步态阶段，看看控制器正在判断什么。</div>
   </div>
   <div class="homeCard stepEngineeringPanel">
     <p class="stepEngIntro">一步之中，信息远比表面丰富。对可穿戴机器人而言，每一步都是一连串信号：意图、地形、平衡、时序与安全。我的工作，就是将这些信号实时转化为让用户感觉自然的控制决策。</p>
@@ -452,7 +447,7 @@
         <span class="newsTag newsTag-milestone">🎓 里程碑</span>
         <span class="newsDate">2025年5月</span>
         <span class="newsText">
-          任命为 Shift Robotics 首席控制工程师，负责首款轮式外骨骼动力鞋的控制与传感系统开发。
+          任命为 Shift Robotics 首席控制工程师，负责 Moonwalkers 轮式机器人鞋平台的控制与感知系统开发。
         </span>
       </li>
 
@@ -472,7 +467,50 @@
         </span>
       </li>
 
+      <li class="homeCard reveal" style="--d:225ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
+        <span class="newsDate">2023年10月</span>
+        <span class="newsText">
+          因动力假肢连续转换控制研究获得 <strong>IROS 2023 最佳学生论文奖</strong>。
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:270ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
+        <span class="newsDate">2023年4月</span>
+        <span class="newsText">
+          获得密歇根大学 Rackham 预博士奖学金。
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:315ms" data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
+        <span class="newsDate">2021年5月</span>
+        <span class="newsText">
+          获得密歇根大学机械工程与机器人双硕士学位。
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:360ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 奖项</span>
+        <span class="newsDate">2018年12月</span>
+        <span class="newsText">
+          普渡大学 Senior Design 项目获得 Malott Innovation Award。
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:405ms" data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 里程碑</span>
+        <span class="newsDate">2018年12月</span>
+        <span class="newsText">
+          以 Distinction 荣誉获得普渡大学机械工程学士学位，辅修数学与经济学。
+        </span>
+      </li>
+
     </ul>
+    <div class="newsControls">
+      <button class="btn newsToggle" id="newsToggleBtn" type="button" aria-expanded="false">展开</button>
+    </div>
   </div>
 </section>
 
@@ -542,9 +580,8 @@
 <div class="footer">© <span id="y"></span> 程世浩</div>
 </section>
 </main>
-</div>
-<script src="../assets/site.js"></script>
-<script src="../assets/widgets/step-engineering.js"></script>
+<script src="../assets/site.js?v=25"></script>
+<script src="../assets/widgets/step-engineering.js?v=25"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>

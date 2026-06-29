@@ -563,3 +563,46 @@ if (lightboxTargets.length) {
   window.addEventListener('resize', requestUpdate);
   update();
 })();
+
+// ===========================
+// In-page anchor navigation: smooth scroll with sticky-nav offset.
+// Covers same-page nav clicks and on-load hashes (e.g. arriving from
+// another page via index.html#section), immune to layout/image shifts.
+// ===========================
+(function initAnchorScroll(){
+  const NAV_OFFSET = 78;
+
+  function scrollToHash(hash, smooth){
+    if (!hash || hash === "#") return false;
+    let target;
+    try { target = document.querySelector(hash); } catch (e) { return false; }
+    if (!target) return false;
+    const top = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+    window.scrollTo({ top: Math.max(0, top), behavior: smooth ? "smooth" : "auto" });
+    return true;
+  }
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href*="#"]');
+    if (!a) return;
+    const url = new URL(a.href, window.location.href);
+    // Only handle links that stay on the current page.
+    if (url.pathname !== window.location.pathname || url.search !== window.location.search) return;
+    const hash = url.hash;
+    if (!hash || hash === "#") return;
+    if (scrollToHash(hash, true)) {
+      e.preventDefault();
+      history.pushState(null, "", hash);
+      const menu = document.querySelector("[data-mobilemenu]");
+      if (menu) menu.classList.remove("open");
+    }
+  });
+
+  // Correct the landing position when arriving with a hash (after images/layout settle).
+  if (window.location.hash) {
+    window.addEventListener("load", () => {
+      const h = window.location.hash;
+      requestAnimationFrame(() => setTimeout(() => scrollToHash(h, false), 60));
+    });
+  }
+})();

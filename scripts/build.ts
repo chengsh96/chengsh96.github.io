@@ -50,6 +50,7 @@ function buildPages(): Page[] {
         rootPath: homePath,
         meta: routeMeta("home", locale),
         main: renderHome(locale),
+        bodyClass: "page-home",
         scripts: ["assets/site.js", "assets/widgets/step-engineering.js"],
         inlineScripts: ['document.getElementById("y").textContent = new Date().getFullYear();'],
       }),

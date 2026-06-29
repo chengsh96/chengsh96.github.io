@@ -22,58 +22,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=19" rel="stylesheet"/>
+<link href="assets/site.css?v=25" rel="stylesheet"/>
 </head>
-<body>
+<body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
 <header class="nav">
 <div class="navInner">
-<div class="brand">
+<a class="brand" href="index.html" aria-label="Shihao Cheng">
 <span class="dot"></span>
 <span>Shihao Cheng</span>
-</div>
+</a>
 <nav class="navLinks">
-<a href="index.html">Home</a>
-<a href="#about">About</a>
-<a href="#projects">Work &amp; Publications</a>
-<a href="#experience">Experience</a>
-<a href="#step-engineering">Philosophy</a>
-<a href="#news">Updates</a>
-<a href="#education">Education</a>
-<a href="#contact">Contact</a>
-<a href="projects/index.html">All Projects</a>
+<a class="navLink" href="#intro">Highlights</a>
+<a class="navLink" href="#about">About</a>
+<a class="navLink" href="#projects">Selected Work</a>
+<a class="navLink" href="#experience">Experience</a>
+<a class="navLink" href="#step-engineering">Hidden Engineering</a>
+<a class="navLink" href="#news">Updates</a>
+<a class="navLink" href="#education">Education &amp; Awards</a>
+<a class="navLink" href="#contact">Contact</a>
+<a class="navLink navLinkJump" href="projects/index.html">All Projects</a>
 </nav>
 <button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
 <button class="langBtn" type="button" data-lang-toggle data-lang-href="zh/index.html" aria-label="Switch to Chinese">中文</button>
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="index.html">Home</a>
-<a href="#about">About</a>
-<a href="#projects">Work &amp; Publications</a>
-<a href="#experience">Experience</a>
-<a href="#step-engineering">Philosophy</a>
-<a href="#news">Updates</a>
-<a href="#education">Education</a>
-<a href="#contact">Contact</a>
-<a href="projects/index.html">All Projects</a>
+<a class="navLink" href="#intro">Highlights</a>
+<a class="navLink" href="#about">About</a>
+<a class="navLink" href="#projects">Selected Work</a>
+<a class="navLink" href="#experience">Experience</a>
+<a class="navLink" href="#step-engineering">Hidden Engineering</a>
+<a class="navLink" href="#news">Updates</a>
+<a class="navLink" href="#education">Education &amp; Awards</a>
+<a class="navLink" href="#contact">Contact</a>
+<a class="navLink navLinkJump" href="projects/index.html">All Projects</a>
 </div>
 </header>
-<div class="homeShell">
-
-<aside class="homeSectionNav" aria-label="Homepage section navigation">
-  <nav>
-    <a class="active" href="#intro" data-section-link="intro">Intro</a>
-    <a href="#snapshot" data-section-link="snapshot">Snapshot</a>
-    <a href="#about" data-section-link="about">About</a>
-    <a href="#projects" data-section-link="projects">Work &amp; Publications</a>
-    <a href="#experience" data-section-link="experience">Experience</a>
-    <a href="#step-engineering" data-section-link="step-engineering">Step</a>
-    <a href="#news" data-section-link="news">Updates</a>
-    <a href="#education" data-section-link="education">Education</a>
-    <a href="#contact" data-section-link="contact">Contact</a>
-  </nav>
-</aside>
 <main class="container homeMain">
 
 <!-- Intro / Hero -->
@@ -84,8 +69,12 @@
   <h1>Shihao Cheng, <span class="nameAccent">Ph.D.</span></h1>
   <p class="heroRole homeHeroRole">A <span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
   <p class="sub heroLead">
-    I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear products used in the real world</a>.
+    I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear deployed in real-world environments</a>.
   </p>
+  <div class="heroByline">
+    <img class="avatarSm" src="assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="Shihao Cheng"/>
+    <span class="heroBylineText"><span>Robotics PhD @ UMich</span><span class="heroBylineSep" aria-hidden="true">|</span><span>Lead Control Engineer @ Shift Robotics</span></span>
+  </div>
   <div class="ctaRow">
     <a class="btn btnPrimary" href="#projects">View Work</a>
     <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
@@ -122,18 +111,7 @@
   </div>
 </div>
 <div class="homeCard glancePanel">
-  <div class="glanceTop">
-    <article class="glanceLeadCard">
-      <h3>From prosthetics research to deployed robotic footwear.</h3>
-      <p>A compact summary of the same story: robotics training, control engineering role, recognized research, and product deployment.</p>
-      <div class="chipRow glanceChipRow">
-      <span class="chip">Gait control</span>
-      <span class="chip">Embedded systems</span>
-      <span class="chip">Human locomotion</span>
-      <span class="chip">ML intent recognition</span>
-      </div>
-    </article>
-    <div class="miniStatGrid" aria-label="Training, current role, deployed product work, and research recognition.">
+  <div class="miniStatGrid miniStatRow" aria-label="Training, current role, deployed product work, and research recognition.">
     <article class="homeCard miniStatCard reveal" style="--d:0ms">
       <div class="miniStatValue">Ph.D.</div>
       <p>Robotics · University of Michigan</p>
@@ -150,13 +128,12 @@
       <div class="miniStatValue">50+</div>
       <p>Journal &amp; conference reviews</p>
     </article>
-    </div>
   </div>
   <div class="glanceProofGrid">
     <a class="homeCard glanceProofCard glanceProof-deployment reveal" style="--d:0ms" href="projects/shiftos.html">
       <h3>IKEA deployment</h3>
       <div class="glanceProofMeta">Moonwalkers · warehouse environments</div>
-      <p>Real-world robotic footwear systems in operational settings.</p>
+      <p>Robotic footwear deployed in warehouse operations.</p>
       <div class="chipRow">
         <span class="chip">Robotic footwear</span>
         <span class="chip">Validation</span>
@@ -189,29 +166,48 @@
 <h2>About</h2>
 <div class="small">Research → deployment</div>
 </div>
-<div class="aboutPanel">
-  <div class="aboutText">
-<p class="projDesc"><strong>I make wearable robots less robotic.</strong></p>
-<p class="projDesc">My work blends control, embedded systems, and machine learning to help robotic devices understand human movement intent in milliseconds. I focus on taking algorithms from simulation to production — where safety, reliability, and real-world messiness matter most.</p>
-<p class="projDesc">I like building systems that feel simple to the user because the engineering underneath is anything but.</p>
+<div class="homeCard aboutPanel">
+  <div class="aboutStatement">
+    <p class="aboutStatementText">I build systems that feel <em>simple</em> because the engineering underneath is not.</p>
   </div>
-  <div class="focusGrid" aria-label="Research → deployment">
-    <div class="focusCard">
-      <h3>Control systems</h3>
-      <p>Real-time assistance synchronized to human motion.</p>
+  <div class="aboutDivider" aria-hidden="true"></div>
+  <div class="aboutBody">
+    <div class="aboutText">
+      <p class="aboutLead"><strong>I make wearable robots less robotic.</strong></p>
+      <p class="projDesc">I work on control and sensing for wearable robots. The hard part isn't making them move — it's making them respond naturally to people.</p>
+      <p class="projDesc">Most of my work lives in the gap between lab prototype and daily use: delivering assistance at the right moment, handling noisy sensors and rough terrain, and validating the whole system, not isolated algorithms.</p>
+      <p class="projDesc">The goal is for users to notice the robot less, not more.</p>
     </div>
-    <div class="focusCard">
-      <h3>Human locomotion</h3>
-      <p>Gait phase, terrain, intent, and safety-aware behavior.</p>
-    </div>
-    <div class="focusCard">
-      <h3>Product validation</h3>
-      <p>Lab-to-field testing for wearable robotics products.</p>
-    </div>
-    <div class="focusCard">
-      <h3>Embedded sensing</h3>
-      <p>Sensor fusion and low-latency deployment constraints.</p>
-    </div>
+    <ol class="aboutPrinciples" aria-label="Research → deployment">
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">01</span>
+      <div class="aboutPrincipleBody">
+        <h3>Read the situation, not just the sensors</h3>
+        <p>Human movement is noisy and context-dependent. Intent has to be inferred from motion, contact, terrain, and timing together.</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">02</span>
+      <div class="aboutPrincipleBody">
+        <h3>Assist only when it helps</h3>
+        <p>Assistance should arrive at the right moment, and stay unobtrusive when the user is already moving well.</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">03</span>
+      <div class="aboutPrincipleBody">
+        <h3>Design for the full system</h3>
+        <p>Control logic, embedded constraints, hardware behavior, and safety checks have to work together.</p>
+      </div>
+    </li>
+    <li class="aboutPrinciple">
+      <span class="aboutPrincipleNum" aria-hidden="true">04</span>
+      <div class="aboutPrincipleBody">
+        <h3>Prove it outside the lab</h3>
+        <p>Models and bench tests are starting points. The real question is whether the behavior stays reliable across users, surfaces, and use cases.</p>
+      </div>
+    </li>
+    </ol>
   </div>
 </div>
 </section>
@@ -221,9 +217,7 @@
 <span class="anchorAlias" id="publications" aria-hidden="true"></span>
 <div class="sectionHead">
 <h2>Selected Work &amp; Publications</h2>
-<div class="small">Product systems and peer-reviewed research, without repeating the same contribution twice</div>
 </div>
-<p class="sectionIntro">Each card connects a work area with the relevant publication record when there is one.</p>
 <div class="workGrid selectedWorkGrid">
 <article class="homeCard workCard selectedWorkCard reveal workCardLarge" style="--d:0ms">
   <div class="workCardMedia">
@@ -233,17 +227,13 @@
     <span class="workMeta">Industry</span>
     <h3><a href="projects/shiftos.html">Moonwalkers Control System (ShiftOS)</a></h3>
     
-    <p class="workSummary">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
-    <p class="workRole"><strong>Role:</strong> Lead / Gait Control Engineer.</p>
+    <p class="workSummary">Real-time gait control and embedded deployment for robotic footwear.</p>
+    <p class="workRole"><strong>Role:</strong> Lead Control Engineer / Gait Control Engineer.</p>
     <div class="chipRow">
       <span class="chip">ShiftOS</span>
       <span class="chip">Gait sensing</span>
       <span class="chip">Embedded control</span>
       <span class="chip">Validation</span>
-    </div>
-    <div class="workLinks">
-      <a href="projects/shiftos.html">Project</a>
-
     </div>
   </div>
 </article>
@@ -262,10 +252,6 @@
       <span class="chip">Stairs</span>
       <span class="chip">Human trials</span>
     </div>
-    <div class="workLinks">
-      <a href="projects/tnsre2024.html">Project</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
-    </div>
   </div>
 </article>
 <article class="homeCard workCard selectedWorkCard reveal" style="--d:160ms">
@@ -274,7 +260,7 @@
   </div>
   <div class="workCardBody">
     <span class="workMeta">Research</span>
-    <h3><a href="projects/icf.html">Ambilateral Activity Recognition (TRO 2025)</a></h3>
+    <h3><a href="projects/icf.html">Ambilateral Activity Recognition (T-RO 2025)</a></h3>
     <div class="workPublication">IEEE T-RO 2025</div>
     <p class="workSummary">Interpretable intent recognition and continuous adaptation for powered prosthesis control.</p>
     <p class="workRole"><strong>Role:</strong> First-author research on interpretable activity recognition and continuous adaptation.</p>
@@ -282,10 +268,6 @@
       <span class="chip">Intent recognition</span>
       <span class="chip">ICF</span>
       <span class="chip">Real-time ML</span>
-    </div>
-    <div class="workLinks">
-      <a href="projects/icf.html">Project</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
     </div>
   </div>
 </article>
@@ -295,8 +277,8 @@
   </div>
   <div class="workCardBody">
     <span class="workMeta">Research</span>
-    <h3><a href="projects/tbme2024.html">Safety-Critical Stub Avoidance (TBME 2024)</a></h3>
-    <div class="workPublication">IEEE TBME 2024</div>
+    <h3><a href="projects/tbme2024.html">Safety-Critical Toe-Stub Avoidance (TBME 2024)</a></h3>
+    <div class="workPublication">IEEE TBME 2024 · Featured Article</div>
     <p class="workSummary">Real-time sensing and trajectory reshaping to reduce toe-stub risk.</p>
     <p class="workRole"><strong>Role:</strong> Safety-aware prosthesis control with sensing and real-time trajectory reshaping.</p>
     <div class="chipRow">
@@ -304,9 +286,22 @@
       <span class="chip">Obstacle avoidance</span>
       <span class="chip">Biomechanics</span>
     </div>
-    <div class="workLinks">
-      <a href="projects/tbme2024.html">Project</a>
-      <a href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+  </div>
+</article>
+<article class="homeCard workCard selectedWorkCard reveal" style="--d:320ms">
+  <div class="workCardMedia">
+    <img loading="lazy" width="1379" height="1254" src="assets/img/projects/ral2024_concept.jpg" alt="ral2024_concept"/>
+  </div>
+  <div class="workCardBody">
+    <span class="workMeta">Research</span>
+    <h3><a href="projects/ral2024.html">Transfer Learning for Intent Recognition (RA-L 2024)</a></h3>
+    <div class="workPublication">IEEE RA-L 2024</div>
+    <p class="workSummary">Low-data cross-user adaptation for practical prosthesis intent recognition.</p>
+    <p class="workRole"><strong>Role:</strong> Built the CNN intent classifier and transfer-learning strategy for cross-user adaptation.</p>
+    <div class="chipRow">
+      <span class="chip">Transfer learning</span>
+      <span class="chip">Intent prediction</span>
+      <span class="chip">Cross-user</span>
     </div>
   </div>
 </article>
@@ -357,7 +352,7 @@
     <ul class="projList">
 <li>Multi-activity prosthesis control and activity transitions</li>
 <li>Interpretable ML-based intent recognition and cross-user adaptation</li>
-<li>Environmental sensing for safety interventions for obstacle avoidance</li>
+<li>Environmental sensing for obstacle-avoidance safety interventions</li>
     </ul>
   </div>
 </article>
@@ -368,7 +363,7 @@
 <section class="section reveal" id="step-engineering">
   <div class="sectionHead">
     <h2>The Hidden Engineering in a Step</h2>
-    <div class="small">Tap a phase to see what the robot thinks.</div>
+    <div class="small">Tap a phase to see what the controller is estimating.</div>
   </div>
   <div class="homeCard stepEngineeringPanel">
     <p class="stepEngIntro">A single step contains more information than it seems. For wearable robots, each stride is a stream of clues: intent, terrain, balance, timing, and safety. My work focuses on turning those clues into real-time control decisions that feel natural outside the lab.</p>
@@ -386,7 +381,7 @@
 <article class="philosophyStep">
   <span class="philosophyIndex">03</span>
   <h3>Assist</h3>
-  <p>Apply support at the right moment under real-time limits.</p>
+  <p>Deliver assistance at the right moment under real-time limits.</p>
 </article>
 <article class="philosophyStep">
   <span class="philosophyIndex">04</span>
@@ -452,7 +447,7 @@
         <span class="newsTag newsTag-milestone">🎓 Milestone</span>
         <span class="newsDate">May 2025</span>
         <span class="newsText">
-          Appointed Lead Control Engineer at Shift Robotics, leading control and sensing for the first wheeled exoskeleton shoe.
+          Appointed Lead Control Engineer at Shift Robotics, leading control and sensing for Moonwalkers' wheeled robotic footwear platform.
         </span>
       </li>
 
@@ -472,7 +467,50 @@
         </span>
       </li>
 
+      <li class="homeCard reveal" style="--d:225ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
+        <span class="newsDate">Oct 2023</span>
+        <span class="newsText">
+          Received the <strong>IROS 2023 Best Student Paper Award</strong> for work on continuous transition control of powered prostheses.
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:270ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
+        <span class="newsDate">Apr 2023</span>
+        <span class="newsText">
+          Awarded the Rackham Pre-Doctoral Fellowship, University of Michigan.
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:315ms" data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
+        <span class="newsDate">May 2021</span>
+        <span class="newsText">
+          Earned dual M.S. degrees in Mechanical Engineering and Robotics from the University of Michigan.
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:360ms" data-tag="award">
+        <span class="newsTag newsTag-award">🏆 Award</span>
+        <span class="newsDate">Dec 2018</span>
+        <span class="newsText">
+          Senior Design project received the Malott Innovation Award, Purdue University.
+        </span>
+      </li>
+
+      <li class="homeCard reveal" style="--d:405ms" data-tag="milestone">
+        <span class="newsTag newsTag-milestone">🎓 Milestone</span>
+        <span class="newsDate">Dec 2018</span>
+        <span class="newsText">
+          Graduated from Purdue University with a B.S. in Mechanical Engineering <em>with Distinction</em>, with minors in Mathematics and Economics.
+        </span>
+      </li>
+
     </ul>
+    <div class="newsControls">
+      <button class="btn newsToggle" id="newsToggleBtn" type="button" aria-expanded="false">Show more</button>
+    </div>
   </div>
 </section>
 
@@ -542,9 +580,8 @@
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
 </main>
-</div>
-<script src="assets/site.js"></script>
-<script src="assets/widgets/step-engineering.js"></script>
+<script src="assets/site.js?v=25"></script>
+<script src="assets/widgets/step-engineering.js?v=25"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
