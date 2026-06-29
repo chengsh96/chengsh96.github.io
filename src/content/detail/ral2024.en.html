@@ -1,0 +1,98 @@
+<section class="section reveal">
+<div class="sectionHead">
+<h1>Transfer Learning for Efficient Intent Prediction (RA-L 2024)</h1>
+<div class="small">Research</div>
+</div>
+<div class="card">
+<!-- Badges / quick meta -->
+<div class="badgeRow">
+<span class="badge">IEEE Robotics &amp; Automation Letters</span>
+<span class="badge badgeSoft">Transfer Learning</span>
+<span class="badge badgeSoft">Intent Prediction</span>
+<span class="badge badgeSoft">Data-Limited Training</span>
+</div>
+<!-- Links -->
+<div class="linkRow u-mt-14">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10476673" rel="noopener" target="_blank">
+            RA-L 2024 Paper
+          </a>
+<!-- Optional: add arXiv / project repo later if you want -->
+</div>
+<!-- Media -->
+<div class="mediaGrid mediaGridSingle u-mt-16">
+<!-- IMPORTANT:
+               Use an existing image in your repo. If you already have a preview image for this project,
+               keep the filename consistent with what you renamed earlier.
+               Examples below (pick ONE that exists and delete the other <figure>).
+          -->
+<figure class="mediaFigure">
+<img width="1379" height="1254" alt="Transfer learning framework for locomotion intent prediction (RA-L 2024)" src="../assets/img/projects/ral2024_concept.jpg"/>
+<figcaption class="mediaCaption">
+              Transfer learning for intent prediction: pre-train on larger datasets, then fine-tune with minimal user-specific data.
+            </figcaption>
+</figure>
+<figure class="mediaFigure">
+<img width="1682" height="359" alt="Sensor configuration and evaluation setup for intent prediction" loading="lazy" src="../assets/img/projects/ral2024_demo.jpg"/>
+<figcaption class="mediaCaption">
+              Practical sensor insight: a thigh IMU + load cell can be an efficient, high-performing setup in data-limited scenarios.
+            </figcaption>
+</figure>
+</div>
+<!-- Enriched description -->
+<p class="projDesc u-mt-14">
+          This project develops a transfer learning pipeline to improve locomotion intent prediction for new transfemoral
+          amputee users when only a small amount of labeled data is available. Instead of training a fully subject-dependent
+          model from scratch (which requires extensive per-user data), we fine-tune pre-trained CNN models to quickly adapt
+          to a novel user while retaining useful feature representations learned from prior datasets.
+        </p>
+<div class="split u-mt-12">
+<div class="card card--flat">
+<h3 class="u-heading-flush">What I contributed</h3>
+<ul class="projList">
+<li>
+                A CNN-based intent classifier using a Fully Convolutional Network backbone, designed for continuous-time prediction.
+              </li>
+<li>
+                Transfer learning strategy: freeze early convolutional blocks and fine-tune remaining layers for a new amputee user,
+                improving accuracy with limited training circuits.
+              </li>
+<li>
+                Comparative evaluation across subject-dependent, subject-independent, and transfer-learning models, plus sensor ablations.
+              </li>
+</ul>
+</div>
+<div class="card card--flat">
+<h3 class="u-heading-flush">Key findings (why it matters)</h3>
+<ul class="projList">
+<li>
+                Transfer learning achieves error rates comparable to heavier subject-dependent training, but with substantially less user data.
+              </li>
+<li>
+                Pre-training can leverage both amputee and able-bodied datasets; performance improves as more subject data is available.
+              </li>
+<li>
+                A thigh IMU + load cell is identified as a practical, efficient sensing choice for deployment-oriented systems.
+              </li>
+</ul>
+</div>
+</div>
+<!-- Skills -->
+<div class="u-mt-12">
+<h3>Skills highlighted</h3>
+<div class="pills u-mt-8">
+<span class="pill">Deep Learning (CNN / FCN)</span>
+<span class="pill">Transfer Learning / Fine-Tuning</span>
+<span class="pill">Time-Series Windows</span>
+<span class="pill">Wearable Sensing (IMU + Load Cell)</span>
+<span class="pill">Model Evaluation &amp; Ablations</span>
+<span class="pill">Deployment-Oriented Design</span>
+</div>
+</div>
+<p class="affil">Ph.D. research conducted in the <a href="https://locolab.robotics.umich.edu/index.html" target="_blank" rel="noopener">LocoLab</a> at the University of Michigan, advised by Prof. Robert D. Gregg.</p>
+<!-- Footer nav -->
+<div class="linkRow u-mt-18">
+<a class="btn" href="index.html">← Back to All Projects</a>
+<a class="btn" href="../index.html#projects">Featured Projects</a>
+</div>
+</div>
+</section>

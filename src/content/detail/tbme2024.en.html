@@ -1,0 +1,94 @@
+<section class="section reveal">
+<div class="sectionHead sectionHeadAward">
+<div class="headLeft">
+<h1>Automatic Stub Avoidance for a Powered Prosthetic Leg Over Stairs and Obstacles (TBME 2024)</h1>
+<div class="awardBadge">TBME 2024 Featured Article</div>
+</div>
+<div class="small">Research</div>
+</div>
+<div class="card">
+<!-- Links -->
+<div class="linkRow">
+<a class="btn" href="https://ieeexplore.ieee.org/abstract/document/10347471" rel="noopener" target="_blank">
+            TBME 2024 Paper
+          </a>
+<a class="btn btnPrimary" href="https://youtu.be/Mq_Qx1WDkg8?si=szw2Dc7INelrnpMF" rel="noopener" target="_blank">
+            Watch Video
+          </a>
+</div>
+<!-- Media -->
+<div class="mediaGrid">
+<!-- NOTE: if your image is png/webp, just change the extension. -->
+<div class="mediaItem">
+<img width="1051" height="482" alt="Stub avoidance experimental demo (TBME 2024)" src="../assets/img/projects/tbme2024_exp_demo.jpg"/>
+</div>
+<div class="mediaItem">
+<img width="2539" height="1791" alt="Conceptual / block diagram of swing-phase obstacle-avoidance controller" loading="lazy" src="../assets/img/projects/tbme2024_concept.jpg"/>
+</div>
+</div>
+<!-- Narrative -->
+<p class="projDesc u-mt-14">
+          Toe stubbing during swing is a common safety risk for transfemoral prosthesis users, especially on stairs and
+          during obstacle negotiation. This work adds a <strong>reactive safety layer</strong> on top of continuous locomotion
+          control: the controller predicts insufficient clearance and automatically reshapes swing trajectories to increase
+          toe clearance, while preserving smoothness and user comfort.
+        </p>
+<p class="projDesc">
+          The core idea is to treat stub avoidance as a <strong>trajectory adjustment problem</strong>, not a mode switch:
+          when a risk is detected, the system computes a <strong>minimum-jerk corrective trajectory</strong> and blends it into
+          the nominal gait to avoid abrupt motion or destabilizing transients.
+        </p>
+<hr/>
+<h3 class="u-heading-tight">What I built</h3>
+<ul class="projList">
+<li>
+<strong>Real-time risk estimation:</strong> detected toe-clearance risk using prosthesis kinematics
+            (e.g., knee/shank angles) combined with <strong>ultrasonic distance measurements</strong> to stairs/obstacles.
+          </li>
+<li>
+<strong>Minimum-jerk trajectory reshaping:</strong> computed smooth corrective knee trajectories and blended them
+            into the nominal motion to preserve comfort and stability.
+          </li>
+<li>
+<strong>Compatibility with continuous control:</strong> integrated the safety layer with the continuous controller
+            so that avoidance behavior is consistent across locomotion modes (walking and stairs), rather than bolted-on
+            as a separate “special case.”
+          </li>
+</ul>
+<hr/>
+<h3 class="u-heading-tight">Results &amp; robustness highlights</h3>
+<ul class="projList">
+<li>
+<strong>Large reduction in stub events on stairs (risky stepping):</strong>
+            in a “safe-line” protocol designed to induce high stubbing risk, the controller reduced stub rate from ~49% to
+            ~5% overall, with participant reductions of <strong>87.6%</strong> and <strong>92.3%</strong>.
+          </li>
+<li>
+<strong>Obstacle-crossing effectiveness:</strong>
+            achieved successful obstacle crossings, with remaining scuffs tied to conservative knee-velocity limits that were
+            later tuned (demonstrating practical deployment tradeoffs).
+          </li>
+<li>
+<strong>Low false-trigger rate across multi-activity circuits:</strong>
+            in an offline simulation spanning diverse daily activities (turning, ramps, stairs, sit/stand), the false-positive
+            rate for noticeable extra flexion was <strong>1.23%</strong>, and all extra flexions returned to nominal by heel strike.
+          </li>
+</ul>
+<hr/>
+<h3 class="u-heading-tight">Skills highlighted</h3>
+<div class="pills u-mt-10">
+<span class="pill">Safety-critical control</span>
+<span class="pill">Minimum-jerk optimization</span>
+<span class="pill">Environmental sensing (distance)</span>
+<span class="pill">Trajectory blending</span>
+<span class="pill">Human-subject experiments</span>
+<span class="pill">Robustness / FP analysis</span>
+</div>
+</div>
+<p class="affil">Ph.D. research conducted in the <a href="https://locolab.robotics.umich.edu/index.html" target="_blank" rel="noopener">LocoLab</a> at the University of Michigan, advised by Prof. Robert D. Gregg.</p>
+<!-- Footer nav -->
+<div class="linkRow u-mt-18">
+<a class="btn" href="index.html">← Back to All Projects</a>
+<a class="btn" href="../index.html#projects">Featured Projects</a>
+</div>
+</section>

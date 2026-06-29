@@ -13,9 +13,16 @@
     "check:i18n": "node scripts/check-i18n.mjs",
     "check:sitemap": "node scripts/gen-sitemap.mjs --check",
     "gen:sitemap": "node scripts/gen-sitemap.mjs",
-    "test": "npm run lint:html && npm run lint:js && npm run check:links && npm run check:nav && npm run check:seo && npm run check:i18n && npm run check:sitemap"
+    "typecheck": "tsc --noEmit",
+    "content:check": "tsx scripts/check-content-parity.ts",
+    "build": "tsx scripts/build.ts",
+    "build:check": "tsx scripts/build.ts --check",
+    "test": "npm run typecheck && npm run content:check && npm run build:check && npm run lint:html && npm run lint:js && npm run check:links && npm run check:nav && npm run check:seo && npm run check:i18n && npm run check:sitemap"
   },
   "devDependencies": {
-    "htmlhint": "^1.1.4"
+    "@types/node": "^26.0.1",
+    "htmlhint": "^1.1.4",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   }
 }

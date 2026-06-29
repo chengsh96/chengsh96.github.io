@@ -8,7 +8,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, normalize, relative, resolve, sep } from "node:path";
 
 const ROOT = process.cwd();
-const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts"]);
+const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts", "src"]);
 
 function walk(dir, files = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

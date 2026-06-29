@@ -18,7 +18,7 @@ import { basename, join, relative, sep } from "node:path";
 
 const ROOT = process.cwd();
 const SITE = "https://chengsh96.github.io";
-const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts"]);
+const IGNORE_DIRS = new Set([".git", ".claude", "node_modules", "scripts", "src"]);
 
 function walk(dir, files = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
