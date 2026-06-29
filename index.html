@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=14" rel="stylesheet"/>
+<link href="assets/site.css?v=15" rel="stylesheet"/>
 </head>
 <body>
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -61,8 +61,9 @@
 </header>
 <main class="container">
 
-<!-- Hero with ShiftOS video -->
-<section class="hero">
+<!-- Hero: split-screen control cockpit -->
+<section class="hero" data-parallax-scene>
+<div class="heroBg" aria-hidden="true" data-parallax></div>
 <div class="heroGrid">
 <div class="heroLeft reveal">
   <span class="kicker">Wearable Robotics • Controls • ML</span>
@@ -83,15 +84,48 @@
 </div>
 
 <div class="heroRight reveal reveal-right">
-  <figure class="heroVideo">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="assets/video/shiftos_demo_poster.jpg"
-      aria-label="ShiftOS Moonwalkers demonstration">
-      <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
-      <source src="assets/video/shiftos_demo.mp4" type="video/mp4"/>
-    </video>
-    <figcaption>ShiftOS in production · <a href="projects/shiftos.html">See the system →</a></figcaption>
-  </figure>
+  <div class="cockpit" data-tilt>
+    <div class="cockpitHead">
+      <span class="cockpitLive"><span class="cockpitLiveDot" aria-hidden="true"></span>LIVE</span>
+      <span class="cockpitTitle">Control Telemetry</span>
+    </div>
+    <figure class="cockpitFeed">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="assets/video/shiftos_demo_poster.jpg"
+        aria-label="ShiftOS Moonwalkers demonstration">
+        <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
+        <source src="assets/video/shiftos_demo.mp4" type="video/mp4"/>
+      </video>
+      <span class="cockpitScan" aria-hidden="true"></span>
+      <figcaption class="cockpitFeedCap">ShiftOS in production · <a href="projects/shiftos.html">See the system →</a></figcaption>
+    </figure>
+    <div class="cockpitWave" aria-hidden="true">
+      <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0,20 C20,20 28,6 40,6 C52,6 60,34 76,34 C92,34 98,12 112,12 C126,12 134,28 150,28 C166,28 172,10 188,10 C204,10 212,32 228,32 C244,32 252,16 268,16 C282,16 290,20 300,20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="cockpitReadout">
+      <div class="cockpitRow">
+        <span class="cockpitLabel">Gait Phase</span>
+        <span class="cockpitValue" data-metric="phase">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">Intent</span>
+        <span class="cockpitValue" data-metric="intent">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">Terrain</span>
+        <span class="cockpitValue" data-metric="terrain">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">Controller</span>
+        <span class="cockpitValue" data-metric="mode">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">Latency</span>
+        <span class="cockpitValue" data-metric="latency">—</span>
+      </div>
+    </div>
+    <p class="cockpitCaption">Illustrative real-time signals from wearable-robot control.</p>
+  </div>
 </div>
 </div>
 </section>
@@ -103,25 +137,30 @@
   <p class="statRowSub">Robotics systems deployed in the real world, with research recognized at top venues.</p>
 </div>
 <div class="statGrid">
-  <a class="stat stat--featured statHero reveal" href="projects/shiftos.html" style="--d:0ms">
+  <a class="stat stat--featured statHero statTile reveal" href="projects/shiftos.html" style="--d:0ms">
+    <span class="statGhost" aria-hidden="true">IKEA</span>
     <div class="statNum statText">IKEA</div>
     <div class="statBadge">Real-World Deployment</div>
     <div class="statLabel">Moonwalkers deployed across global IKEA warehouses</div>
   </a>
-  <a class="stat stat--award statHero reveal" href="projects/tnsre2024.html" style="--d:90ms">
+  <a class="stat stat--award statHero statTile reveal" href="projects/tnsre2024.html" style="--d:90ms">
+    <span class="statGhost" aria-hidden="true">IROS '23</span>
     <div class="statNum statText">IROS '23</div>
     <div class="statBadge">Top Research Award</div>
     <div class="statLabel">Best Student Paper Award · IEEE/RSJ IROS 2023</div>
   </a>
-  <a class="stat statSupport reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
+  <a class="stat statSupport statTile reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
+    <span class="statGhost" aria-hidden="true">10+</span>
     <div class="statNum statText">10+</div>
     <div class="statLabel">Peer-reviewed publications</div>
   </a>
-  <a class="stat statSupport reveal" href="projects/icf.html" style="--d:270ms">
+  <a class="stat statSupport statTile reveal" href="projects/icf.html" style="--d:270ms">
+    <span class="statGhost" aria-hidden="true">T-RO '25</span>
     <div class="statNum statText">T-RO '25</div>
     <div class="statLabel">First-author · Flagship robotics journal</div>
   </a>
-  <div class="stat statSupport reveal" style="--d:360ms">
+  <div class="stat statSupport statTile reveal" style="--d:360ms">
+    <span class="statGhost" aria-hidden="true">50+</span>
     <div class="statNum statText">50+</div>
     <div class="statLabel">Journal &amp; Conference Reviews</div>
   </div>
@@ -255,85 +294,109 @@
   <button class="filterChip" data-filter="software" role="tab" aria-selected="false">Software &amp; App</button>
   <button class="filterChip" data-filter="safety" role="tab" aria-selected="false">Safety</button>
 </div>
-<div class="grid">
-<a class="card proj reveal reveal-left" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
-<div class="projMedia"><img loading="lazy" width="760" height="500" alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Moonwalkers Control System (ShiftOS)</p>
-<span class="tag">Industry</span>
-</div>
-<p class="projOutcome">Moonwalkers deployed across global IKEA warehouses</p>
-<p class="projDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
-<ul class="projList">
+<div class="caseStudies">
+<a class="caseStudy proj reveal" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
+  <div class="csVisual">
+    <img loading="lazy" width="760" height="500" alt="shiftos_aero" src="assets/img/projects/shiftos_aero.jpg"/>
+    <span class="csIndex" aria-hidden="true">01</span>
+    <span class="csTagFloat">Industry</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">Moonwalkers deployed across global IKEA warehouses</p>
+    <h3 class="csTitle">Moonwalkers Control System (ShiftOS)</h3>
+    <p class="csDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
+    <ul class="csList">
 <li>Balance-aware behaviors for uneven terrain</li>
 <li>Low-latency transitions and safety constraints</li>
 <li>RTOS integration and reliability hardening</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:90ms" href="projects/tbme2024.html" data-tags="safety estimation">
-<div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p>
-<span class="tag">Research</span>
-</div>
-<p class="projOutcome">Published in IEEE TBME 2024</p>
-<p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:80ms" href="projects/tbme2024.html" data-tags="safety estimation">
+  <div class="csVisual">
+    <img loading="lazy" width="2539" height="1791" alt="tbme2024_concept" src="assets/img/projects/tbme2024_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">02</span>
+    <span class="csTagFloat">Research</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">Published in IEEE TBME 2024</p>
+    <h3 class="csTitle">Safety-Critical Stub Avoidance (TBME 2024)</h3>
+    <p class="csDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
+    <ul class="csList">
 <li>Safety intervention compatible with continuous control</li>
 <li>Multi-sensor inputs (kinematics + ranging)</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:180ms" href="projects/tnsre2024.html" data-tags="gait">
-<div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Continuous Transition Control (TNSRE 2024)</p>
-<span class="tag">Research</span>
-</div>
-<p class="projOutcome">IROS 2023 Best Student Paper Award</p>
-<p class="projDesc">Continuous trajectories for walk↔stairs transitions, robust to timing errors.</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:160ms" href="projects/tnsre2024.html" data-tags="gait">
+  <div class="csVisual">
+    <img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="assets/img/projects/tnsre2024_exp.jpg"/>
+    <span class="csIndex" aria-hidden="true">03</span>
+    <span class="csTagFloat">Research</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">IROS 2023 Best Student Paper Award</p>
+    <h3 class="csTitle">Continuous Transition Control (TNSRE 2024)</h3>
+    <p class="csDesc">Continuous trajectories for walk↔stairs transitions, robust to timing errors.</p>
+    <ul class="csList">
 <li>Phase-aligned reference generation</li>
 <li>Robust across inter-leg transition cases</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:270ms" href="projects/ral2024.html" data-tags="intent ml">
-<div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p>
-<span class="tag">Research</span>
-</div>
-<p class="projOutcome">Published in IEEE RA-L 2024</p>
-<p class="projDesc">Low-data adaptation for intent prediction across users with practical dataset constraints.</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:240ms" href="projects/ral2024.html" data-tags="intent ml">
+  <div class="csVisual">
+    <img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="assets/img/projects/ral2024_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">04</span>
+    <span class="csTagFloat">Research</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">Published in IEEE RA-L 2024</p>
+    <h3 class="csTitle">Transfer Learning for Intent (RA-L 2024)</h3>
+    <p class="csDesc">Low-data adaptation for intent prediction across users with practical dataset constraints.</p>
+    <ul class="csList">
 <li>Cross-user generalization</li>
 <li>Reduced subject-specific data requirements</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:360ms" href="projects/icf.html" data-tags="intent ml">
-<div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Ambilateral Activity Recognition (TRO 2025)</p>
-<span class="tag">Research</span>
-</div>
-<p class="projOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
-<p class="projDesc">Interpretable ICF-based intent recognition for powered prostheses, extended to bilateral sensing for continuous adaptation across locomotion modes.</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:320ms" href="projects/icf.html" data-tags="intent ml">
+  <div class="csVisual">
+    <img loading="lazy" width="4000" height="2250" alt="ICF-based intent recognition concept" src="assets/img/projects/icf_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">05</span>
+    <span class="csTagFloat">Research</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
+    <h3 class="csTitle">Ambilateral Activity Recognition (TRO 2025)</h3>
+    <p class="csDesc">Interpretable ICF-based intent recognition for powered prostheses, extended to bilateral sensing for continuous adaptation across locomotion modes.</p>
+    <ul class="csList">
 <li>Biomechanically interpretable features — no black-box embeddings</li>
 <li>Real-time classifier (&lt;5 ms), ambilateral gait estimation</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:450ms" href="projects/embc2025.html" data-tags="software intent">
-<div class="projMedia"><img loading="lazy" width="1017" height="750" alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Smartwatch Gesture Control (EMBC 2025)</p>
-<span class="tag">Research</span>
-</div>
-<p class="projOutcome">Published in IEEE EMBC 2025</p>
-<p class="projDesc">Smartwatch-based human–robot interface for explicit mode control of a powered knee-ankle prosthesis with vibrotactile feedback.</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:400ms" href="projects/embc2025.html" data-tags="software intent">
+  <div class="csVisual">
+    <img loading="lazy" width="1017" height="750" alt="Smartwatch interface for prosthesis mode switching" src="assets/img/projects/embc2025_watch.jpg"/>
+    <span class="csIndex" aria-hidden="true">06</span>
+    <span class="csTagFloat">Research</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">Published in IEEE EMBC 2025</p>
+    <h3 class="csTitle">Smartwatch Gesture Control (EMBC 2025)</h3>
+    <p class="csDesc">Smartwatch-based human–robot interface for explicit mode control of a powered knee-ankle prosthesis with vibrotactile feedback.</p>
+    <ul class="csList">
 <li>Swipe gestures mapped to four locomotion modes</li>
 <li>Vibrotactile + visual confirmation, TCP comms to prosthesis</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">Read the case study →</span>
+  </div>
 </a>
 </div>
 <div class="linkRow reveal u-mt-18">
@@ -351,12 +414,15 @@
   <div class="controlLoop" aria-label="Control loop: Sense, Infer, Decide, Act"></div>
   <div class="stepTimeline" role="tablist" aria-label="Gait phases"></div>
   <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
-  <div class="signalWaves" aria-hidden="true"></div>
-  <div class="stepDetail card" role="tabpanel" aria-live="polite">
-    <div id="seHuman"></div>
-    <div id="seSenses"></div>
-    <div id="seCtrl"></div>
+  <div class="seCenter">
+    <div class="seStage" aria-hidden="true"></div>
+    <div class="stepDetail card" role="tabpanel" aria-live="polite">
+      <div id="seHuman"></div>
+      <div id="seSenses"></div>
+      <div id="seCtrl"></div>
+    </div>
   </div>
+  <div class="signalWaves" aria-hidden="true"></div>
   <div class="factGrid"></div>
   <p class="stepRef"></p>
 </section>

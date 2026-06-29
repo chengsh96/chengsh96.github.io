@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=14" rel="stylesheet"/>
+<link href="../assets/site.css?v=15" rel="stylesheet"/>
 </head>
 <body>
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -61,8 +61,9 @@
 </header>
 <main class="container">
 
-<!-- Hero with ShiftOS video -->
-<section class="hero">
+<!-- Hero: split-screen control cockpit -->
+<section class="hero" data-parallax-scene>
+<div class="heroBg" aria-hidden="true" data-parallax></div>
 <div class="heroGrid">
 <div class="heroLeft reveal">
   <span class="kicker">可穿戴机器人 • 控制 • 机器学习</span>
@@ -83,15 +84,48 @@
 </div>
 
 <div class="heroRight reveal reveal-right">
-  <figure class="heroVideo">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="../assets/video/shiftos_demo_poster.jpg"
-      aria-label="ShiftOS Moonwalkers 演示">
-      <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
-      <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
-    </video>
-    <figcaption>ShiftOS 量产系统 · <a href="projects/shiftos.html">查看详情 →</a></figcaption>
-  </figure>
+  <div class="cockpit" data-tilt>
+    <div class="cockpitHead">
+      <span class="cockpitLive"><span class="cockpitLiveDot" aria-hidden="true"></span>实时</span>
+      <span class="cockpitTitle">控制遥测</span>
+    </div>
+    <figure class="cockpitFeed">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="../assets/video/shiftos_demo_poster.jpg"
+        aria-label="ShiftOS Moonwalkers 演示">
+        <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
+        <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
+      </video>
+      <span class="cockpitScan" aria-hidden="true"></span>
+      <figcaption class="cockpitFeedCap">ShiftOS 量产系统 · <a href="projects/shiftos.html">查看详情 →</a></figcaption>
+    </figure>
+    <div class="cockpitWave" aria-hidden="true">
+      <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0,20 C20,20 28,6 40,6 C52,6 60,34 76,34 C92,34 98,12 112,12 C126,12 134,28 150,28 C166,28 172,10 188,10 C204,10 212,32 228,32 C244,32 252,16 268,16 C282,16 290,20 300,20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="cockpitReadout">
+      <div class="cockpitRow">
+        <span class="cockpitLabel">步态相位</span>
+        <span class="cockpitValue" data-metric="phase">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">意图</span>
+        <span class="cockpitValue" data-metric="intent">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">地形</span>
+        <span class="cockpitValue" data-metric="terrain">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">控制模式</span>
+        <span class="cockpitValue" data-metric="mode">—</span>
+      </div>
+      <div class="cockpitRow">
+        <span class="cockpitLabel">延迟</span>
+        <span class="cockpitValue" data-metric="latency">—</span>
+      </div>
+    </div>
+    <p class="cockpitCaption">示意性实时信号，来自可穿戴机器人控制系统。</p>
+  </div>
 </div>
 </div>
 </section>
@@ -103,25 +137,30 @@
   <p class="statRowSub">机器人系统落地真实场景，研究成果获顶级学术认可。</p>
 </div>
 <div class="statGrid">
-  <a class="stat stat--featured statHero reveal" href="projects/shiftos.html" style="--d:0ms">
+  <a class="stat stat--featured statHero statTile reveal" href="projects/shiftos.html" style="--d:0ms">
+    <span class="statGhost" aria-hidden="true">IKEA</span>
     <div class="statNum statText">IKEA</div>
     <div class="statBadge">实地量产部署</div>
     <div class="statLabel">Moonwalkers 已在全球 IKEA 仓库部署</div>
   </a>
-  <a class="stat stat--award statHero reveal" href="projects/tnsre2024.html" style="--d:90ms">
+  <a class="stat stat--award statHero statTile reveal" href="projects/tnsre2024.html" style="--d:90ms">
+    <span class="statGhost" aria-hidden="true">IROS '23</span>
     <div class="statNum statText">IROS '23</div>
     <div class="statBadge">顶级科研奖项</div>
     <div class="statLabel">最佳学生论文奖 · IEEE/RSJ IROS 2023</div>
   </a>
-  <a class="stat statSupport reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
+  <a class="stat statSupport statTile reveal" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener" style="--d:180ms">
+    <span class="statGhost" aria-hidden="true">10+</span>
     <div class="statNum statText">10+</div>
     <div class="statLabel">同行评审论文</div>
   </a>
-  <a class="stat statSupport reveal" href="projects/icf.html" style="--d:270ms">
+  <a class="stat statSupport statTile reveal" href="projects/icf.html" style="--d:270ms">
+    <span class="statGhost" aria-hidden="true">T-RO '25</span>
     <div class="statNum statText">T-RO '25</div>
     <div class="statLabel">第一作者 · 旗舰机器人期刊</div>
   </a>
-  <div class="stat statSupport reveal" style="--d:360ms">
+  <div class="stat statSupport statTile reveal" style="--d:360ms">
+    <span class="statGhost" aria-hidden="true">50+</span>
     <div class="statNum statText">50+</div>
     <div class="statLabel">期刊与会议审稿</div>
   </div>
@@ -255,85 +294,109 @@
   <button class="filterChip" data-filter="software" role="tab" aria-selected="false">软件与应用</button>
   <button class="filterChip" data-filter="safety" role="tab" aria-selected="false">安全</button>
 </div>
-<div class="grid">
-<a class="card proj reveal reveal-left" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
-<div class="projMedia"><img loading="lazy" width="760" height="500" alt="shiftos_aero" src="../assets/img/projects/shiftos_aero.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">Moonwalkers 控制系统（ShiftOS）</p>
-<span class="tag">量产</span>
-</div>
-<p class="projOutcome">Moonwalkers 已在全球 IKEA 仓库部署</p>
-<p class="projDesc">为可穿戴动力鞋打造实时运动控制系统，并完成嵌入式量产部署。</p>
-<ul class="projList">
+<div class="caseStudies">
+<a class="caseStudy proj reveal" style="--d:0ms" href="projects/shiftos.html" data-tags="gait estimation intent software">
+  <div class="csVisual">
+    <img loading="lazy" width="760" height="500" alt="shiftos_aero" src="../assets/img/projects/shiftos_aero.jpg"/>
+    <span class="csIndex" aria-hidden="true">01</span>
+    <span class="csTagFloat">量产</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">Moonwalkers 已在全球 IKEA 仓库部署</p>
+    <h3 class="csTitle">Moonwalkers 控制系统（ShiftOS）</h3>
+    <p class="csDesc">为可穿戴动力鞋打造实时运动控制系统，并完成嵌入式量产部署。</p>
+    <ul class="csList">
 <li>平衡感知控制与不平路面稳定性</li>
 <li>低延迟状态切换与安全约束</li>
 <li>RTOS 集成与可靠性加固</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:90ms" href="projects/tbme2024.html" data-tags="safety estimation">
-<div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024" src="../assets/img/projects/tbme2024_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">安全关键绊脚规避（TBME 2024）</p>
-<span class="tag">科研</span>
-</div>
-<p class="projOutcome">发表于 IEEE TBME 2024</p>
-<p class="projDesc">基于实时预测与最小跃度轨迹重塑，实现对障碍接触的安全规避。</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:80ms" href="projects/tbme2024.html" data-tags="safety estimation">
+  <div class="csVisual">
+    <img loading="lazy" width="2539" height="1791" alt="tbme2024" src="../assets/img/projects/tbme2024_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">02</span>
+    <span class="csTagFloat">科研</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">发表于 IEEE TBME 2024</p>
+    <h3 class="csTitle">安全关键绊脚规避（TBME 2024）</h3>
+    <p class="csDesc">基于实时预测与最小跃度轨迹重塑，实现对障碍接触的安全规避。</p>
+    <ul class="csList">
 <li>与连续控制兼容的安全干预</li>
 <li>多传感器输入（运动学 + 距离）</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:180ms" href="projects/tnsre2024.html" data-tags="gait">
-<div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="../assets/img/projects/tnsre2024_exp.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">连续转换控制（TNSRE 2024）</p>
-<span class="tag">科研</span>
-</div>
-<p class="projOutcome">IROS 2023 最佳学生论文奖</p>
-<p class="projDesc">在平地与楼梯之间生成连续轨迹，对意图延迟与时序误差更鲁棒。</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:160ms" href="projects/tnsre2024.html" data-tags="gait">
+  <div class="csVisual">
+    <img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="../assets/img/projects/tnsre2024_exp.jpg"/>
+    <span class="csIndex" aria-hidden="true">03</span>
+    <span class="csTagFloat">科研</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">IROS 2023 最佳学生论文奖</p>
+    <h3 class="csTitle">连续转换控制（TNSRE 2024）</h3>
+    <p class="csDesc">在平地与楼梯之间生成连续轨迹，对意图延迟与时序误差更鲁棒。</p>
+    <ul class="csList">
 <li>相位对齐的参考轨迹生成</li>
 <li>覆盖多种跨腿转换场景</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:270ms" href="projects/ral2024.html" data-tags="intent ml">
-<div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="../assets/img/projects/ral2024_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">迁移学习意图预测（RA-L 2024）</p>
-<span class="tag">科研</span>
-</div>
-<p class="projOutcome">发表于 IEEE RA-L 2024</p>
-<p class="projDesc">在数据受限条件下，实现对新用户的快速意图适配与泛化。</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:240ms" href="projects/ral2024.html" data-tags="intent ml">
+  <div class="csVisual">
+    <img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="../assets/img/projects/ral2024_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">04</span>
+    <span class="csTagFloat">科研</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">发表于 IEEE RA-L 2024</p>
+    <h3 class="csTitle">迁移学习意图预测（RA-L 2024）</h3>
+    <p class="csDesc">在数据受限条件下，实现对新用户的快速意图适配与泛化。</p>
+    <ul class="csList">
 <li>预训练 + 微调策略</li>
 <li>跨用户泛化与传感器分析</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:360ms" href="projects/icf.html" data-tags="intent ml">
-<div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="基于 ICF 的意图识别概念图" src="../assets/img/projects/icf_concept.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">双侧活动识别（TRO 2025）</p>
-<span class="tag">科研</span>
-</div>
-<p class="projOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
-<p class="projDesc">面向动力假肢的可解释 ICF 意图识别框架，扩展至双侧传感，支持多活动模式的持续自适应控制。</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:320ms" href="projects/icf.html" data-tags="intent ml">
+  <div class="csVisual">
+    <img loading="lazy" width="4000" height="2250" alt="基于 ICF 的意图识别概念图" src="../assets/img/projects/icf_concept.jpg"/>
+    <span class="csIndex" aria-hidden="true">05</span>
+    <span class="csTagFloat">科研</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">IEEE Transactions on Robotics · TNSRE 2021</p>
+    <h3 class="csTitle">双侧活动识别（TRO 2025）</h3>
+    <p class="csDesc">面向动力假肢的可解释 ICF 意图识别框架，扩展至双侧传感，支持多活动模式的持续自适应控制。</p>
+    <ul class="csList">
 <li>生物力学可解释特征，无黑箱嵌入</li>
 <li>实时分类（&lt;5 ms），双侧步态估计</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
-<a class="card proj reveal reveal-left" style="--d:450ms" href="projects/embc2025.html" data-tags="software intent">
-<div class="projMedia"><img loading="lazy" width="1017" height="750" alt="用于假肢模式切换的智能手表界面" src="../assets/img/projects/embc2025_watch.jpg"/></div>
-<div class="projTop">
-<p class="projTitle">智能手表手势控制（EMBC 2025）</p>
-<span class="tag">科研</span>
-</div>
-<p class="projOutcome">发表于 IEEE EMBC 2025</p>
-<p class="projDesc">基于智能手表的人机交互接口，通过手势指令与振动触觉反馈实现动力假肢的显式模式切换。</p>
-<ul class="projList">
+<a class="caseStudy proj reveal" style="--d:400ms" href="projects/embc2025.html" data-tags="software intent">
+  <div class="csVisual">
+    <img loading="lazy" width="1017" height="750" alt="用于假肢模式切换的智能手表界面" src="../assets/img/projects/embc2025_watch.jpg"/>
+    <span class="csIndex" aria-hidden="true">06</span>
+    <span class="csTagFloat">科研</span>
+  </div>
+  <div class="csText">
+    <p class="csOutcome">发表于 IEEE EMBC 2025</p>
+    <h3 class="csTitle">智能手表手势控制（EMBC 2025）</h3>
+    <p class="csDesc">基于智能手表的人机交互接口，通过手势指令与振动触觉反馈实现动力假肢的显式模式切换。</p>
+    <ul class="csList">
 <li>四种步行模式映射至滑动手势</li>
 <li>振动触觉确认反馈，TCP 通信连接假肢控制器</li>
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">查看案例详情 →</span>
+  </div>
 </a>
 </div>
 <div class="linkRow reveal u-mt-18">
@@ -351,12 +414,15 @@
   <div class="controlLoop" aria-label="控制回路：感知、推断、决策、执行"></div>
   <div class="stepTimeline" role="tablist" aria-label="步态阶段"></div>
   <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
-  <div class="signalWaves" aria-hidden="true"></div>
-  <div class="stepDetail card" role="tabpanel" aria-live="polite">
-    <div id="seHuman"></div>
-    <div id="seSenses"></div>
-    <div id="seCtrl"></div>
+  <div class="seCenter">
+    <div class="seStage" aria-hidden="true"></div>
+    <div class="stepDetail card" role="tabpanel" aria-live="polite">
+      <div id="seHuman"></div>
+      <div id="seSenses"></div>
+      <div id="seCtrl"></div>
+    </div>
   </div>
+  <div class="signalWaves" aria-hidden="true"></div>
   <div class="factGrid"></div>
   <p class="stepRef"></p>
 </section>

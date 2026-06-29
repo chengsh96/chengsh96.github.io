@@ -78,6 +78,23 @@ export const homeContent = {
       en: 'ShiftOS in production · <a href="projects/shiftos.html">See the system →</a>',
       zh: 'ShiftOS 量产系统 · <a href="projects/shiftos.html">查看详情 →</a>',
     } as LocalizedRichText,
+    // Hero "cockpit" telemetry panel. Labels are localized + server-rendered;
+    // the animated values cycle client-side (site.js initCockpit).
+    cockpit: {
+      live: { en: "LIVE", zh: "实时" } as LocalizedString,
+      title: { en: "Control Telemetry", zh: "控制遥测" } as LocalizedString,
+      caption: {
+        en: "Illustrative real-time signals from wearable-robot control.",
+        zh: "示意性实时信号，来自可穿戴机器人控制系统。",
+      } as LocalizedString,
+      metrics: {
+        gaitPhase: { en: "Gait Phase", zh: "步态相位" } as LocalizedString,
+        intent: { en: "Intent", zh: "意图" } as LocalizedString,
+        terrain: { en: "Terrain", zh: "地形" } as LocalizedString,
+        mode: { en: "Controller", zh: "控制模式" } as LocalizedString,
+        latency: { en: "Latency", zh: "延迟" } as LocalizedString,
+      },
+    },
   },
 
   recognition: {
@@ -174,6 +191,7 @@ export const homeContent = {
       { key: "safety", label: { en: "Safety", zh: "安全" } },
     ] as Filter[],
     allProjectsCta: { en: "All Projects →", zh: "全部项目 →" } as LocalizedString,
+    caseStudyCta: { en: "Read the case study", zh: "查看案例详情" } as LocalizedString,
   },
 
   stepEngineering: {

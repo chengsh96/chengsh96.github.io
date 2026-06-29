@@ -177,6 +177,7 @@
   var seCtrl   = section.querySelector('#seCtrl');
   var factGrid = section.querySelector('.factGrid');
   var refEl    = section.querySelector('.stepRef');
+  var stageEl  = section.querySelector('.seStage');
 
   // ─── INTRO ────────────────────────────────────────────────────────────────
   if (introEl) introEl.textContent = d.intro;
@@ -376,6 +377,64 @@
     }
   }
 
+  // ─── FOOT / LEG / WHEEL STAGE ───────────────────────────────────────────────
+  var legG = null, footG = null, wheelG = null;
+  // per phase: [leg swing about hip (deg), foot pitch about ankle (deg), rolling]
+  var POSE = [
+    [-10, -12, 1], // Heel Strike
+    [ -4,  -5, 1], // Loading
+    [  0,   0, 1], // Mid-Stance
+    [ 11,  18, 1], // Push-Off
+    [-15,  -8, 0], // Swing
+    [-10, -12, 1]  // Next Heel Strike
+  ];
+  var stagePhaseEl = null, stagePctEl = null;
+  if (stageEl) {
+    stageEl.innerHTML =
+      '<div class="seStageLabel">' +
+        '<span class="seStagePhase"></span>' +
+        '<span class="seStagePct"></span>' +
+      '</div>' +
+      '<svg viewBox="0 0 260 230" class="seStageSvg" preserveAspectRatio="xMidYMid meet">' +
+        '<path class="seArc" d="M130 168 C100 150 96 110 120 92" fill="none"/>' +
+        '<ellipse class="seContact" cx="138" cy="204" rx="26" ry="5"/>' +
+        '<line class="seGround" x1="16" y1="202" x2="244" y2="202"/>' +
+        '<g class="seLeg" id="seLeg">' +
+          '<line class="seLimb" x1="130" y1="30" x2="130" y2="122"/>' +
+          '<line class="seLimb" x1="130" y1="122" x2="130" y2="170"/>' +
+          '<circle class="seJoint seJointHip" cx="130" cy="30" r="7"/>' +
+          '<circle class="seJoint" cx="130" cy="122" r="6"/>' +
+          '<circle class="seJoint" cx="130" cy="170" r="5.5"/>' +
+          '<g class="seFoot" id="seFoot">' +
+            '<rect class="seFootPlate" x="102" y="180" width="68" height="11" rx="5.5"/>' +
+            '<circle class="seHeelMark" cx="109" cy="185" r="3.5"/>' +
+            '<circle class="seToeMark" cx="163" cy="185" r="3.5"/>' +
+            '<g class="seWheel" id="seWheel">' +
+              '<circle class="seWheelTire" cx="136" cy="199" r="13"/>' +
+              '<circle class="seWheelHub" cx="136" cy="199" r="3"/>' +
+              '<line class="seWheelSpoke" x1="136" y1="188" x2="136" y2="210"/>' +
+              '<line class="seWheelSpoke" x1="125" y1="199" x2="147" y2="199"/>' +
+            '</g>' +
+          '</g>' +
+        '</g>' +
+      '</svg>';
+    legG   = stageEl.querySelector('#seLeg');
+    footG  = stageEl.querySelector('#seFoot');
+    wheelG = stageEl.querySelector('#seWheel');
+    stagePhaseEl = stageEl.querySelector('.seStagePhase');
+    stagePctEl   = stageEl.querySelector('.seStagePct');
+  }
+  function setPose(idx) {
+    if (!legG) return;
+    var p = POSE[idx] || POSE[0];
+    legG.setAttribute('transform',  'rotate(' + p[0] + ' 130 30)');
+    footG.setAttribute('transform', 'rotate(' + p[1] + ' 130 170)');
+    if (wheelG) wheelG.classList.toggle('rolling', !reduce && p[2] === 1);
+    if (stageEl) stageEl.classList.toggle('seAirborne', p[2] === 0);
+    if (stagePhaseEl) stagePhaseEl.textContent = d.phases[idx].name;
+    if (stagePctEl)   stagePctEl.textContent   = d.phases[idx].pct;
+  }
+
   // ─── DETAIL PANEL ─────────────────────────────────────────────────────────
   function updateDetail(phase) {
     if (seHuman)  seHuman.innerHTML  = '<h4>' + d.humanLabel  + '</h4><p>' + phase.human  + '</p>';
@@ -419,6 +478,7 @@
     });
     updateDetail(d.phases[activeIdx]);
     updatePlots(activeIdx);
+    setPose(activeIdx);
     if (progFill) progFill.style.width = ((activeIdx + 1) / d.phases.length * 100) + '%';
     if (!isInit) scrollPhaseInView(phaseBtns[activeIdx]);
   }

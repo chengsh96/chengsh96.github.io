@@ -450,3 +450,69 @@ if (lightboxTargets.length) {
   // Suppress accidental click navigation after a drag
   track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
 })();
+
+
+// ===========================
+// Hero cockpit: animated telemetry readouts
+// ===========================
+(function initCockpit(){
+  const root = document.querySelector('.cockpitReadout');
+  if (!root) return;
+  const zh = window.location.pathname.includes('/zh/');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const V = zh ? {
+    phase:   ['脚跟触地','负重期','站立中期','蹬地期','摆动期'],
+    intent:  ['行走','上楼梯','坡道','站立'],
+    terrain: ['平地','斜坡','楼梯','平地'],
+    mode:    ['自适应','平衡感知','助力']
+  } : {
+    phase:   ['Heel Strike','Loading','Mid-Stance','Push-Off','Swing'],
+    intent:  ['Walk','Stair ascent','Ramp','Stand'],
+    terrain: ['Flat','Incline','Stairs','Flat'],
+    mode:    ['Adaptive','Balance-aware','Assist']
+  };
+  const node = (k) => root.querySelector('.cockpitValue[data-metric="' + k + '"]');
+  const n = { phase:node('phase'), intent:node('intent'), terrain:node('terrain'), mode:node('mode'), latency:node('latency') };
+  function set(el, val){
+    if (!el || el.textContent === val) return;
+    el.textContent = val;
+    el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip');
+  }
+  let i = 0;
+  function tick(){
+    set(n.phase,   V.phase[i % V.phase.length]);
+    set(n.intent,  V.intent[i % V.intent.length]);
+    set(n.terrain, V.terrain[i % V.terrain.length]);
+    set(n.mode,    V.mode[(i >> 1) % V.mode.length]);
+    set(n.latency, (6 + Math.random() * 3).toFixed(1) + ' ms');
+    i++;
+  }
+  tick();
+  if (!reduce) setInterval(tick, 1700);
+})();
+
+
+// ===========================
+// Hero mouse parallax + cockpit tilt
+// ===========================
+(function initHeroParallax(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return; // skip on touch
+  const scene = document.querySelector('[data-parallax-scene]');
+  if (!scene) return;
+  const bg = scene.querySelector('[data-parallax]');
+  const tilt = scene.querySelector('[data-tilt]');
+  let raf = 0, tx = 0, ty = 0;
+  function apply(){
+    raf = 0;
+    if (bg) bg.style.transform = 'translate(' + (tx * 16) + 'px,' + (ty * 16) + 'px)';
+    if (tilt) tilt.style.transform = 'rotateX(' + (-ty * 3.5) + 'deg) rotateY(' + (tx * 4.5) + 'deg)';
+  }
+  scene.addEventListener('pointermove', (e) => {
+    const r = scene.getBoundingClientRect();
+    tx = (e.clientX - r.left) / r.width - 0.5;
+    ty = (e.clientY - r.top) / r.height - 0.5;
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+  scene.addEventListener('pointerleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+})();

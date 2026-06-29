@@ -21,9 +21,28 @@ export function renderHome(locale: Locale): string {
   const projectsHref = relHref(root, routeRootPath("projects", locale));
   const a = (p: string) => asset(p, root);
 
+  const cm = c.hero.cockpit.metrics;
+  const readoutRows = (
+    [
+      ["phase", cm.gaitPhase],
+      ["intent", cm.intent],
+      ["terrain", cm.terrain],
+      ["mode", cm.mode],
+      ["latency", cm.latency],
+    ] as const
+  )
+    .map(
+      ([k, label]) => `      <div class="cockpitRow">
+        <span class="cockpitLabel">${esc(label[locale])}</span>
+        <span class="cockpitValue" data-metric="${k}">—</span>
+      </div>`,
+    )
+    .join("\n");
+
   const hero = `
-<!-- Hero with ShiftOS video -->
-<section class="hero">
+<!-- Hero: split-screen control cockpit -->
+<section class="hero" data-parallax-scene>
+<div class="heroBg" aria-hidden="true" data-parallax></div>
 <div class="heroGrid">
 <div class="heroLeft reveal">
   <span class="kicker">${esc(c.hero.kicker[locale])}</span>
@@ -44,15 +63,29 @@ export function renderHome(locale: Locale): string {
 </div>
 
 <div class="heroRight reveal reveal-right">
-  <figure class="heroVideo">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="${a("assets/video/shiftos_demo_poster.jpg")}"
-      aria-label="${esc(c.hero.videoAria[locale])}">
-      <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
-      <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
-    </video>
-    <figcaption>${c.hero.videoCaption[locale]}</figcaption>
-  </figure>
+  <div class="cockpit" data-tilt>
+    <div class="cockpitHead">
+      <span class="cockpitLive"><span class="cockpitLiveDot" aria-hidden="true"></span>${esc(c.hero.cockpit.live[locale])}</span>
+      <span class="cockpitTitle">${esc(c.hero.cockpit.title[locale])}</span>
+    </div>
+    <figure class="cockpitFeed">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="${a("assets/video/shiftos_demo_poster.jpg")}"
+        aria-label="${esc(c.hero.videoAria[locale])}">
+        <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
+        <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
+      </video>
+      <span class="cockpitScan" aria-hidden="true"></span>
+      <figcaption class="cockpitFeedCap">${c.hero.videoCaption[locale]}</figcaption>
+    </figure>
+    <div class="cockpitWave" aria-hidden="true">
+      <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0,20 C20,20 28,6 40,6 C52,6 60,34 76,34 C92,34 98,12 112,12 C126,12 134,28 150,28 C166,28 172,10 188,10 C204,10 212,32 228,32 C244,32 252,16 268,16 C282,16 290,20 300,20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="cockpitReadout">
+${readoutRows}
+    </div>
+    <p class="cockpitCaption">${esc(c.hero.cockpit.caption[locale])}</p>
+  </div>
 </div>
 </div>
 </section>`;
@@ -60,8 +93,8 @@ export function renderHome(locale: Locale): string {
   const stats = c.recognition.stats
     .map((s, i) => {
       const badge = s.badge ? `\n    <div class="statBadge">${esc(s.badge[locale])}</div>` : "";
-      const inner = `\n    <div class="statNum statText">${esc(s.num)}</div>${badge}\n    <div class="statLabel">${esc(s.label[locale])}</div>\n  `;
-      const cls = `${s.classes} reveal`;
+      const inner = `\n    <span class="statGhost" aria-hidden="true">${esc(s.num)}</span>\n    <div class="statNum statText">${esc(s.num)}</div>${badge}\n    <div class="statLabel">${esc(s.label[locale])}</div>\n  `;
+      const cls = `${s.classes} statTile reveal`;
       const d = ` style="--d:${i * 90}ms"`;
       if (s.ref.kind === "none") return `  <div class="${cls}"${d}>${inner}</div>`;
       const href =
@@ -142,17 +175,22 @@ ${newsItems}
     .map((p, i) => {
       const href = relHref(root, projectRootPath(p.slug, locale));
       const bullets = p.highlights.map((h) => `<li>${esc(h[locale])}</li>`).join("\n");
-      return `<a class="card proj reveal reveal-left" style="--d:${i * 90}ms" href="${escUrl(href)}" data-tags="${p.tags.join(" ")}">
-<div class="projMedia"><img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" alt="${esc(p.alt[locale])}" src="${a(p.image)}"/></div>
-<div class="projTop">
-<p class="projTitle">${esc(p.title[locale])}</p>
-<span class="tag">${esc(p.category[locale])}</span>
-</div>
-<p class="projOutcome">${esc(p.outcome ? p.outcome[locale] : "")}</p>
-<p class="projDesc">${esc(p.summary[locale])}</p>
-<ul class="projList">
+      const outcome = p.outcome ? `<p class="csOutcome">${esc(p.outcome[locale])}</p>` : "";
+      return `<a class="caseStudy proj reveal" style="--d:${i * 80}ms" href="${escUrl(href)}" data-tags="${p.tags.join(" ")}">
+  <div class="csVisual">
+    <img loading="lazy" width="${p.imageDims.w}" height="${p.imageDims.h}" alt="${esc(p.alt[locale])}" src="${a(p.image)}"/>
+    <span class="csIndex" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+    <span class="csTagFloat">${esc(p.category[locale])}</span>
+  </div>
+  <div class="csText">
+    ${outcome}
+    <h3 class="csTitle">${esc(p.title[locale])}</h3>
+    <p class="csDesc">${esc(p.summary[locale])}</p>
+    <ul class="csList">
 ${bullets}
-</ul>
+    </ul>
+    <span class="csArrow" aria-hidden="true">${esc(c.projectsSection.caseStudyCta[locale])} →</span>
+  </div>
 </a>`;
     })
     .join("\n");
@@ -167,7 +205,7 @@ ${bullets}
 <div class="filterRow reveal" role="tablist" aria-label="${esc(c.projectsSection.filterAria[locale])}">
 ${chips}
 </div>
-<div class="grid">
+<div class="caseStudies">
 ${cards}
 </div>
 <div class="linkRow reveal u-mt-18">
@@ -186,12 +224,15 @@ ${cards}
   <div class="controlLoop" aria-label="${esc(c.stepEngineering.controlLoopAria[locale])}"></div>
   <div class="stepTimeline" role="tablist" aria-label="${esc(c.stepEngineering.timelineAria[locale])}"></div>
   <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill"></div></div>
-  <div class="signalWaves" aria-hidden="true"></div>
-  <div class="stepDetail card" role="tabpanel" aria-live="polite">
-    <div id="seHuman"></div>
-    <div id="seSenses"></div>
-    <div id="seCtrl"></div>
+  <div class="seCenter">
+    <div class="seStage" aria-hidden="true"></div>
+    <div class="stepDetail card" role="tabpanel" aria-live="polite">
+      <div id="seHuman"></div>
+      <div id="seSenses"></div>
+      <div id="seCtrl"></div>
+    </div>
   </div>
+  <div class="signalWaves" aria-hidden="true"></div>
   <div class="factGrid"></div>
   <p class="stepRef"></p>
 </section>`;
