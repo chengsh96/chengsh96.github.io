@@ -11,7 +11,7 @@ import {
 } from "../lib/localized.js";
 import { asset, esc, escUrl } from "./html.js";
 
-const CSS_VERSION = "v=32";
+const CSS_VERSION = "v=59";
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap";
 

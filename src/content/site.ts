@@ -64,23 +64,23 @@ export const homeContent = {
 
   hero: {
     kicker: {
-      en: "Wearable Robotics • Controls • ML",
-      zh: "可穿戴机器人 • 控制 • 机器学习",
+      en: "Wearable Robotics • Controls • Biomechanics • Motion & Interaction • Machine Learning",
+      zh: "可穿戴机器人 • 控制 • 生物力学 • 运动与交互 • 机器学习",
     } as LocalizedString,
     // Full <h1> inner HTML (contains the .nameAccent span).
     name: {
-      en: 'Shihao Cheng, <span class="nameAccent">Ph.D.</span>',
-      zh: '程世浩 — <span class="nameAccent">博士</span>',
+      en: 'Hi, <span class="nameWordmark">I\'m Shihao</span>',
+      zh: '你好，<span class="nameWordmark">我是世浩</span>',
     } as LocalizedRichText,
     rolePrefix: { en: "A ", zh: "一位 " } as LocalizedString,
     lead: {
-      en: 'I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear deployed in real-world environments</a>.',
-      zh: '我开发面向可穿戴机器人的实时控制与感知系统，研究对象从动力假肢延伸到<a href="projects/shiftos.html">已在真实场景中部署的 Moonwalkers（轮式机器人鞋）</a>。',
+      en: 'I build real-time control systems for wearable robots — from <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to <a href="projects/icf.html">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.',
+      zh: '我构建面向可穿戴机器人的实时控制系统 —— 从<a href="projects/shiftos.html">仓库地面上的 Moonwalkers</a>，到<a href="projects/icf.html">能够适应楼梯、坡道与真实地形的智能假肢</a>。',
     } as LocalizedRichText,
     cta: {
-      viewProjects: { en: "View Work", zh: "查看工作" } as LocalizedString,
-      linkedin: { en: "Contact", zh: "联系" } as LocalizedString,
-      scholar: { en: "Google Scholar", zh: "谷歌学术" } as LocalizedString,
+      viewProjects: { en: "View Projects", zh: "查看项目" } as LocalizedString,
+      linkedin: { en: "LinkedIn", zh: "领英" } as LocalizedString,
+      scholar: { en: "Scholar", zh: "谷歌学术" } as LocalizedString,
     },
     avatarAlt: { en: "Shihao Cheng", zh: "程世浩" } as LocalizedString,
     byline: [
@@ -92,8 +92,8 @@ export const homeContent = {
       zh: "ShiftOS Moonwalkers 演示",
     } as LocalizedString,
     videoCaption: {
-      en: 'Robotic footwear in real-world walking environments · <a href="projects/shiftos.html">See the system →</a>',
-      zh: '真实步行环境中的机器人鞋 · <a href="projects/shiftos.html">查看系统 →</a>',
+      en: 'ShiftOS in production · <a href="projects/shiftos.html">See the system →</a>',
+      zh: 'ShiftOS 量产应用 · <a href="projects/shiftos.html">查看系统 →</a>',
     } as LocalizedRichText,
     // Hero "cockpit" telemetry panel. Labels are localized + server-rendered;
     // the animated values cycle client-side (site.js initCockpit).

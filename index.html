@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=32" rel="stylesheet"/>
+<link href="assets/site.css?v=59" rel="stylesheet"/>
 </head>
 <body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -33,7 +33,7 @@
 <span>Shihao Cheng</span>
 </a>
 <nav class="navLinks">
-<a class="navLink" href="#intro">Highlights</a>
+<a class="navLink" href="#snapshot">Highlights</a>
 <a class="navLink" href="#about">About</a>
 <a class="navLink" href="#projects">Selected Work</a>
 <a class="navLink" href="#experience">Experience</a>
@@ -48,7 +48,7 @@
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a class="navLink" href="#intro">Highlights</a>
+<a class="navLink" href="#snapshot">Highlights</a>
 <a class="navLink" href="#about">About</a>
 <a class="navLink" href="#projects">Selected Work</a>
 <a class="navLink" href="#experience">Experience</a>
@@ -59,49 +59,48 @@
 <a class="navLink navLinkJump" href="projects/index.html">All Projects</a>
 </div>
 </header>
-<main class="container homeMain">
 
-<!-- Intro / Hero -->
-<section class="hero homeHero" id="intro">
-<div class="heroGrid homeHeroGrid">
-<div class="heroLeft">
-  <span class="kicker">Wearable Robotics • Controls • ML</span>
-  <h1>Shihao Cheng, <span class="nameAccent">Ph.D.</span></h1>
-  <p class="heroRole homeHeroRole">A <span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
-  <p class="sub heroLead">
-    I build real-time control and sensing systems for wearable robots, from powered prostheses research to <a href="projects/shiftos.html">robotic footwear deployed in real-world environments</a>.
-  </p>
-  <div class="heroByline">
-    <img class="avatarSm" src="assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="Shihao Cheng"/>
-    <span class="heroBylineText"><span>Robotics PhD @ UMich</span><span class="heroBylineSep" aria-hidden="true">|</span><span>Lead Control Engineer @ Shift Robotics</span></span>
+<!-- Cover intro (full-page two-column hero; recedes on a short sticky scroll) -->
+<section class="coverTrack" id="cover">
+<div class="coverSticky">
+<div class="coverScene">
+  <div class="coverLeft">
+    <h1 class="coverName">Hi, <span class="nameWordmark">I'm Shihao</span></h1>
+    <p class="coverRole">A <span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+    <p class="coverLead">I build real-time control systems for wearable robots — from <a href="projects/shiftos.html">Moonwalkers on warehouse floors</a> to <a href="projects/icf.html">intelligent prosthetic legs that adapt to stairs, ramps, and real-world terrain</a>.</p>
+    <figure class="coverVideo">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="assets/video/shiftos_demo_poster.jpg"
+        aria-label="ShiftOS Moonwalkers demonstration">
+        <source src="assets/video/shiftos_demo.mp4" type="video/mp4"/>
+        <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
+      </video>
+      <figcaption>ShiftOS in production · <a href="projects/shiftos.html">See the system →</a></figcaption>
+    </figure>
+    <div class="coverCtas">
+      <a class="btn btnPrimary" href="projects/index.html">View Projects</a>
+      <a class="btn" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    </div>
   </div>
-  <div class="ctaRow">
-    <a class="btn btnPrimary" href="#projects">View Work</a>
-    <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
-    <a class="btn" href="#contact">Contact</a>
-    <a class="btn" href="projects/index.html">All Projects →</a>
+  <div class="coverRight">
+    <div class="coverVisual">
+      <div class="coverPortraitFrame">
+        <img class="coverPortrait" src="assets/img/profile.jpg" width="560" height="560" alt="Shihao Cheng"/>
+      </div>
+      <div class="coverInfoStack">
+        <div class="coverByline">
+          <img class="avatarSm" src="assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="Shihao Cheng"/>
+          <span class="coverBylineText"><span>Robotics PhD @ UMich</span><span class="coverBylineSep" aria-hidden="true">|</span><span>Lead Control Engineer @ Shift Robotics</span></span>
+        </div>
+        <span class="kicker coverKicker">Wearable Robotics • Controls • Biomechanics • Motion &amp; Interaction • Machine Learning</span>
+      </div>
+    </div>
   </div>
-  <div class="homeHeroTags" aria-label="Filter projects">
-    <span>Gait control</span>
-    <span>Embedded systems</span>
-    <span>Human locomotion</span>
-    <span>ML intent recognition</span>
-  </div>
-</div>
-
-<div class="heroRight">
-  <figure class="heroVideo homeVideoCard">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="assets/video/shiftos_demo_poster.jpg"
-      aria-label="ShiftOS Moonwalkers demonstration">
-      <source src="assets/video/shiftos_demo.webm" type="video/webm"/>
-      <source src="assets/video/shiftos_demo.mp4" type="video/mp4"/>
-    </video>
-    <figcaption>Robotic footwear in real-world walking environments · <a href="projects/shiftos.html">See the system →</a></figcaption>
-  </figure>
 </div>
 </div>
 </section>
+<main class="container homeMain coverMain">
 
 <!-- Credibility Snapshot -->
 <section class="section statRow atAGlance reveal" id="snapshot" aria-label="Career highlights">
@@ -582,8 +581,8 @@
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
 </main>
-<script src="assets/site.js?v=32"></script>
-<script src="assets/widgets/step-engineering.js?v=32"></script>
+<script src="assets/site.js?v=59"></script>
+<script src="assets/widgets/step-engineering.js?v=59"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>

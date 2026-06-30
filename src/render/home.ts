@@ -27,49 +27,48 @@ export function renderHome(locale: Locale): string {
   const a = (p: string) => asset(p, root);
 
 
-  const heroTags = [
-    { en: "Gait control", zh: "步态控制" },
-    { en: "Embedded systems", zh: "嵌入式系统" },
-    { en: "Human locomotion", zh: "人体运动" },
-    { en: "ML intent recognition", zh: "机器学习意图识别" },
-  ] as const;
+  const bylineText = c.hero.byline
+    .map((p) => `<span>${esc(p[locale])}</span>`)
+    .join('<span class="coverBylineSep" aria-hidden="true">|</span>');
 
-  const hero = `
-<!-- Intro / Hero -->
-<section class="hero homeHero" id="intro">
-<div class="heroGrid homeHeroGrid">
-<div class="heroLeft">
-  <span class="kicker">${esc(c.hero.kicker[locale])}</span>
-  <h1>${c.hero.name[locale]}</h1>
-  <p class="heroRole homeHeroRole">${esc(c.hero.rolePrefix[locale])}<span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
-  <p class="sub heroLead">
-    ${c.hero.lead[locale]}
-  </p>
-  <div class="heroByline">
-    <img class="avatarSm" src="${a("assets/img/profile.jpg")}" width="36" height="36" loading="lazy" alt="${esc(c.hero.avatarAlt[locale])}"/>
-    <span class="heroBylineText">${c.hero.byline.map((p) => `<span>${esc(p[locale])}</span>`).join('<span class="heroBylineSep" aria-hidden="true">|</span>')}</span>
+  const cover = `
+<!-- Cover intro (full-page two-column hero; recedes on a short sticky scroll) -->
+<section class="coverTrack" id="cover">
+<div class="coverSticky">
+<div class="coverScene">
+  <div class="coverLeft">
+    <h1 class="coverName">${c.hero.name[locale]}</h1>
+    <p class="coverRole">${esc(c.hero.rolePrefix[locale])}<span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+    <p class="coverLead">${c.hero.lead[locale]}</p>
+    <figure class="coverVideo">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="${a("assets/video/shiftos_demo_poster.jpg")}"
+        aria-label="${esc(c.hero.videoAria[locale])}">
+        <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
+        <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
+      </video>
+      <figcaption>${c.hero.videoCaption[locale]}</figcaption>
+    </figure>
+    <div class="coverCtas">
+      <a class="btn btnPrimary" href="${escUrl(projectsHref)}">${esc(c.hero.cta.viewProjects[locale])}</a>
+      <a class="btn" href="${escUrl(links.linkedin)}" target="_blank" rel="noopener">${esc(c.hero.cta.linkedin[locale])}</a>
+      <a class="btn" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.hero.cta.scholar[locale])}</a>
+    </div>
   </div>
-  <div class="ctaRow">
-    <a class="btn btnPrimary" href="#projects">${esc(c.hero.cta.viewProjects[locale])}</a>
-    <a class="btn" href="${escUrl(links.scholar)}" target="_blank" rel="noopener">${esc(c.hero.cta.scholar[locale])}</a>
-    <a class="btn" href="#contact">${esc(c.hero.cta.linkedin[locale])}</a>
-    <a class="btn" href="${escUrl(projectsHref)}">${esc(c.projectsSection.allProjectsCta[locale])}</a>
+  <div class="coverRight">
+    <div class="coverVisual">
+      <div class="coverPortraitFrame">
+        <img class="coverPortrait" src="${a("assets/img/profile.jpg")}" width="560" height="560" alt="${esc(c.hero.avatarAlt[locale])}"/>
+      </div>
+      <div class="coverInfoStack">
+        <div class="coverByline">
+          <img class="avatarSm" src="${a("assets/img/profile.jpg")}" width="36" height="36" loading="lazy" alt="${esc(c.hero.avatarAlt[locale])}"/>
+          <span class="coverBylineText">${bylineText}</span>
+        </div>
+        <span class="kicker coverKicker">${esc(c.hero.kicker[locale])}</span>
+      </div>
+    </div>
   </div>
-  <div class="homeHeroTags" aria-label="${esc(c.projectsSection.filterAria[locale])}">
-${heroTags.map((tag) => `    <span>${esc(tag[locale])}</span>`).join("\n")}
-  </div>
-</div>
-
-<div class="heroRight">
-  <figure class="heroVideo homeVideoCard">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="${a("assets/video/shiftos_demo_poster.jpg")}"
-      aria-label="${esc(c.hero.videoAria[locale])}">
-      <source src="${a("assets/video/shiftos_demo.webm")}" type="video/webm"/>
-      <source src="${a("assets/video/shiftos_demo.mp4")}" type="video/mp4"/>
-    </video>
-    <figcaption>${c.hero.videoCaption[locale]}</figcaption>
-  </figure>
 </div>
 </div>
 </section>`;
@@ -413,8 +412,8 @@ ${awardItems}
 <div class="footer">© <span id="y"></span> ${esc(c.footerName[locale])}</div>
 </section>`;
 
-  return `<main class="container homeMain">
-${hero}
+  return `${cover}
+<main class="container homeMain coverMain">
 ${recognition}
 ${about}
 ${featuredWorkSection}

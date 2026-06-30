@@ -35,7 +35,7 @@ export const routes: Route[] = [
 // matching Route. Order drives display order; the nav builder produces correct
 // relative hrefs per page/locale.
 export const navItems: NavItem[] = [
-  { id: "intro", order: 2, label: { en: "Highlights", zh: "亮点" }, target: { kind: "anchor", anchor: "intro" } },
+  { id: "highlights", order: 2, label: { en: "Highlights", zh: "亮点" }, target: { kind: "anchor", anchor: "snapshot" } },
   { id: "about", order: 3, label: { en: "About", zh: "关于" }, target: { kind: "anchor", anchor: "about" } },
   { id: "projects", order: 4, label: { en: "Selected Work", zh: "精选工作" }, target: { kind: "anchor", anchor: "projects" } },
   { id: "experience", order: 5, label: { en: "Experience", zh: "经历" }, target: { kind: "anchor", anchor: "experience" } },

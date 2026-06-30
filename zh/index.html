@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=32" rel="stylesheet"/>
+<link href="../assets/site.css?v=59" rel="stylesheet"/>
 </head>
 <body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -33,7 +33,7 @@
 <span>程世浩</span>
 </a>
 <nav class="navLinks">
-<a class="navLink" href="#intro">亮点</a>
+<a class="navLink" href="#snapshot">亮点</a>
 <a class="navLink" href="#about">关于</a>
 <a class="navLink" href="#projects">精选工作</a>
 <a class="navLink" href="#experience">经历</a>
@@ -48,7 +48,7 @@
 <button aria-label="打开菜单" class="navBtn" data-navbtn="">菜单</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a class="navLink" href="#intro">亮点</a>
+<a class="navLink" href="#snapshot">亮点</a>
 <a class="navLink" href="#about">关于</a>
 <a class="navLink" href="#projects">精选工作</a>
 <a class="navLink" href="#experience">经历</a>
@@ -59,49 +59,48 @@
 <a class="navLink navLinkJump" href="projects/index.html">全部项目</a>
 </div>
 </header>
-<main class="container homeMain">
 
-<!-- Intro / Hero -->
-<section class="hero homeHero" id="intro">
-<div class="heroGrid homeHeroGrid">
-<div class="heroLeft">
-  <span class="kicker">可穿戴机器人 • 控制 • 机器学习</span>
-  <h1>程世浩 — <span class="nameAccent">博士</span></h1>
-  <p class="heroRole homeHeroRole">一位 <span class="roleSlot"><span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></span></p>
-  <p class="sub heroLead">
-    我开发面向可穿戴机器人的实时控制与感知系统，研究对象从动力假肢延伸到<a href="projects/shiftos.html">已在真实场景中部署的 Moonwalkers（轮式机器人鞋）</a>。
-  </p>
-  <div class="heroByline">
-    <img class="avatarSm" src="../assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="程世浩"/>
-    <span class="heroBylineText"><span>机器人学博士 @ 密歇根大学</span><span class="heroBylineSep" aria-hidden="true">|</span><span>首席控制工程师 @ Shift Robotics</span></span>
+<!-- Cover intro (full-page two-column hero; recedes on a short sticky scroll) -->
+<section class="coverTrack" id="cover">
+<div class="coverSticky">
+<div class="coverScene">
+  <div class="coverLeft">
+    <h1 class="coverName">你好，<span class="nameWordmark">我是世浩</span></h1>
+    <p class="coverRole">一位 <span class="roleTyped" id="roleTyped"></span><span class="roleCursor" aria-hidden="true">|</span></p>
+    <p class="coverLead">我构建面向可穿戴机器人的实时控制系统 —— 从<a href="projects/shiftos.html">仓库地面上的 Moonwalkers</a>，到<a href="projects/icf.html">能够适应楼梯、坡道与真实地形的智能假肢</a>。</p>
+    <figure class="coverVideo">
+      <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
+        poster="../assets/video/shiftos_demo_poster.jpg"
+        aria-label="ShiftOS Moonwalkers 演示">
+        <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
+        <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
+      </video>
+      <figcaption>ShiftOS 量产应用 · <a href="projects/shiftos.html">查看系统 →</a></figcaption>
+    </figure>
+    <div class="coverCtas">
+      <a class="btn btnPrimary" href="projects/index.html">查看项目</a>
+      <a class="btn" href="https://www.linkedin.com/in/shihao-cheng/" target="_blank" rel="noopener">领英</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">谷歌学术</a>
+    </div>
   </div>
-  <div class="ctaRow">
-    <a class="btn btnPrimary" href="#projects">查看工作</a>
-    <a class="btn" href="https://scholar.google.com/citations?user=C0T5uN0AAAAJ&amp;hl=en" target="_blank" rel="noopener">谷歌学术</a>
-    <a class="btn" href="#contact">联系</a>
-    <a class="btn" href="projects/index.html">全部项目 →</a>
+  <div class="coverRight">
+    <div class="coverVisual">
+      <div class="coverPortraitFrame">
+        <img class="coverPortrait" src="../assets/img/profile.jpg" width="560" height="560" alt="程世浩"/>
+      </div>
+      <div class="coverInfoStack">
+        <div class="coverByline">
+          <img class="avatarSm" src="../assets/img/profile.jpg" width="36" height="36" loading="lazy" alt="程世浩"/>
+          <span class="coverBylineText"><span>机器人学博士 @ 密歇根大学</span><span class="coverBylineSep" aria-hidden="true">|</span><span>首席控制工程师 @ Shift Robotics</span></span>
+        </div>
+        <span class="kicker coverKicker">可穿戴机器人 • 控制 • 生物力学 • 运动与交互 • 机器学习</span>
+      </div>
+    </div>
   </div>
-  <div class="homeHeroTags" aria-label="筛选项目">
-    <span>步态控制</span>
-    <span>嵌入式系统</span>
-    <span>人体运动</span>
-    <span>机器学习意图识别</span>
-  </div>
-</div>
-
-<div class="heroRight">
-  <figure class="heroVideo homeVideoCard">
-    <video width="426" height="240" autoplay muted loop playsinline preload="metadata"
-      poster="../assets/video/shiftos_demo_poster.jpg"
-      aria-label="ShiftOS Moonwalkers 演示">
-      <source src="../assets/video/shiftos_demo.webm" type="video/webm"/>
-      <source src="../assets/video/shiftos_demo.mp4" type="video/mp4"/>
-    </video>
-    <figcaption>真实步行环境中的机器人鞋 · <a href="projects/shiftos.html">查看系统 →</a></figcaption>
-  </figure>
 </div>
 </div>
 </section>
+<main class="container homeMain coverMain">
 
 <!-- Credibility Snapshot -->
 <section class="section statRow atAGlance reveal" id="snapshot" aria-label="职业亮点">
@@ -582,8 +581,8 @@
 <div class="footer">© <span id="y"></span> 程世浩</div>
 </section>
 </main>
-<script src="../assets/site.js?v=32"></script>
-<script src="../assets/widgets/step-engineering.js?v=32"></script>
+<script src="../assets/site.js?v=59"></script>
+<script src="../assets/widgets/step-engineering.js?v=59"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>

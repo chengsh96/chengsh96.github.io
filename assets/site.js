@@ -340,8 +340,22 @@ if (lightboxTargets.length) {
 
   const isZh = window.location.pathname.includes('/zh/');
   const roles = isZh
-    ? ['控制工程师', '机器人研究者', '可穿戴机器人工程师', '人体运动研究者']
-    : ['Control Engineer', 'Robotics Researcher', 'Wearable Robotics Engineer', 'Human Locomotion Researcher'];
+    ? [
+      '可穿戴机器人研究者',
+      '控制工程师',
+      '机器人运动调校师',
+      '机器学习工程师',
+      '人机交互研究者',
+      '让机器人理解人类的人',
+    ]
+    : [
+      'Wearable Robotics Researcher',
+      'Control Engineer',
+      'Robot Motion Tuner',
+      'Machine Learning Engineer',
+      'Human-Robot Interaction Researcher',
+      'Person Making Robots Understand Humans',
+    ];
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     el.textContent = roles[0]; return;
@@ -423,6 +437,37 @@ if (lightboxTargets.length) {
   window.addEventListener('scroll', () => {
     if (!ticking){ requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
+  update();
+})();
+
+
+// ===========================
+// Cover intro: browser-framed opening scene that recedes on a short sticky
+// scroll. Sets --p (0..1 progress) on :root as the cover track scrolls past;
+// CSS maps it to the frame transform/opacity/blur and the main page rise-in.
+// Disabled under prefers-reduced-motion (CSS also hard-resets it).
+// ===========================
+(function initScrollCover(){
+  const track = document.querySelector('.coverTrack');
+  if (!track) return;
+  const root = document.documentElement;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    root.style.setProperty('--p', '0');
+    return;
+  }
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  let ticking = false;
+  function update(){
+    const rect = track.getBoundingClientRect();
+    const distance = track.offsetHeight - window.innerHeight;
+    const p = clamp(-rect.top / Math.max(distance, 1), 0, 1);
+    root.style.setProperty('--p', p.toFixed(4));
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update);
   update();
 })();
 
