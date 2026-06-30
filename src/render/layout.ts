@@ -5,11 +5,13 @@ import {
   absoluteUrl,
   alternates,
   buildNav,
+  homeRootPath,
   pairedHref,
+  relHref,
 } from "../lib/localized.js";
 import { asset, esc, escUrl } from "./html.js";
 
-const CSS_VERSION = "v=13";
+const CSS_VERSION = "v=59";
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&display=swap";
 
@@ -57,20 +59,24 @@ function renderHead(locale: Locale, rootPath: string, meta: HeadMeta): string {
 
 function navList(locale: Locale, rootPath: string): string {
   return buildNav(locale, rootPath)
-    .map((l) => `<a href="${escUrl(l.href)}">${esc(l.label)}</a>`)
+    .map((l) => {
+      const cls = l.kind === "route" ? "navLink navLinkJump" : "navLink";
+      return `<a class="${cls}" href="${escUrl(l.href)}">${esc(l.label)}</a>`;
+    })
     .join("\n");
 }
 
 function renderHeader(locale: Locale, rootPath: string): string {
   const links = navList(locale, rootPath);
   const langHref = pairedHref(rootPath);
+  const homeHref = relHref(rootPath, homeRootPath(locale));
   return [
     '<header class="nav">',
     '<div class="navInner">',
-    '<div class="brand">',
+    `<a class="brand" href="${escUrl(homeHref)}" aria-label="${esc(chrome.brand[locale])}">`,
     '<span class="dot"></span>',
     `<span>${esc(chrome.brand[locale])}</span>`,
-    "</div>",
+    "</a>",
     '<nav class="navLinks">',
     links,
     "</nav>",
@@ -92,19 +98,21 @@ export type PageOptions = {
   main: string; // inner HTML of <main> (or full <main>...</main>)
   scripts: string[]; // site-root-relative script paths
   inlineScripts?: string[];
+  bodyClass?: string; // optional class on <body> for page-scoped styling
 };
 
 export function renderPage(opts: PageOptions): string {
-  const { locale, rootPath, meta, main, scripts, inlineScripts = [] } = opts;
+  const { locale, rootPath, meta, main, scripts, inlineScripts = [], bodyClass } = opts;
   const scriptTags = [
-    ...scripts.map((s) => `<script src="${asset(s, rootPath)}"></script>`),
+    ...scripts.map((s) => `<script src="${asset(s, rootPath)}?${CSS_VERSION}"></script>`),
     ...inlineScripts.map((s) => `<script>${s}</script>`),
   ].join("\n");
   return [
     "<!DOCTYPE html>",
     `<html lang="${htmlLang[locale]}">`,
     renderHead(locale, rootPath, meta),
-    "<body>",
+    bodyClass ? `<body class="${bodyClass}">` : "<body>",
+    '<div class="scrollProgress" aria-hidden="true"></div>',
     renderHeader(locale, rootPath),
     main,
     scriptTags,

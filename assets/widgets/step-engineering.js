@@ -3,23 +3,24 @@
   if (!section) return;
 
   var isZh   = window.location.pathname.includes('/zh/');
+  var gaitAssetRoot = isZh ? '../' : '';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var NS     = 'http://www.w3.org/2000/svg';
   var TW = 400, TH = 60;
 
   // Phase x-ranges in the 400px viewBox (proportional to gait cycle %)
   var PHASE_X = [
-    { x:   0, w:  48 },  // Heel Strike  0–12%
-    { x:  48, w:  76 },  // Loading     12–31%
-    { x: 124, w:  76 },  // Mid-Stance  31–50%
-    { x: 200, w:  48 },  // Push-Off    50–62%
-    { x: 248, w: 152 },  // Swing       62–100%
-    { x:   0, w: 400 }   // Adapt       full cycle
+    [{ x:   0, w:  48 }],                  // Heel Strike   0-12%
+    [{ x:  48, w:  76 }],                  // Loading      12-31%
+    [{ x: 124, w:  76 }],                  // Mid-Stance   31-50%
+    [{ x: 200, w:  48 }],                  // Push-Off     50-62%
+    [{ x: 248, w: 152 }],                  // Swing        62-100%
+    [{ x: 386, w:  14 }, { x: 0, w: 14 }]  // Next contact wraps 100% to 0%
   ];
   var PHASE_COLORS = ['#2b6cff','#00a8e8','#00c2a0','#f59e0b','#7c3aed','#e11d48'];
 
   // Phase boundary x positions (for grid lines inside each plot)
-  var GRID_X = [48, 124, 200, 248];
+  var GRID_X = [48, 124, 200, 248, 386];
 
   // ─── SIGNAL PATHS (viewBox 0 0 400 60) ───────────────────────────────────
   //
@@ -29,13 +30,13 @@
   //   strong plantarflexion at push-off → rapid dorsiflexion in swing → recovery
   var PATH_PITCH = [
     'M0,28',
-    'C8,28 15,30 30,33',          // loading: foot goes flat
-    'C45,35 68,38 95,40',         // mid-stance: gradual plantar rise
-    'C120,42 145,45 165,48',      // terminal stance: continuing plantar
-    'C182,51 196,53 202,53',      // push-off: strong plantarflexion peak
-    'C212,52 225,44 240,30',      // early swing: rapid dorsiflexion
-    'C256,16 272,12 292,13',      // mid-swing: dorsiflexed for clearance
-    'C318,15 355,22 390,26 L400,28' // late swing: returning to neutral
+    'C16,29 28,32 48,34',         // heel strike to loading: foot lowers
+    'C72,36 100,38 124,40',       // loading: foot approaches flat
+    'C148,42 176,44 200,47',      // mid-stance: gradual plantarflexion
+    'C214,50 226,53 238,52',      // push-off: plantarflexion peak
+    'C250,48 258,34 268,23',      // early swing: rapid dorsiflexion
+    'C282,12 306,12 332,15',      // mid-swing: clearance
+    'C356,18 382,24 400,27'       // late swing: prepare for next contact
   ].join(' ');
 
   // vGRF: vertical ground reaction force — classic walking double-hump
@@ -43,14 +44,14 @@
   //   second hump (push-off) → drop to zero in swing
   var PATH_VGRF = [
     'M0,57 L2,57',
-    'C4,46 8,22 14,9',            // rapid rise at heel strike
-    'C19,4 27,5 36,11',           // first peak ~110% BW
-    'C46,18 58,25 84,29',         // decline from first peak
-    'C104,31 120,28 140,22',      // mid-stance valley ~80% BW
-    'C158,16 170,9 182,6',        // rise to second peak
-    'C191,4 200,8 210,20',        // second peak ~110% BW
-    'C220,34 232,50 242,57 L400,57' // rapid drop to zero → swing (zero)
+    'C4,42 9,18 18,8',            // heel strike: rapid force rise
+    'C30,4 46,8 62,16',           // loading: first peak then unloading
+    'C86,27 112,34 140,34',       // mid-stance: force valley
+    'C164,33 190,24 205,14',      // terminal stance: rise toward second peak
+    'C218,7 232,12 244,30',       // push-off: second peak and unloading
+    'C252,42 258,53 264,57 L400,57' // swing: foot off ground, force near zero
   ].join(' ');
+
 
 
   // ─── DATA ─────────────────────────────────────────────────────────────────
@@ -177,6 +178,12 @@
   var seCtrl   = section.querySelector('#seCtrl');
   var factGrid = section.querySelector('.factGrid');
   var refEl    = section.querySelector('.stepRef');
+  var stageEl  = section.querySelector('.seStage');
+
+  if (loopEl) loopEl.innerHTML = '';
+  if (tlEl) tlEl.innerHTML = '';
+  if (wavesEl) wavesEl.innerHTML = '';
+  if (factGrid) factGrid.innerHTML = '';
 
   // ─── INTRO ────────────────────────────────────────────────────────────────
   if (introEl) introEl.textContent = d.intro;
@@ -337,18 +344,22 @@
           svg.appendChild(gl);
         });
 
-        // Phase highlight rect (updated on phase change)
-        var rect = document.createElementNS(NS, 'rect');
-        rect.setAttribute('x', '0');
-        rect.setAttribute('y', '0');
-        rect.setAttribute('width', '0');
-        rect.setAttribute('height', TH);
-        rect.setAttribute('rx', '3');
-        rect.setAttribute('fill', PHASE_COLORS[0]);
-        rect.setAttribute('opacity', '0');
-        rect.setAttribute('class', 'seHighlightRect');
-        svg.appendChild(rect);
-        highlightRects.push(rect);
+        // Phase highlight rects (updated on phase change; supports wrapped phases)
+        var rectGroup = [];
+        for (var hr = 0; hr < 2; hr++) {
+          var rect = document.createElementNS(NS, 'rect');
+          rect.setAttribute('x', '0');
+          rect.setAttribute('y', '0');
+          rect.setAttribute('width', '0');
+          rect.setAttribute('height', TH);
+          rect.setAttribute('rx', '3');
+          rect.setAttribute('fill', PHASE_COLORS[0]);
+          rect.setAttribute('opacity', '0');
+          rect.setAttribute('class', 'seHighlightRect');
+          svg.appendChild(rect);
+          rectGroup.push(rect);
+        }
+        highlightRects.push(rectGroup);
 
         // Signal trace
         var path = document.createElementNS(NS, 'path');
@@ -376,7 +387,229 @@
     }
   }
 
-  // ─── DETAIL PANEL ─────────────────────────────────────────────────────────
+  // ─── RENDERED GAIT-PHASE STAGE ────────────────────────────────────────────
+  var phaseImages = [];
+  var stagePhaseEl = null, stagePctEl = null;
+  var overlayEls = {};
+  var activeStageIdx = 0;
+  var STAGE_PHASES = [
+    {
+      image:'heel-strike.webp',
+      contactPx:{x:650,y:780,rx:105,ry:16,opacity:.36}, focusPx:{x:650,y:765}, haloPx:{rx:76,ry:34}, callout:{x:88,y:74}, anchor:'start',
+      label:isZh ? 'heel contact' : 'heel contact', air:false
+    },
+    {
+      image:'loading.webp',
+      contactPx:{x:678,y:782,rx:165,ry:16,opacity:.30}, focusPx:{x:678,y:765}, haloPx:{rx:118,ry:34}, callout:{x:82,y:72}, anchor:'start',
+      label:isZh ? 'load transfer' : 'load transfer', air:false
+    },
+    {
+      image:'mid-stance.webp',
+      contactPx:{x:745,y:776,rx:132,ry:16,opacity:.28}, focusPx:{x:745,y:760}, haloPx:{rx:100,ry:32}, callout:{x:318,y:78}, anchor:'end',
+      label:isZh ? 'stable support' : 'stable support', air:false
+    },
+    {
+      image:'push-off.webp',
+      contactPx:{x:770,y:770,rx:58,ry:16,opacity:.42}, focusPx:{x:770,y:758}, haloPx:{rx:62,ry:32}, callout:{x:318,y:74}, anchor:'end',
+      label:isZh ? 'propulsion' : 'propulsion', air:false
+    },
+    {
+      image:'swing.webp',
+      contactPx:{x:582,y:768,rx:58,ry:14,opacity:0}, focusPx:{x:582,y:748}, haloPx:{rx:72,ry:34}, callout:{x:318,y:76}, anchor:'end',
+      label:isZh ? 'clearance' : 'clearance', air:true
+    },
+    {
+      image:'next-heel-strike.webp',
+      contactPx:{x:650,y:780,rx:105,ry:16,opacity:.34}, focusPx:{x:650,y:765}, haloPx:{rx:76,ry:34}, callout:{x:82,y:76}, anchor:'start',
+      label:isZh ? 'next contact' : 'next contact', air:false
+    }
+  ];
+
+  function escStage(s) {
+    return String(s).replace(/[&<>"']/g, function(ch) {
+      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch];
+    });
+  }
+
+  function phaseImageSrc(file) {
+    return gaitAssetRoot + 'public/assets/gait/' + file;
+  }
+
+  function imageFit(img) {
+    var imgRect = img.getBoundingClientRect();
+    var stageRect = stageEl.getBoundingClientRect();
+    var naturalW = img.naturalWidth || 1400;
+    var naturalH = img.naturalHeight || 900;
+    var imageAspect = naturalW / naturalH;
+    var boxAspect = imgRect.width / imgRect.height;
+    var renderW = imgRect.width;
+    var renderH = imgRect.height;
+    var offsetX = 0;
+    var offsetY = 0;
+    if (boxAspect > imageAspect) {
+      renderW = imgRect.height * imageAspect;
+      offsetX = (imgRect.width - renderW) / 2;
+    } else {
+      renderH = imgRect.width / imageAspect;
+      offsetY = (imgRect.height - renderH) / 2;
+    }
+    return {
+      stageRect: stageRect,
+      imgRect: imgRect,
+      naturalW: naturalW,
+      naturalH: naturalH,
+      renderW: renderW,
+      renderH: renderH,
+      offsetX: offsetX,
+      offsetY: offsetY,
+      sx: 400 / stageRect.width,
+      sy: 240 / stageRect.height
+    };
+  }
+
+  function imagePointToStage(fit, point) {
+    return {
+      x: (fit.imgRect.left - fit.stageRect.left + fit.offsetX + point.x / fit.naturalW * fit.renderW) * fit.sx,
+      y: (fit.imgRect.top - fit.stageRect.top + fit.offsetY + point.y / fit.naturalH * fit.renderH) * fit.sy
+    };
+  }
+
+  function imageSizeToStage(fit, size) {
+    return {
+      x: size.x / fit.naturalW * fit.renderW * fit.sx,
+      y: size.y / fit.naturalH * fit.renderH * fit.sy
+    };
+  }
+
+  function overlayPath(focus, callout, anchor) {
+    var side = anchor === 'end' ? -1 : 1;
+    var c1x = focus.x + side * 38;
+    var c1y = Math.max(92, focus.y - 34);
+    var c2x = callout.x - side * 28;
+    var c2y = callout.y + 8;
+    return 'M' + focus.x.toFixed(1) + ',' + focus.y.toFixed(1) +
+      ' C' + c1x.toFixed(1) + ',' + c1y.toFixed(1) +
+      ' ' + c2x.toFixed(1) + ',' + c2y.toFixed(1) +
+      ' ' + callout.x + ',' + callout.y;
+  }
+
+  function motionArcPath(focus, callout, anchor) {
+    var side = anchor === 'end' ? -1 : 1;
+    var startX = Math.max(56, Math.min(344, focus.x - side * 84));
+    var endX = Math.max(56, Math.min(344, focus.x + side * 78));
+    var y = Math.max(70, Math.min(116, focus.y - 128));
+    var lift = Math.max(48, y - 28);
+    return 'M' + startX.toFixed(1) + ',' + (y + 16).toFixed(1) +
+      ' C' + (startX + side * 38).toFixed(1) + ',' + lift.toFixed(1) +
+      ' ' + (endX - side * 28).toFixed(1) + ',' + lift.toFixed(1) +
+      ' ' + endX.toFixed(1) + ',' + y.toFixed(1);
+  }
+
+  function renderPhaseImage(p, idx) {
+    var phase = d.phases[idx] || d.phases[0];
+    return '<img class="sePhaseImage' + (idx === 0 ? ' seImageActive' : '') + '" src="' + phaseImageSrc(p.image) + '" alt="' + escStage(phase.name + ' lower-limb gait phase render') + '" loading="' + (idx === 0 ? 'eager' : 'lazy') + '" decoding="async" data-phase="' + idx + '"/>';
+  }
+
+  if (stageEl) {
+    var imageMarkup = STAGE_PHASES.map(renderPhaseImage).join('');
+    stageEl.innerHTML =
+      '<div class="seGridBackground" aria-hidden="true"></div>' +
+      '<div class="seStageLabel">' +
+        '<span class="seStagePhase"></span>' +
+        '<span class="seStagePct"></span>' +
+      '</div>' +
+      '<div class="seImageStack" aria-hidden="true">' + imageMarkup + '</div>' +
+      '<svg viewBox="0 0 400 240" class="seStageOverlay" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path class="seOverlayArc" d="M78 84 C120 44 198 38 280 70"/>' +
+        '<line class="seOverlayGround" x1="34" y1="214" x2="366" y2="214"/>' +
+        '<ellipse class="seOverlayContact" cx="226" cy="212" rx="28" ry="5"/>' +
+        '<ellipse class="seOverlayHalo" cx="218" cy="204" rx="24" ry="14"/>' +
+        '<circle class="seOverlayMarker" cx="218" cy="204" r="3.6"/>' +
+        '<path class="seOverlayCallout" d="M218,204 C152,160 86,72 86,72"/>' +
+        '<circle class="seOverlayDot" cx="86" cy="72" r="2.4"/>' +
+        '<text class="seOverlayNote" x="86" y="62" text-anchor="start">heel contact</text>' +
+      '</svg>';
+    phaseImages = Array.prototype.slice.call(stageEl.querySelectorAll('.sePhaseImage'));
+    stagePhaseEl = stageEl.querySelector('.seStagePhase');
+    stagePctEl   = stageEl.querySelector('.seStagePct');
+    overlayEls = {
+      arc: stageEl.querySelector('.seOverlayArc'),
+      ground: stageEl.querySelector('.seOverlayGround'),
+      contact: stageEl.querySelector('.seOverlayContact'),
+      halo: stageEl.querySelector('.seOverlayHalo'),
+      marker: stageEl.querySelector('.seOverlayMarker'),
+      callout: stageEl.querySelector('.seOverlayCallout'),
+      dot: stageEl.querySelector('.seOverlayDot'),
+      note: stageEl.querySelector('.seOverlayNote')
+    };
+    phaseImages.forEach(function(img) {
+      img.addEventListener('load', function() { updateStageOverlay(activeStageIdx); });
+    });
+    window.addEventListener('resize', function() { updateStageOverlay(activeStageIdx); });
+  }
+  function updateStageOverlay(idx) {
+    var p = STAGE_PHASES[idx] || STAGE_PHASES[0];
+    var img = phaseImages[idx] || phaseImages[0];
+    if (!stageEl || !img || !img.getBoundingClientRect) return;
+    var fit = imageFit(img);
+    var focus = imagePointToStage(fit, p.focusPx);
+    var contact = imagePointToStage(fit, { x: p.contactPx.x, y: p.contactPx.y });
+    var contactSize = imageSizeToStage(fit, { x: p.contactPx.rx, y: p.contactPx.ry });
+    var haloSize = imageSizeToStage(fit, { x: p.haloPx.rx, y: p.haloPx.ry });
+    var groundY = p.air ? Math.max(204, contact.y + 8) : contact.y + 5;
+    if (overlayEls.arc) overlayEls.arc.setAttribute('d', motionArcPath(focus, p.callout, p.anchor));
+    if (overlayEls.ground) {
+      overlayEls.ground.setAttribute('y1', groundY.toFixed(1));
+      overlayEls.ground.setAttribute('y2', groundY.toFixed(1));
+    }
+    if (overlayEls.contact) {
+      overlayEls.contact.setAttribute('cx', contact.x.toFixed(1));
+      overlayEls.contact.setAttribute('cy', contact.y.toFixed(1));
+      overlayEls.contact.setAttribute('rx', Math.max(16, contactSize.x).toFixed(1));
+      overlayEls.contact.setAttribute('ry', Math.max(3.5, contactSize.y).toFixed(1));
+      overlayEls.contact.style.opacity = p.contactPx.opacity;
+    }
+    if (overlayEls.halo) {
+      overlayEls.halo.setAttribute('cx', focus.x.toFixed(1));
+      overlayEls.halo.setAttribute('cy', focus.y.toFixed(1));
+      overlayEls.halo.setAttribute('rx', Math.max(18, haloSize.x).toFixed(1));
+      overlayEls.halo.setAttribute('ry', Math.max(8, haloSize.y).toFixed(1));
+    }
+    if (overlayEls.marker) {
+      overlayEls.marker.setAttribute('cx', focus.x.toFixed(1));
+      overlayEls.marker.setAttribute('cy', focus.y.toFixed(1));
+    }
+    if (overlayEls.callout) overlayEls.callout.setAttribute('d', overlayPath(focus, p.callout, p.anchor));
+    if (overlayEls.dot) {
+      overlayEls.dot.setAttribute('cx', p.callout.x);
+      overlayEls.dot.setAttribute('cy', p.callout.y);
+    }
+    if (overlayEls.note) {
+      overlayEls.note.setAttribute('x', p.callout.x);
+      overlayEls.note.setAttribute('y', p.callout.y - 10);
+      overlayEls.note.setAttribute('text-anchor', p.anchor);
+      overlayEls.note.textContent = p.label;
+    }
+  }
+  function setPose(idx) {
+    var p = STAGE_PHASES[idx] || STAGE_PHASES[0];
+    activeStageIdx = idx;
+    phaseImages.forEach(function(img, i) {
+      img.classList.toggle('seImageActive', i === idx);
+    });
+    if (stageEl) {
+      stageEl.classList.toggle('seAirborne', !!p.air);
+      stageEl.classList.remove('sePoseChanged');
+      if (!reduce) {
+        void stageEl.offsetWidth;
+        stageEl.classList.add('sePoseChanged');
+      }
+    }
+    updateStageOverlay(idx);
+    if (stagePhaseEl) stagePhaseEl.textContent = d.phases[idx].name;
+    if (stagePctEl)   stagePctEl.textContent   = d.phases[idx].pct;
+  }
+
   function updateDetail(phase) {
     if (seHuman)  seHuman.innerHTML  = '<h4>' + d.humanLabel  + '</h4><p>' + phase.human  + '</p>';
     if (seSenses) seSenses.innerHTML = '<h4>' + d.sensesLabel + '</h4><p>' + phase.senses + '</p>';
@@ -384,14 +617,17 @@
   }
 
   function updatePlots(idx) {
-    var px    = PHASE_X[idx];
+    var segments = PHASE_X[idx] || PHASE_X[0];
     var color = PHASE_COLORS[idx];
-    var opac  = idx === 5 ? '0.06' : '0.16';
-    highlightRects.forEach(function(r) {
-      r.setAttribute('x',       px.x);
-      r.setAttribute('width',   px.w);
-      r.setAttribute('fill',    color);
-      r.setAttribute('opacity', opac);
+    var opac  = idx === 5 ? '0.13' : '0.16';
+    highlightRects.forEach(function(group) {
+      group.forEach(function(r, i) {
+        var px = segments[i];
+        r.setAttribute('x',       px ? px.x : 0);
+        r.setAttribute('width',   px ? px.w : 0);
+        r.setAttribute('fill',    color);
+        r.setAttribute('opacity', px ? opac : 0);
+      });
     });
   }
 
@@ -419,6 +655,7 @@
     });
     updateDetail(d.phases[activeIdx]);
     updatePlots(activeIdx);
+    setPose(activeIdx);
     if (progFill) progFill.style.width = ((activeIdx + 1) / d.phases.length * 100) + '%';
     if (!isInit) scrollPhaseInView(phaseBtns[activeIdx]);
   }

@@ -29,8 +29,8 @@ export const news: NewsItem[] = [
     tagLabel: { en: "🎓 Milestone", zh: "🎓 里程碑" },
     date: { en: "May 2025", zh: "2025年5月" },
     text: {
-      en: "Appointed Lead Control Engineer at Shift Robotics, leading control and sensing for the first wheeled exoskeleton shoe.",
-      zh: "任命为 Shift Robotics 首席控制工程师，负责首款轮式外骨骼动力鞋的控制与传感系统开发。",
+      en: "Appointed Lead Control Engineer at Shift Robotics, leading control and sensing for Moonwalkers' wheeled robotic footwear platform.",
+      zh: "任命为 Shift Robotics 首席控制工程师，负责 Moonwalkers 轮式机器人鞋平台的控制与感知系统开发。",
     },
   },
   {

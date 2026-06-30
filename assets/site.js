@@ -237,7 +237,8 @@ if (lightboxTargets.length) {
   }
 
   function setBtnLabel(isZhNow) {
-    btn.textContent = isZhNow ? "EN" : "中文";
+    btn.textContent = isZhNow ? "English" : "\u4e2d\u6587";
+    btn.setAttribute("aria-label", isZhNow ? "Switch to English" : "Switch to Chinese");
   }
 
   function normalizePath(path) {
@@ -272,10 +273,10 @@ if (lightboxTargets.length) {
     window.location.href = target + window.location.search;
   });
 
-  // URL is authoritative for language — no auto-redirect.
-  // The toggle button label reflects the current page's language.
+  // The generated page language is authoritative; URL parsing is only a fallback.
+  const pageIsZh = (document.documentElement.lang || "").toLowerCase().startsWith("zh");
   const { isZh } = parsePath();
-  setBtnLabel(isZh);
+  setBtnLabel(pageIsZh || isZh);
 })();
 
 
@@ -339,8 +340,22 @@ if (lightboxTargets.length) {
 
   const isZh = window.location.pathname.includes('/zh/');
   const roles = isZh
-    ? ['机器人工程师', '控制工程师', '研究科学家', '传感融合工程师', '可穿戴机器人开发者', '人体运动调试员']
-    : ['Robotics Engineer', 'Control Engineer', 'Research Scientist', 'Sensor Fusion Engineer', 'Wearable Robotics Builder', 'Human-Motion Debugger'];
+    ? [
+      '可穿戴机器人研究者',
+      '控制工程师',
+      '机器人运动调校师',
+      '机器学习工程师',
+      '人机交互研究者',
+      '让机器人理解人类的人',
+    ]
+    : [
+      'Wearable Robotics Researcher',
+      'Control Engineer',
+      'Robot Motion Tuner',
+      'Machine Learning Engineer',
+      'Human-Robot Interaction Researcher',
+      'Person Making Robots Understand Humans',
+    ];
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     el.textContent = roles[0]; return;
@@ -400,4 +415,239 @@ if (lightboxTargets.length) {
     langBtn.parentNode.insertBefore(btn, langBtn);
     wire(btn);
   });
+})();
+
+
+// ===========================
+// Scroll progress bar + sticky-nav shadow
+// ===========================
+(function initScrollChrome(){
+  const bar = document.querySelector('.scrollProgress');
+  const nav = document.querySelector('.nav');
+  if (!bar && !nav) return;
+  let ticking = false;
+  function update(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
+    if (bar) bar.style.transform = 'scaleX(' + p + ')';
+    if (nav) nav.classList.toggle('scrolled', h.scrollTop > 8);
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+
+
+// ===========================
+// Cover intro: browser-framed opening scene that recedes on a short sticky
+// scroll. Sets --p (0..1 progress) on :root as the cover track scrolls past;
+// CSS maps it to the frame transform/opacity/blur and the main page rise-in.
+// Disabled under prefers-reduced-motion (CSS also hard-resets it).
+// ===========================
+(function initScrollCover(){
+  const track = document.querySelector('.coverTrack');
+  if (!track) return;
+  const root = document.documentElement;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    root.style.setProperty('--p', '0');
+    return;
+  }
+  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  let ticking = false;
+  function update(){
+    const rect = track.getBoundingClientRect();
+    const distance = track.offsetHeight - window.innerHeight;
+    const p = clamp(-rect.top / Math.max(distance, 1), 0, 1);
+    root.style.setProperty('--p', p.toFixed(4));
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking){ requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+
+// ===========================
+// Drag-to-scroll for the research -> product timeline
+// ===========================
+(function initTimelineDrag(){
+  const track = document.querySelector('[data-timeline]');
+  if (!track) return;
+  let down = false, startX = 0, startScroll = 0, moved = false;
+  track.addEventListener('pointerdown', (e) => {
+    down = true; moved = false; startX = e.clientX; startScroll = track.scrollLeft;
+    track.classList.add('dragging');
+    track.setPointerCapture && track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    track.scrollLeft = startScroll - dx;
+  });
+  function end(){ down = false; track.classList.remove('dragging'); }
+  track.addEventListener('pointerup', end);
+  track.addEventListener('pointercancel', end);
+  // Suppress accidental click navigation after a drag
+  track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+})();
+
+
+// ===========================
+// Hero cockpit: animated telemetry readouts
+// ===========================
+(function initCockpit(){
+  const root = document.querySelector('.cockpitReadout');
+  if (!root) return;
+  const zh = window.location.pathname.includes('/zh/');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const V = zh ? {
+    phase:   ['脚跟触地','负重期','站立中期','蹬地期','摆动期'],
+    intent:  ['行走','上楼梯','坡道','站立'],
+    terrain: ['平地','斜坡','楼梯','平地'],
+    mode:    ['自适应','平衡感知','助力']
+  } : {
+    phase:   ['Heel Strike','Loading','Mid-Stance','Push-Off','Swing'],
+    intent:  ['Walk','Stair ascent','Ramp','Stand'],
+    terrain: ['Flat','Incline','Stairs','Flat'],
+    mode:    ['Adaptive','Balance-aware','Assist']
+  };
+  const node = (k) => root.querySelector('.cockpitValue[data-metric="' + k + '"]');
+  const n = { phase:node('phase'), intent:node('intent'), terrain:node('terrain'), mode:node('mode'), latency:node('latency') };
+  function set(el, val){
+    if (!el || el.textContent === val) return;
+    el.textContent = val;
+    el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip');
+  }
+  let i = 0;
+  function tick(){
+    set(n.phase,   V.phase[i % V.phase.length]);
+    set(n.intent,  V.intent[i % V.intent.length]);
+    set(n.terrain, V.terrain[i % V.terrain.length]);
+    set(n.mode,    V.mode[(i >> 1) % V.mode.length]);
+    set(n.latency, (6 + Math.random() * 3).toFixed(1) + ' ms');
+    i++;
+  }
+  tick();
+  if (!reduce) setInterval(tick, 1700);
+})();
+
+
+// ===========================
+// Hero mouse parallax + cockpit tilt
+// ===========================
+(function initHeroParallax(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return; // skip on touch
+  const scene = document.querySelector('[data-parallax-scene]');
+  if (!scene) return;
+  const bg = scene.querySelector('[data-parallax]');
+  const tilt = scene.querySelector('[data-tilt]');
+  let raf = 0, tx = 0, ty = 0;
+  function apply(){
+    raf = 0;
+    if (bg) bg.style.transform = 'translate(' + (tx * 16) + 'px,' + (ty * 16) + 'px)';
+    if (tilt) tilt.style.transform = 'rotateX(' + (-ty * 3.5) + 'deg) rotateY(' + (tx * 4.5) + 'deg)';
+  }
+  scene.addEventListener('pointermove', (e) => {
+    const r = scene.getBoundingClientRect();
+    tx = (e.clientX - r.left) / r.width - 0.5;
+    ty = (e.clientY - r.top) / r.height - 0.5;
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+  scene.addEventListener('pointerleave', () => { tx = 0; ty = 0; if (!raf) raf = requestAnimationFrame(apply); });
+})();
+
+
+// ===========================
+// Homepage left section rail
+// ===========================
+(function initHomeSectionNav(){
+  const links = Array.from(document.querySelectorAll('.homeSectionNav a[data-section-link]'));
+  const sections = links
+    .map((link) => document.getElementById(link.dataset.sectionLink || ''))
+    .filter(Boolean);
+  if (!links.length || !sections.length) return;
+
+  const activate = (id) => {
+    links.forEach((link) => {
+      const active = link.dataset.sectionLink === id;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  let ticking = false;
+  const update = () => {
+    const marker = window.scrollY + Math.min(window.innerHeight * 0.24, 220);
+    let current = sections[0].id;
+    sections.forEach((section) => {
+      if (section.offsetTop <= marker) current = section.id;
+    });
+    const snapshot = sections.find((section) => section.id === 'snapshot');
+    if (snapshot && current === snapshot.id && window.scrollY < snapshot.offsetTop - 80) {
+      current = sections[0].id;
+    }
+    activate(current);
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+  update();
+})();
+
+// ===========================
+// In-page anchor navigation: smooth scroll with sticky-nav offset.
+// Covers same-page nav clicks and on-load hashes (e.g. arriving from
+// another page via index.html#section), immune to layout/image shifts.
+// ===========================
+(function initAnchorScroll(){
+  const NAV_OFFSET = 78;
+
+  function scrollToHash(hash, smooth){
+    if (!hash || hash === "#") return false;
+    let target;
+    try { target = document.querySelector(hash); } catch (e) { return false; }
+    if (!target) return false;
+    const top = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+    window.scrollTo({ top: Math.max(0, top), behavior: smooth ? "smooth" : "auto" });
+    return true;
+  }
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href*="#"]');
+    if (!a) return;
+    const url = new URL(a.href, window.location.href);
+    // Only handle links that stay on the current page.
+    if (url.pathname !== window.location.pathname || url.search !== window.location.search) return;
+    const hash = url.hash;
+    if (!hash || hash === "#") return;
+    if (scrollToHash(hash, true)) {
+      e.preventDefault();
+      history.pushState(null, "", hash);
+      const menu = document.querySelector("[data-mobilemenu]");
+      if (menu) menu.classList.remove("open");
+    }
+  });
+
+  // Correct the landing position when arriving with a hash (after images/layout settle).
+  if (window.location.hash) {
+    window.addEventListener("load", () => {
+      const h = window.location.hash;
+      requestAnimationFrame(() => setTimeout(() => scrollToHash(h, false), 60));
+    });
+  }
 })();

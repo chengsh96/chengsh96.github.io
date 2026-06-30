@@ -117,3 +117,14 @@ export type EducationItem = {
   url?: string;
   degree: LocalizedRichText; // contains <strong> and an optional affiliation link
 };
+
+// Research-to-product timeline node. `kind` drives the node shape (research vs
+// industry); `year` is shared (same in both languages).
+export type JourneyItem = {
+  id: string;
+  year: string;
+  kind: "research" | "industry";
+  title: LocalizedString;
+  org: LocalizedString;
+  detail: LocalizedString;
+};

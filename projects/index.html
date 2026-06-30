@@ -22,40 +22,41 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="../assets/site.css?v=13" rel="stylesheet"/>
+<link href="../assets/site.css?v=59" rel="stylesheet"/>
 </head>
 <body>
+<div class="scrollProgress" aria-hidden="true"></div>
 <header class="nav">
 <div class="navInner">
-<div class="brand">
+<a class="brand" href="../index.html" aria-label="Shihao Cheng">
 <span class="dot"></span>
 <span>Shihao Cheng</span>
-</div>
+</a>
 <nav class="navLinks">
-<a href="../index.html">Home</a>
-<a href="../index.html#about">About</a>
-<a href="../index.html#news">News</a>
-<a href="../index.html#projects">Featured Projects</a>
-<a href="../index.html#step-engineering">Behind a Step</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#education">Education</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
+<a class="navLink" href="../index.html#snapshot">Highlights</a>
+<a class="navLink" href="../index.html#about">About</a>
+<a class="navLink" href="../index.html#projects">Selected Work</a>
+<a class="navLink" href="../index.html#experience">Experience</a>
+<a class="navLink" href="../index.html#step-engineering">Hidden Engineering</a>
+<a class="navLink" href="../index.html#news">Updates</a>
+<a class="navLink" href="../index.html#education">Education &amp; Awards</a>
+<a class="navLink" href="../index.html#contact">Contact</a>
+<a class="navLink navLinkJump" href="index.html">All Projects</a>
 </nav>
 <button class="themeBtn" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
-<button class="langBtn" type="button" data-lang-toggle data-lang-href="../zh/projects/index.html" aria-label="Switch language">中文</button>
+<button class="langBtn" type="button" data-lang-toggle data-lang-href="../zh/projects/index.html" aria-label="Switch to Chinese">中文</button>
 <button aria-label="Open menu" class="navBtn" data-navbtn="">Menu</button>
 </div>
 <div class="mobileMenu" data-mobilemenu="">
-<a href="../index.html">Home</a>
-<a href="../index.html#about">About</a>
-<a href="../index.html#news">News</a>
-<a href="../index.html#projects">Featured Projects</a>
-<a href="../index.html#step-engineering">Behind a Step</a>
-<a href="../index.html#experience">Experience</a>
-<a href="../index.html#education">Education</a>
-<a href="../index.html#contact">Contact</a>
-<a href="index.html">All Projects</a>
+<a class="navLink" href="../index.html#snapshot">Highlights</a>
+<a class="navLink" href="../index.html#about">About</a>
+<a class="navLink" href="../index.html#projects">Selected Work</a>
+<a class="navLink" href="../index.html#experience">Experience</a>
+<a class="navLink" href="../index.html#step-engineering">Hidden Engineering</a>
+<a class="navLink" href="../index.html#news">Updates</a>
+<a class="navLink" href="../index.html#education">Education &amp; Awards</a>
+<a class="navLink" href="../index.html#contact">Contact</a>
+<a class="navLink navLinkJump" href="index.html">All Projects</a>
 </div>
 </header>
 <main class="container">
@@ -67,10 +68,10 @@
 <div class="grid">
 <a class="card proj reveal" href="shiftos.html"><div class="projMedia"><img width="760" height="500" alt="shiftos_aero" src="../assets/img/projects/shiftos_aero.jpg"/></div>
 <div class="projTop"><p class="projTitle">Moonwalkers Control System (ShiftOS)</p><span class="tag">Industry</span></div>
-<p class="projDesc">Real-time locomotion control + embedded deployment for wearable robotic footwear.</p>
+<p class="projDesc">Real-time gait control and embedded deployment for robotic footwear.</p>
 </a>
 <a class="card proj reveal" href="tbme2024.html"><div class="projMedia"><img loading="lazy" width="2539" height="1791" alt="tbme2024_concept" src="../assets/img/projects/tbme2024_concept.jpg"/></div>
-<div class="projTop"><p class="projTitle">Safety-Critical Stub Avoidance (TBME 2024)</p><span class="tag">Research</span></div>
+<div class="projTop"><p class="projTitle">Safety-Critical Toe-Stub Avoidance (TBME 2024)</p><span class="tag">Research</span></div>
 <p class="projDesc">Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.</p>
 </a>
 <a class="card proj reveal" href="tnsre2024.html"><div class="projMedia"><img loading="lazy" width="1023" height="760" alt="tnsre2024_exp" src="../assets/img/projects/tnsre2024_exp.jpg"/></div>
@@ -86,11 +87,11 @@
 <p class="projDesc">Unified kinematic modeling of walking/stairs and their transitions.</p>
 </a>
 <a class="card proj reveal" href="icf.html"><div class="projMedia"><img loading="lazy" width="4000" height="2250" alt="ICF-based intent recognition concept" src="../assets/img/projects/icf_concept.jpg"/></div>
-<div class="projTop"><p class="projTitle">Automatic Activity Recognition (TRO 2025)</p><span class="tag">Research</span></div>
+<div class="projTop"><p class="projTitle">Automatic Activity Recognition (T-RO 2025)</p><span class="tag">Research</span></div>
 <p class="projDesc">Interpretable features + robust transition logic across activities.</p>
 </a>
 <a class="card proj reveal" href="ral2024.html"><div class="projMedia"><img loading="lazy" width="1379" height="1254" alt="ral2024_concept" src="../assets/img/projects/ral2024_concept.jpg"/></div>
-<div class="projTop"><p class="projTitle">Transfer Learning for Intent (RA-L 2024)</p><span class="tag">Research</span></div>
+<div class="projTop"><p class="projTitle">Transfer Learning for Intent Recognition (RA-L 2024)</p><span class="tag">Research</span></div>
 <p class="projDesc">Low-data adaptation and cross-user generalization for intent prediction.</p>
 </a>
 <a class="card proj reveal" href="embc2025.html"><div class="projMedia"><img loading="lazy" width="1017" height="750" alt="Smartwatch interface for prosthesis mode switching" src="../assets/img/projects/embc2025_watch.jpg"/></div>
@@ -109,6 +110,6 @@
 </section>
 <div class="footer">Back to <a href="../index.html">Home</a></div>
 </main>
-<script src="../assets/site.js"></script>
+<script src="../assets/site.js?v=59"></script>
 </body>
 </html>

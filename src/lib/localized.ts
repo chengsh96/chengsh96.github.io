@@ -48,7 +48,7 @@ export function pairedHref(currentRootPath: string): string {
   return relHref(currentRootPath, pairedRootPath(currentRootPath));
 }
 
-export type NavLink = { href: string; label: string };
+export type NavLink = { href: string; label: string; kind: "anchor" | "route" };
 
 // Build the header menu for a page, with hrefs resolved relative to that page.
 export function buildNav(locale: Locale, currentRootPath: string): NavLink[] {
@@ -61,9 +61,13 @@ export function buildNav(locale: Locale, currentRootPath: string): NavLink[] {
         const anchor = `#${item.target.anchor}`;
         // On the homepage itself, anchors are pure fragments.
         const href = currentRootPath === home ? anchor : relHref(currentRootPath, home) + anchor;
-        return { href, label };
+        return { href, label, kind: "anchor" as const };
       }
-      return { href: relHref(currentRootPath, routeRootPath(item.target.routeId, locale)), label };
+      return {
+        href: relHref(currentRootPath, routeRootPath(item.target.routeId, locale)),
+        label,
+        kind: "route" as const,
+      };
     });
 }
 

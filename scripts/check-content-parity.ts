@@ -10,6 +10,7 @@ import { projects } from "../src/content/projects.js";
 import { news } from "../src/content/news.js";
 import { experience } from "../src/content/experience.js";
 import { education } from "../src/content/education.js";
+import { journey } from "../src/content/journey.js";
 
 const ROOT = process.cwd();
 const errors: string[] = [];
@@ -83,11 +84,13 @@ checkIds(projects, "projects");
 checkIds(news, "news");
 checkIds(experience, "experience");
 checkIds(education, "education");
+checkIds(journey, "journey");
 
 checkLocalized(projects, "projects");
 checkLocalized(news, "news");
 checkLocalized(experience, "experience");
 checkLocalized(education, "education");
+checkLocalized(journey, "journey");
 
 // --- homepage content (site.ts) ---
 checkLocalized(homeContent, "homeContent");

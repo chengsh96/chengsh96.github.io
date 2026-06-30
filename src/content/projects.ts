@@ -26,12 +26,12 @@ export const projects: Project[] = [
       zh: "Moonwalkers 已在全球 IKEA 仓库部署",
     },
     summary: {
-      en: "Real-time locomotion control + embedded deployment for wearable robotic footwear.",
-      zh: "为可穿戴动力鞋打造实时运动控制系统，并完成嵌入式量产部署。",
+      en: "Real-time gait control and embedded deployment for robotic footwear.",
+      zh: "为机器人鞋打造实时步态控制系统，并完成嵌入式量产部署。",
     },
     listSummary: {
-      en: "Real-time locomotion control + embedded deployment for wearable robotic footwear.",
-      zh: "面向可穿戴动力鞋的实时运动控制系统，并完成嵌入式量产部署。",
+      en: "Real-time gait control and embedded deployment for robotic footwear.",
+      zh: "面向机器人鞋的实时步态控制系统，并完成嵌入式量产部署。",
     },
     highlights: [
       { en: "Balance-aware behaviors for uneven terrain", zh: "平衡感知控制与不平路面稳定性" },
@@ -59,7 +59,7 @@ export const projects: Project[] = [
     image: "assets/img/projects/tbme2024_concept.jpg",
     imageDims: { w: 2539, h: 1791 },
     alt: { en: "tbme2024_concept", zh: "tbme2024" },
-    title: { en: "Safety-Critical Stub Avoidance (TBME 2024)", zh: "安全关键绊脚规避（TBME 2024）" },
+    title: { en: "Safety-Critical Toe-Stub Avoidance (TBME 2024)", zh: "安全关键绊脚规避（TBME 2024）" },
     outcome: { en: "Published in IEEE TBME 2024", zh: "发表于 IEEE TBME 2024" },
     summary: {
       en: "Real-time prediction + minimum-jerk trajectory reshaping to avoid obstacle contact.",
@@ -132,8 +132,8 @@ export const projects: Project[] = [
     image: "assets/img/projects/ral2024_concept.jpg",
     imageDims: { w: 1379, h: 1254 },
     alt: { en: "ral2024_concept", zh: "ral2024_concept" },
-    title: { en: "Transfer Learning for Intent (RA-L 2024)", zh: "迁移学习意图预测（RA-L 2024）" },
-    listTitle: { en: "Transfer Learning for Intent (RA-L 2024)", zh: "意图识别的迁移学习方法（RA-L 2024）" },
+    title: { en: "Transfer Learning for Intent Recognition (RA-L 2024)", zh: "意图识别的迁移学习（RA-L 2024）" },
+    listTitle: { en: "Transfer Learning for Intent Recognition (RA-L 2024)", zh: "意图识别的迁移学习方法（RA-L 2024）" },
     outcome: { en: "Published in IEEE RA-L 2024", zh: "发表于 IEEE RA-L 2024" },
     summary: {
       en: "Low-data adaptation for intent prediction across users with practical dataset constraints.",
@@ -173,8 +173,8 @@ export const projects: Project[] = [
       en: "ICF-based intent recognition concept",
       zh: "基于 ICF 的意图识别概念图",
     },
-    title: { en: "Ambilateral Activity Recognition (TRO 2025)", zh: "双侧活动识别（TRO 2025）" },
-    listTitle: { en: "Automatic Activity Recognition (TRO 2025)", zh: "自动活动识别（TRO 2025）" },
+    title: { en: "Ambilateral Activity Recognition (T-RO 2025)", zh: "双侧活动识别（T-RO 2025）" },
+    listTitle: { en: "Automatic Activity Recognition (T-RO 2025)", zh: "自动活动识别（T-RO 2025）" },
     outcome: {
       en: "IEEE Transactions on Robotics · TNSRE 2021",
       zh: "IEEE Transactions on Robotics · TNSRE 2021",
