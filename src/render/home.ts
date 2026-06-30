@@ -293,17 +293,19 @@ ${fallbackPhases.map((p, i) => `      <button class="sePhase" type="button" role
     </div>
     <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill" style="width: 16.6667%"></div></div>
     <div class="seCenter">
+      <div class="seVisualRow">
       <div class="seStage" aria-hidden="true"></div>
+      <div class="signalWaves" aria-hidden="true">
+        <div class="fallbackSignals">
+          <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.footPitch[locale])}</strong><span>deg</span></div>
+          <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.vgrf[locale])}</strong><span>%BW</span></div>
+        </div>
+      </div>
+      </div>
       <div class="stepDetail homeCard" role="tabpanel" aria-live="polite">
         <div id="seHuman"><h4>${esc(fallbackDetail.human[locale])}</h4><p>${esc(fallbackDetail.humanText[locale])}</p></div>
         <div id="seSenses"><h4>${esc(fallbackDetail.senses[locale])}</h4><p>${esc(fallbackDetail.sensesText[locale])}</p></div>
         <div id="seCtrl"><h4>${esc(fallbackDetail.ctrl[locale])}</h4><p><em>${esc(fallbackDetail.ctrlText[locale])}</em></p></div>
-      </div>
-    </div>
-    <div class="signalWaves" aria-hidden="true">
-      <div class="fallbackSignals">
-        <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.footPitch[locale])}</strong><span>deg</span></div>
-        <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.vgrf[locale])}</strong><span>%BW</span></div>
       </div>
     </div>
     <div class="factGrid"></div>

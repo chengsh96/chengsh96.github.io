@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=25" rel="stylesheet"/>
+<link href="assets/site.css?v=32" rel="stylesheet"/>
 </head>
 <body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -399,17 +399,19 @@
     </div>
     <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill" style="width: 16.6667%"></div></div>
     <div class="seCenter">
+      <div class="seVisualRow">
       <div class="seStage" aria-hidden="true"></div>
+      <div class="signalWaves" aria-hidden="true">
+        <div class="fallbackSignals">
+          <div class="homeCard fallbackSignal"><strong>Foot Pitch</strong><span>deg</span></div>
+          <div class="homeCard fallbackSignal"><strong>vGRF</strong><span>%BW</span></div>
+        </div>
+      </div>
+      </div>
       <div class="stepDetail homeCard" role="tabpanel" aria-live="polite">
         <div id="seHuman"><h4>Human</h4><p>The foot contacts the ground. Body weight begins transferring onto the leading leg.</p></div>
         <div id="seSenses"><h4>Robot senses</h4><p>Impact timing, rapid force rise, foot orientation, and angular velocity from the IMU.</p></div>
         <div id="seCtrl"><h4>Controller asks</h4><p><em>&quot;Has stance begun? Is this a normal step, a sudden stop, or an uneven surface?&quot;</em></p></div>
-      </div>
-    </div>
-    <div class="signalWaves" aria-hidden="true">
-      <div class="fallbackSignals">
-        <div class="homeCard fallbackSignal"><strong>Foot Pitch</strong><span>deg</span></div>
-        <div class="homeCard fallbackSignal"><strong>vGRF</strong><span>%BW</span></div>
       </div>
     </div>
     <div class="factGrid"></div>
@@ -580,8 +582,8 @@
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
 </main>
-<script src="assets/site.js?v=25"></script>
-<script src="assets/widgets/step-engineering.js?v=25"></script>
+<script src="assets/site.js?v=32"></script>
+<script src="assets/widgets/step-engineering.js?v=32"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
