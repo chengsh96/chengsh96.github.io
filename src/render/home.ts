@@ -237,78 +237,134 @@ ${orgCards}
 </div>
 </section>`;
 
-  const philosophySteps = c.stepEngineering.loopSteps
+  const se = c.stepEngineering;
+
+  // Heading with the accent word wrapped in a highlighted span (matches preview).
+  const headingHtml = (() => {
+    const full = se.heading[locale];
+    const accent = se.headingAccent[locale];
+    const at = full.indexOf(accent);
+    if (at < 0) return esc(full);
+    return (
+      esc(full.slice(0, at)) +
+      `<span class="gdTitleAccent">${esc(accent)}</span>` +
+      esc(full.slice(at + accent.length))
+    );
+  })();
+
+  // Inline icons (kept tiny + theme-tinted via currentColor).
+  const ICON = {
+    hand: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V13"/><path d="M8 11v-.5a1.5 1.5 0 0 0-3 0V14c0 3.5 2.5 6 6 6h1.5a5 5 0 0 0 5-5"/></svg>',
+    understand:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M11.7 5.4c-1.1-1.2-3-1.5-4.5-.5-1.5 1-2 3-1.2 4.6-1.3.8-1.9 2.5-1.4 4 .5 1.6 2 2.6 3.6 2.5.3 1.7 1.7 3 3.5 3z"/><path d="M12.3 5.4c1.1-1.2 3-1.5 4.5-.5 1.5 1 2 3 1.2 4.6 1.3.8 1.9 2.5 1.4 4-.5 1.6-2 2.6-3.6 2.5-.3 1.7-1.7 3-3.5 3z"/><path d="M12 5.2v13.6"/><path d="M8.3 8.3c1.2-.5 2.4-.1 3.1.9"/><path d="M15.7 8.3c-1.2-.5-2.4-.1-3.1.9"/><path d="M7.8 12.3c1.2.1 2.2.7 2.7 1.7"/><path d="M16.2 12.3c-1.2.1-2.2.7-2.7 1.7"/></svg>',
+    evaluate:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="8" cy="17" r="2" fill="currentColor" stroke="none"/></svg>',
+    safety:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+    decide:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13H11l-1 9 8.5-11H12z"/></svg>',
+    human:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.2" r="2"/><path d="M12 6.5v5.2"/><path d="M12 8.5l-4 2.2"/><path d="M12.1 11.5l3.7 2.3"/><path d="M12 11.7l-2.9 7.1"/><path d="M14.7 14.1l2.2 5.7"/><path d="M8.2 20h3.2"/><path d="M15.8 20h3"/></svg>',
+    senses:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a8 8 0 0 0 0 12M18 6a8 8 0 0 1 0 12"/></svg>',
+    asks:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13H11l-1 9 8.5-11H12z"/></svg>',
+    bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2.5h6c0-1.3.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+    chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    chevronRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+  };
+
+  const thinkTones = ["#4d9fff", "#a78bfa", "#2dd4bf", "#f5a623"];
+  const thinkingCards = se.thinkingTitles
+    .map((t, i) => {
+      const icon = [ICON.understand, ICON.evaluate, ICON.safety, ICON.decide][i];
+      const emphasis = i === 3 ? " gdThinkPrimary" : "";
+      // A down-chevron connects the reasoning steps into the final decision.
+      const chevron = i === 3 ? `      <div class="gdThinkChevron" aria-hidden="true">${ICON.chevronDown}</div>\n` : "";
+      return `${chevron}      <div class="gdThink${emphasis}" style="--gd-tone:${thinkTones[i]}">
+        <span class="gdThinkIcon" aria-hidden="true">${icon}</span>
+        <div class="gdThinkBody">
+          <span class="gdThinkTitle">${esc(t[locale])}</span>
+          <p class="gdThinkText" data-think="${i}"></p>
+        </div>
+      </div>`;
+    })
+    .join("\n");
+
+  const glanceCards = [
+    { key: "human", label: se.humanLabel, icon: ICON.human, tone: "#4d9fff" },
+    { key: "senses", label: se.sensesLabel, icon: ICON.senses, tone: "#a78bfa" },
+    { key: "asks", label: se.asksLabel, icon: ICON.asks, tone: "#2dd4bf" },
+  ]
     .map(
-      (step, i) => `<article class="philosophyStep">
-  <span class="philosophyIndex">${String(i + 1).padStart(2, "0")}</span>
-  <h3>${esc(step.title[locale])}</h3>
-  <p>${esc(step.text[locale])}</p>
-</article>`,
+      (g, i) => `${i > 0 ? `      <div class="gdGlanceSep" aria-hidden="true">${ICON.chevronRight}</div>\n` : ""}      <article class="gdGlanceCard" style="--gd-tone:${g.tone}">
+        <span class="gdGlanceIcon" aria-hidden="true">${g.icon}</span>
+        <span class="gdGlanceTitle">${esc(g.label[locale])}</span>
+        <p class="gdGlanceText" data-glance="${g.key}"></p>
+      </article>`,
     )
     .join("\n");
 
-  const fallbackPhases = [
-    { en: "Heel Strike", zh: "脚跟触地" },
-    { en: "Loading", zh: "负重期" },
-    { en: "Mid-Stance", zh: "站立中期" },
-    { en: "Push-Off", zh: "蹬地期" },
-    { en: "Swing", zh: "摆动期" },
-    { en: "Next Heel Strike", zh: "下次脚跟触地" },
-  ] as const;
-  const fallbackDetail = {
-    human: { en: "Human", zh: "人体动作" },
-    senses: { en: "Robot senses", zh: "机器人感知" },
-    ctrl: { en: "Controller asks", zh: "控制器决策" },
-    footPitch: { en: "Foot Pitch", zh: "脚部俯仰角" },
-    vgrf: { en: "vGRF", zh: "垂直地反力" },
-    humanText: {
-      en: "The foot contacts the ground. Body weight begins transferring onto the leading leg.",
-      zh: "脚接触地面，体重开始向前腿转移。",
-    },
-    sensesText: {
-      en: "Impact timing, rapid force rise, foot orientation, and angular velocity from the IMU.",
-      zh: "冲击时序、力的快速上升、脚部朝向以及 IMU 角速度。",
-    },
-    ctrlText: {
-      en: '"Has stance begun? Is this a normal step, a sudden stop, or an uneven surface?"',
-      zh: '"是否进入支撑相？这是正常步伐、突然停止，还是不平整地面？"',
-    },
-  };
-
   const stepEngineering = `
-<!-- Technical philosophy / Hidden Engineering Behind a Step -->
-<section class="section reveal" id="step-engineering">
-  <div class="sectionHead">
-    <h2>${esc(c.stepEngineering.heading[locale])}</h2>
-    <div class="small">${esc(c.stepEngineering.small[locale])}</div>
-  </div>
-  <div class="homeCard stepEngineeringPanel">
-    <p class="stepEngIntro">${esc(c.stepEngineering.intro[locale])}</p>
-    <div class="controlLoop fallbackLoop" aria-label="${esc(c.stepEngineering.controlLoopAria[locale])}">
-${philosophySteps}
+<!-- Hidden Engineering — interactive gait-cycle control dashboard -->
+<section class="section reveal gaitSection" id="step-engineering">
+  <div class="homeCard gaitDash" data-gait-dash aria-label="${esc(se.controlLoopAria[locale])}">
+    <div class="gdHeader">
+      <div class="gdHeaderText">
+        <h2 class="gdTitle">${headingHtml}</h2>
+        <p class="gdHook">
+${se.hook.map((line) => `          <span>${esc(line[locale])}</span>`).join("\n")}
+        </p>
+      </div>
+      <p class="gdHelper">
+        <span class="gdHelperIcon" aria-hidden="true">${ICON.hand}</span>
+        <span>${esc(se.small[locale])}</span>
+      </p>
     </div>
-    <div class="stepTimeline fallbackTimeline" role="tablist" aria-label="${esc(c.stepEngineering.timelineAria[locale])}">
-${fallbackPhases.map((p, i) => `      <button class="sePhase" type="button" role="tab" aria-selected="${i === 0 ? "true" : "false"}">${esc(p[locale])}</button>`).join("\n")}
-    </div>
-    <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill" style="width: 16.6667%"></div></div>
-    <div class="seCenter">
-      <div class="seVisualRow">
-      <div class="seStage" aria-hidden="true"></div>
-      <div class="signalWaves" aria-hidden="true">
-        <div class="fallbackSignals">
-          <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.footPitch[locale])}</strong><span>deg</span></div>
-          <div class="homeCard fallbackSignal"><strong>${esc(fallbackDetail.vgrf[locale])}</strong><span>%BW</span></div>
+
+    <div class="gdCockpit">
+      <div class="gdCycle">
+        <div class="gdCycleLabel">
+          <span class="gdEyebrow">${esc(se.cycleLabel[locale])}</span>
+          <span class="gdCycleSub">${esc(se.cycleSub[locale])}</span>
+        </div>
+        <div class="gdTimeline" role="tablist" aria-label="${esc(se.timelineAria[locale])}" data-gd-timeline></div>
+      </div>
+
+      <div class="gdGrid">
+        <div class="gdStage" data-gd-stage role="img"></div>
+
+        <div class="gdPanel gdThinkingPanel">
+          <div class="gdPanelHead"><span class="gdEyebrow">${esc(se.thinkingLabel[locale])}</span></div>
+          <div class="gdThinkList" aria-live="polite">
+${thinkingCards}
+          </div>
+        </div>
+
+        <div class="gdPanel gdSignalsPanel">
+          <div class="gdPanelHead">
+            <span class="gdEyebrow">${esc(se.signalsLabel[locale])}</span>
+            <span class="gdPill"><span class="gdPillDot" aria-hidden="true"></span>${esc(se.realtimeLabel[locale])}</span>
+          </div>
+          <div class="gdSignalList" data-gd-signals aria-hidden="true"></div>
         </div>
       </div>
-      </div>
-      <div class="stepDetail homeCard" role="tabpanel" aria-live="polite">
-        <div id="seHuman"><h4>${esc(fallbackDetail.human[locale])}</h4><p>${esc(fallbackDetail.humanText[locale])}</p></div>
-        <div id="seSenses"><h4>${esc(fallbackDetail.senses[locale])}</h4><p>${esc(fallbackDetail.sensesText[locale])}</p></div>
-        <div id="seCtrl"><h4>${esc(fallbackDetail.ctrl[locale])}</h4><p><em>${esc(fallbackDetail.ctrlText[locale])}</em></p></div>
+
+      <div class="gdSummary">
+        <div class="gdGlance">
+          <span class="gdEyebrow">${esc(se.glanceLabel[locale])}</span>
+          <div class="gdGlanceGrid">
+${glanceCards}
+          </div>
+        </div>
+        <aside class="gdTakeaway" aria-live="polite">
+          <span class="gdTakeawayLabel"><span class="gdTakeawayIcon" aria-hidden="true">${ICON.bulb}</span>${esc(se.takeawayLabel[locale])}</span>
+          <p class="gdTakeawayText" data-takeaway></p>
+        </aside>
       </div>
     </div>
-    <div class="factGrid"></div>
-    <p class="stepRef"></p>
+
+    <p class="gdFoot">${esc(se.ref[locale])} <a href="#projects">${esc(se.seeProjects[locale])} →</a></p>
   </div>
 </section>`;
 

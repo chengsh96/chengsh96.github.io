@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet"/>
-<link href="assets/site.css?v=59" rel="stylesheet"/>
+<link href="assets/site.css?v=69" rel="stylesheet"/>
 </head>
 <body class="page-home">
 <div class="scrollProgress" aria-hidden="true"></div>
@@ -358,63 +358,110 @@
 </div>
 </section>
 
-<!-- Technical philosophy / Hidden Engineering Behind a Step -->
-<section class="section reveal" id="step-engineering">
-  <div class="sectionHead">
-    <h2>The Hidden Engineering in a Step</h2>
-    <div class="small">Tap a phase to see what the controller is estimating.</div>
-  </div>
-  <div class="homeCard stepEngineeringPanel">
-    <p class="stepEngIntro">A single step contains more information than it seems. For wearable robots, each stride is a stream of clues: intent, terrain, balance, timing, and safety. My work focuses on turning those clues into real-time control decisions that feel natural outside the lab.</p>
-    <div class="controlLoop fallbackLoop" aria-label="Control loop: Sense, Infer, Decide, Act">
-<article class="philosophyStep">
-  <span class="philosophyIndex">01</span>
-  <h3>Sense</h3>
-  <p>Read motion, contact, load, and environment cues.</p>
-</article>
-<article class="philosophyStep">
-  <span class="philosophyIndex">02</span>
-  <h3>Estimate</h3>
-  <p>Infer gait phase, intent, terrain, and timing.</p>
-</article>
-<article class="philosophyStep">
-  <span class="philosophyIndex">03</span>
-  <h3>Assist</h3>
-  <p>Deliver assistance at the right moment under real-time limits.</p>
-</article>
-<article class="philosophyStep">
-  <span class="philosophyIndex">04</span>
-  <h3>Recover</h3>
-  <p>Prioritize stability, safety, and the next stride.</p>
-</article>
+<!-- Hidden Engineering — interactive gait-cycle control dashboard -->
+<section class="section reveal gaitSection" id="step-engineering">
+  <div class="homeCard gaitDash" data-gait-dash aria-label="Gait-cycle control dashboard">
+    <div class="gdHeader">
+      <div class="gdHeaderText">
+        <h2 class="gdTitle">The Hidden <span class="gdTitleAccent">Engineering</span> in a Step</h2>
+        <p class="gdHook">
+          <span>Every step is a real-time control problem.</span>
+          <span>The robot must sense motion, infer intent, and assist at exactly the right moment.</span>
+        </p>
+      </div>
+      <p class="gdHelper">
+        <span class="gdHelperIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 11V6.5a1.5 1.5 0 0 1 3 0V13"/><path d="M8 11v-.5a1.5 1.5 0 0 0-3 0V14c0 3.5 2.5 6 6 6h1.5a5 5 0 0 0 5-5"/></svg></span>
+        <span>Tap a phase to see what the controller is estimating.</span>
+      </p>
     </div>
-    <div class="stepTimeline fallbackTimeline" role="tablist" aria-label="Gait phases">
-      <button class="sePhase" type="button" role="tab" aria-selected="true">Heel Strike</button>
-      <button class="sePhase" type="button" role="tab" aria-selected="false">Loading</button>
-      <button class="sePhase" type="button" role="tab" aria-selected="false">Mid-Stance</button>
-      <button class="sePhase" type="button" role="tab" aria-selected="false">Push-Off</button>
-      <button class="sePhase" type="button" role="tab" aria-selected="false">Swing</button>
-      <button class="sePhase" type="button" role="tab" aria-selected="false">Next Heel Strike</button>
-    </div>
-    <div class="timelineProgress" aria-hidden="true"><div class="timelineProgressFill" style="width: 16.6667%"></div></div>
-    <div class="seCenter">
-      <div class="seVisualRow">
-      <div class="seStage" aria-hidden="true"></div>
-      <div class="signalWaves" aria-hidden="true">
-        <div class="fallbackSignals">
-          <div class="homeCard fallbackSignal"><strong>Foot Pitch</strong><span>deg</span></div>
-          <div class="homeCard fallbackSignal"><strong>vGRF</strong><span>%BW</span></div>
+
+    <div class="gdCockpit">
+      <div class="gdCycle">
+        <div class="gdCycleLabel">
+          <span class="gdEyebrow">Gait Cycle</span>
+          <span class="gdCycleSub">One step = 0% → 100%</span>
+        </div>
+        <div class="gdTimeline" role="tablist" aria-label="Gait phases" data-gd-timeline></div>
+      </div>
+
+      <div class="gdGrid">
+        <div class="gdStage" data-gd-stage role="img"></div>
+
+        <div class="gdPanel gdThinkingPanel">
+          <div class="gdPanelHead"><span class="gdEyebrow">Controller's Thinking</span></div>
+          <div class="gdThinkList" aria-live="polite">
+      <div class="gdThink" style="--gd-tone:#4d9fff">
+        <span class="gdThinkIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M11.7 5.4c-1.1-1.2-3-1.5-4.5-.5-1.5 1-2 3-1.2 4.6-1.3.8-1.9 2.5-1.4 4 .5 1.6 2 2.6 3.6 2.5.3 1.7 1.7 3 3.5 3z"/><path d="M12.3 5.4c1.1-1.2 3-1.5 4.5-.5 1.5 1 2 3 1.2 4.6 1.3.8 1.9 2.5 1.4 4-.5 1.6-2 2.6-3.6 2.5-.3 1.7-1.7 3-3.5 3z"/><path d="M12 5.2v13.6"/><path d="M8.3 8.3c1.2-.5 2.4-.1 3.1.9"/><path d="M15.7 8.3c-1.2-.5-2.4-.1-3.1.9"/><path d="M7.8 12.3c1.2.1 2.2.7 2.7 1.7"/><path d="M16.2 12.3c-1.2.1-2.2.7-2.7 1.7"/></svg></span>
+        <div class="gdThinkBody">
+          <span class="gdThinkTitle">Understand</span>
+          <p class="gdThinkText" data-think="0"></p>
         </div>
       </div>
+      <div class="gdThink" style="--gd-tone:#a78bfa">
+        <span class="gdThinkIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/><circle cx="9" cy="7" r="2" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="8" cy="17" r="2" fill="currentColor" stroke="none"/></svg></span>
+        <div class="gdThinkBody">
+          <span class="gdThinkTitle">Evaluate</span>
+          <p class="gdThinkText" data-think="1"></p>
+        </div>
       </div>
-      <div class="stepDetail homeCard" role="tabpanel" aria-live="polite">
-        <div id="seHuman"><h4>Human</h4><p>The foot contacts the ground. Body weight begins transferring onto the leading leg.</p></div>
-        <div id="seSenses"><h4>Robot senses</h4><p>Impact timing, rapid force rise, foot orientation, and angular velocity from the IMU.</p></div>
-        <div id="seCtrl"><h4>Controller asks</h4><p><em>&quot;Has stance begun? Is this a normal step, a sudden stop, or an uneven surface?&quot;</em></p></div>
+      <div class="gdThink" style="--gd-tone:#2dd4bf">
+        <span class="gdThinkIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <div class="gdThinkBody">
+          <span class="gdThinkTitle">Ensure Safety</span>
+          <p class="gdThinkText" data-think="2"></p>
+        </div>
+      </div>
+      <div class="gdThinkChevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="gdThink gdThinkPrimary" style="--gd-tone:#f5a623">
+        <span class="gdThinkIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13H11l-1 9 8.5-11H12z"/></svg></span>
+        <div class="gdThinkBody">
+          <span class="gdThinkTitle">Decide</span>
+          <p class="gdThinkText" data-think="3"></p>
+        </div>
+      </div>
+          </div>
+        </div>
+
+        <div class="gdPanel gdSignalsPanel">
+          <div class="gdPanelHead">
+            <span class="gdEyebrow">Live Signals</span>
+            <span class="gdPill"><span class="gdPillDot" aria-hidden="true"></span>Real-time</span>
+          </div>
+          <div class="gdSignalList" data-gd-signals aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="gdSummary">
+        <div class="gdGlance">
+          <span class="gdEyebrow">At a Glance</span>
+          <div class="gdGlanceGrid">
+      <article class="gdGlanceCard" style="--gd-tone:#4d9fff">
+        <span class="gdGlanceIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.2" r="2"/><path d="M12 6.5v5.2"/><path d="M12 8.5l-4 2.2"/><path d="M12.1 11.5l3.7 2.3"/><path d="M12 11.7l-2.9 7.1"/><path d="M14.7 14.1l2.2 5.7"/><path d="M8.2 20h3.2"/><path d="M15.8 20h3"/></svg></span>
+        <span class="gdGlanceTitle">Human Motion</span>
+        <p class="gdGlanceText" data-glance="human"></p>
+      </article>
+      <div class="gdGlanceSep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+      <article class="gdGlanceCard" style="--gd-tone:#a78bfa">
+        <span class="gdGlanceIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a8 8 0 0 0 0 12M18 6a8 8 0 0 1 0 12"/></svg></span>
+        <span class="gdGlanceTitle">Robot Senses</span>
+        <p class="gdGlanceText" data-glance="senses"></p>
+      </article>
+      <div class="gdGlanceSep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></div>
+      <article class="gdGlanceCard" style="--gd-tone:#2dd4bf">
+        <span class="gdGlanceIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13H11l-1 9 8.5-11H12z"/></svg></span>
+        <span class="gdGlanceTitle">Controller Asks</span>
+        <p class="gdGlanceText" data-glance="asks"></p>
+      </article>
+          </div>
+        </div>
+        <aside class="gdTakeaway" aria-live="polite">
+          <span class="gdTakeawayLabel"><span class="gdTakeawayIcon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2.5h6c0-1.3.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span>Key Takeaway</span>
+          <p class="gdTakeawayText" data-takeaway></p>
+        </aside>
       </div>
     </div>
-    <div class="factGrid"></div>
-    <p class="stepRef"></p>
+
+    <p class="gdFoot">Gait-phase terminology follows clinical convention. Wearable robotics concepts draw from real-time prosthetic and exoskeleton control research. <a href="#projects">See Projects →</a></p>
   </div>
 </section>
 
@@ -581,8 +628,8 @@
 <div class="footer">© <span id="y"></span> Shihao Cheng</div>
 </section>
 </main>
-<script src="assets/site.js?v=59"></script>
-<script src="assets/widgets/step-engineering.js?v=59"></script>
+<script src="assets/site.js?v=69"></script>
+<script src="assets/widgets/step-engineering.js?v=69"></script>
 <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>

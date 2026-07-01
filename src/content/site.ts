@@ -440,37 +440,51 @@ export const homeContent = {
 
   stepEngineering: {
     heading: { en: "The Hidden Engineering in a Step", zh: "每一步背后的隐形工程" } as LocalizedString,
+    // Accent word inside the heading, highlighted in blue (matches preview).
+    headingAccent: { en: "Engineering", zh: "隐形工程" } as LocalizedString,
     small: {
       en: "Tap a phase to see what the controller is estimating.",
       zh: "点击步态阶段，看看控制器正在判断什么。",
     } as LocalizedString,
-    intro: {
-      en: "A single step contains more information than it seems. For wearable robots, each stride is a stream of clues: intent, terrain, balance, timing, and safety. My work focuses on turning those clues into real-time control decisions that feel natural outside the lab.",
-      zh: "一步之中，信息远比表面丰富。对可穿戴机器人而言，每一步都是一连串信号：意图、地形、平衡、时序与安全。我的工作，就是将这些信号实时转化为让用户感觉自然的控制决策。",
-    } as LocalizedString,
-    loopSteps: [
+    // Two-line hook that replaces the old long paragraph.
+    hook: [
       {
-        title: { en: "Sense", zh: "感知" },
-        text: { en: "Read motion, contact, load, and environment cues.", zh: "读取运动、接触、负载与环境线索。" },
+        en: "Every step is a real-time control problem.",
+        zh: "每一步都是一个实时控制问题。",
       },
       {
-        title: { en: "Estimate", zh: "估计" },
-        text: { en: "Infer gait phase, intent, terrain, and timing.", zh: "推断步态相位、意图、地形与时序。" },
+        en: "The robot must sense motion, infer intent, and assist at exactly the right moment.",
+        zh: "机器人必须感知运动、推断意图，并在恰当的时刻给出辅助。",
       },
-      {
-        title: { en: "Assist", zh: "辅助" },
-        text: { en: "Deliver assistance at the right moment under real-time limits.", zh: "在实时约束下，于正确时刻提供辅助。" },
-      },
-      {
-        title: { en: "Recover", zh: "恢复" },
-        text: { en: "Prioritize stability, safety, and the next stride.", zh: "优先保证稳定、安全与下一步衔接。" },
-      },
-    ],
+    ] as LocalizedString[],
+    // Static dashboard chrome labels (per-phase content lives in the widget JS).
+    cycleLabel: { en: "Gait Cycle", zh: "步态周期" } as LocalizedString,
+    cycleSub: { en: "One step = 0% → 100%", zh: "一步 = 0% → 100%" } as LocalizedString,
+    thinkingLabel: { en: "Controller's Thinking", zh: "控制器决策" } as LocalizedString,
+    signalsLabel: { en: "Live Signals", zh: "实时信号" } as LocalizedString,
+    realtimeLabel: { en: "Real-time", zh: "实时" } as LocalizedString,
+    glanceLabel: { en: "At a Glance", zh: "概览" } as LocalizedString,
+    takeawayLabel: { en: "Key Takeaway", zh: "核心要点" } as LocalizedString,
+    humanLabel: { en: "Human Motion", zh: "人体动作" } as LocalizedString,
+    sensesLabel: { en: "Robot Senses", zh: "机器人感知" } as LocalizedString,
+    asksLabel: { en: "Controller Asks", zh: "控制器追问" } as LocalizedString,
+    // The four fixed stages of the controller's reasoning (text differs per phase).
+    thinkingTitles: [
+      { en: "Understand", zh: "理解" },
+      { en: "Evaluate", zh: "评估" },
+      { en: "Ensure Safety", zh: "确保安全" },
+      { en: "Decide", zh: "决策" },
+    ] as LocalizedString[],
     controlLoopAria: {
-      en: "Control loop: Sense, Infer, Decide, Act",
-      zh: "控制回路：感知、推断、决策、执行",
+      en: "Gait-cycle control dashboard",
+      zh: "步态周期控制面板",
     } as LocalizedString,
     timelineAria: { en: "Gait phases", zh: "步态阶段" } as LocalizedString,
+    ref: {
+      en: "Gait-phase terminology follows clinical convention. Wearable robotics concepts draw from real-time prosthetic and exoskeleton control research.",
+      zh: "步态阶段术语遵循临床惯例。可穿戴机器人概念源自实时假肢与外骨骼控制研究。",
+    } as LocalizedString,
+    seeProjects: { en: "See Projects", zh: "查看项目" } as LocalizedString,
   },
 
   journeySection: {

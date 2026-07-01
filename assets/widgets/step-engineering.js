@@ -1,702 +1,798 @@
 (function initStepEngineering() {
   var section = document.getElementById('step-engineering');
   if (!section) return;
+  var dash = section.querySelector('[data-gait-dash]');
+  if (!dash) return;
 
   var isZh   = window.location.pathname.includes('/zh/');
   var gaitAssetRoot = isZh ? '../' : '';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var NS     = 'http://www.w3.org/2000/svg';
-  var TW = 400, TH = 60;
+  var NS = 'http://www.w3.org/2000/svg';
+  var DEFAULT_IDX = 3; // Push-Off
 
-  // Phase x-ranges in the 400px viewBox (proportional to gait cycle %)
-  var PHASE_X = [
-    [{ x:   0, w:  48 }],                  // Heel Strike   0-12%
-    [{ x:  48, w:  76 }],                  // Loading      12-31%
-    [{ x: 124, w:  76 }],                  // Mid-Stance   31-50%
-    [{ x: 200, w:  48 }],                  // Push-Off     50-62%
-    [{ x: 248, w: 152 }],                  // Swing        62-100%
-    [{ x: 386, w:  14 }, { x: 0, w: 14 }]  // Next contact wraps 100% to 0%
+  // ─── SIGNAL TRACES (viewBox 0 0 100 36; lower y = higher value) ─────────────
+  var PLOT = { left: 4, width: 92, top: 5, bottom: 31 };
+  var PHASE_GRID = [0, 12, 31, 50, 62, 100];
+  function signalX(percent) {
+    return PLOT.left + Math.max(0, Math.min(100, percent)) / 100 * PLOT.width;
+  }
+  function signalY(value, min, max) {
+    var t = (Math.max(min, Math.min(max, value)) - min) / (max - min || 1);
+    return PLOT.bottom - t * (PLOT.bottom - PLOT.top);
+  }
+  function signalPath(points, min, max) {
+    var pts = points.map(function (p) {
+      return { x: signalX(p[0]), y: signalY(p[1], min, max) };
+    });
+    if (pts.length < 2) return '';
+
+    var dx = [], slope = [];
+    for (var i = 0; i < pts.length - 1; i++) {
+      dx[i] = pts[i + 1].x - pts[i].x;
+      slope[i] = (pts[i + 1].y - pts[i].y) / (dx[i] || 1);
+    }
+
+    var tangent = [slope[0]];
+    for (var j = 1; j < pts.length - 1; j++) {
+      var prev = slope[j - 1], next = slope[j];
+      if (prev === 0 || next === 0 || prev * next < 0) {
+        tangent[j] = 0;
+      } else {
+        var w1 = 2 * dx[j] + dx[j - 1];
+        var w2 = dx[j] + 2 * dx[j - 1];
+        tangent[j] = (w1 + w2) / (w1 / prev + w2 / next);
+      }
+    }
+    tangent[pts.length - 1] = slope[slope.length - 1];
+
+    var d = 'M' + pts[0].x.toFixed(2) + ',' + pts[0].y.toFixed(2);
+    for (var k = 0; k < pts.length - 1; k++) {
+      var step = dx[k] / 3;
+      var c1x = pts[k].x + step;
+      var c1y = pts[k].y + tangent[k] * step;
+      var c2x = pts[k + 1].x - step;
+      var c2y = pts[k + 1].y - tangent[k + 1] * step;
+      d += ' C' + c1x.toFixed(2) + ',' + c1y.toFixed(2) +
+        ' ' + c2x.toFixed(2) + ',' + c2y.toFixed(2) +
+        ' ' + pts[k + 1].x.toFixed(2) + ',' + pts[k + 1].y.toFixed(2);
+    }
+    return d;
+  }
+
+  var DATA_PITCH = [[0, 8], [10, 5], [20, 4], [31, 3], [42, 2], [50, 1], [56, -2], [62, -1], [68, 5], [78, 9], [88, 11], [100, 8]];
+  var DATA_VGRF = [[0, 0], [5, 45], [12, 95], [18, 118], [24, 124], [31, 102], [40, 72], [48, 84], [54, 102], [57, 108], [60, 88], [62, 38], [66, 0], [100, 0]];
+  var DATA_COP = [[0, 0.06], [8, 0.10], [12, 0.15], [22, 0.25], [31, 0.36], [40, 0.47], [50, 0.62], [54, 0.73], [57, 0.82], [60, 0.89], [62, 0.94]];
+
+  var PATH_PITCH = signalPath(DATA_PITCH, -10, 16);
+  var PATH_VGRF  = signalPath(DATA_VGRF, 0, 130);
+  // COP travels heel→toe through stance, then collapses to 0 once the foot
+  // leaves the ground after push-off (no contact = no centre of pressure).
+  var PATH_COP   = signalPath(DATA_COP, 0, 1);
+
+  // Small line-icon set for the sensor callouts (theme-tinted via currentColor).
+  var I = {
+    signal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="1.8"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7"/><path d="M6 6a8 8 0 0 0 0 12M18 6a8 8 0 0 1 0 12"/></svg>',
+    rotate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4.5h-4.5"/></svg>',
+    load: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v9"/><path d="M8 9.5l4 4 4-4"/><path d="M5 19h14"/></svg>',
+    balance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-2.4 5a3 3 0 0 0 4.8 0z"/><path d="M19 8l-2.4 5a3 3 0 0 0 4.8 0z"/></svg>',
+    speed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a8 8 0 0 1 16 0"/><path d="M12 16l4.5-3.5"/></svg>',
+    clearance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20h14"/><path d="M12 16V5"/><path d="M8 9l4-4 4 4"/></svg>',
+    timing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.2l2.8 1.8"/></svg>',
+    angle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19h14"/><path d="M5 19L18 6"/><path d="M11 19a7 7 0 0 0-1.6-4.4"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.6"/></svg>',
+    symmetry: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M9 8.5L5 12l4 3.5"/><path d="M15 8.5l4 3.5-4 3.5"/></svg>',
+    contact: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4"/><path d="M12 17v4"/><circle cx="12" cy="12" r="3"/><path d="M5 12H3M21 12h-2"/></svg>'
+  };
+
+  var T = {
+    heel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18h14"/><path d="M7 14h5l5 3"/><circle cx="7" cy="14" r="2" fill="currentColor" stroke="none"/></svg>',
+    loading: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v9"/><path d="M8 10l4 4 4-4"/><path d="M5 18h14"/></svg>',
+    stance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M6 19h12"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg>',
+    push: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18h7"/><circle cx="7" cy="18" r="2" fill="currentColor" stroke="none"/><path d="M10 16L19 7"/><path d="M19 7v6"/><path d="M19 7h-6"/></svg>',
+    swing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19h14"/><path d="M7 15c3-3 6-3 10-1"/><path d="M6 16V8"/><path d="M3.5 10.5L6 8l2.5 2.5"/></svg>',
+    reset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a7 7 0 1 0 1 6"/><path d="M18 4v4h-4"/></svg>'
+  };
+  var TIMELINE_ICONS = [T.heel, T.loading, T.stance, T.push, T.swing, T.reset];
+
+  // Index-keyed visual metadata shared across languages. Coordinates are in the
+  // stage overlay space (viewBox 0 0 100 100). `anchors` are the three leg points
+  // the callouts connect to (kept monotonic top→bottom for clean leaders);
+  // `arrow` is the dominant-motion arrow; `tag` is [x, y, anchor] so each phase
+  // can place the motion label in open space around the anatomy/trajectory.
+  var META = [
+    {
+      image: 'heel-strike.webp', band: [0, 12], marker: 6, air: false,
+      arrow: 'M70,32 C73,45 76,58 79,75', tag: [96, 28, 'right'],
+      contact: [73, 86, 27, 46, 0.86],
+      anchors: [[66, 31], [69, 53], [72, 73]], icons: [I.signal, I.timing, I.angle]
+    },
+    {
+      image: 'loading.webp', band: [12, 31], marker: 21, air: false,
+      arrow: 'M78,29 C78,45 79,61 81,78', tag: [95, 22, 'right'],
+      contact: [70, 86, 38, 50, 0.96],
+      anchors: [[60, 31], [62, 53], [67, 74]], icons: [I.load, I.angle, I.contact]
+    },
+    {
+      image: 'mid-stance.webp', band: [31, 50], marker: 40, air: false,
+      arrow: 'M79,77 C76,62 76,45 80,30', tag: [96, 20, 'right'],
+      contact: [69, 86, 37, 48, 0.82],
+      anchors: [[63, 31], [65, 53], [69, 74]], icons: [I.target, I.balance, I.speed]
+    },
+    {
+      image: 'push-off.webp', band: [50, 62], marker: 56, air: false,
+      arrow: 'M62,84 C70,72 80,57 91,42', tag: [94, 21, 'right'],
+      contact: [66, 84, 30, 50, 1],
+      anchors: [[58, 31], [54, 53], [53, 74]], icons: [I.signal, I.load, I.rotate]
+    },
+    {
+      image: 'swing.webp', band: [62, 100], marker: 80, air: true,
+      arrow: 'M58,65 C70,54 82,48 92,43', tag: [94, 27, 'right'],
+      contact: [57, 78, 24, 38, 0.12],
+      anchors: [[58, 34], [60, 53], [62, 68]], icons: [I.clearance, I.rotate, I.timing]
+    },
+    {
+      image: 'next-heel-strike.webp', band: [[96, 100], [0, 4]], marker: 0, air: false,
+      arrow: 'M70,32 C73,45 76,58 79,75', tag: [96, 28, 'right'],
+      contact: [73, 86, 27, 46, 0.86],
+      anchors: [[66, 31], [69, 53], [72, 73]], icons: [I.timing, I.load, I.symmetry]
+    }
   ];
-  var PHASE_COLORS = ['#2b6cff','#00a8e8','#00c2a0','#f59e0b','#7c3aed','#e11d48'];
 
-  // Phase boundary x positions (for grid lines inside each plot)
-  var GRID_X = [48, 124, 200, 248, 386];
-
-  // ─── SIGNAL PATHS (viewBox 0 0 400 60) ───────────────────────────────────
-  //
-  // Foot Pitch: sagittal foot angle over one gait cycle
-  //   near neutral at heel strike → slight drop to flat foot during loading
-  //   gradual rise through stance (increasing plantarflexion)
-  //   strong plantarflexion at push-off → rapid dorsiflexion in swing → recovery
-  var PATH_PITCH = [
-    'M0,28',
-    'C16,29 28,32 48,34',         // heel strike to loading: foot lowers
-    'C72,36 100,38 124,40',       // loading: foot approaches flat
-    'C148,42 176,44 200,47',      // mid-stance: gradual plantarflexion
-    'C214,50 226,53 238,52',      // push-off: plantarflexion peak
-    'C250,48 258,34 268,23',      // early swing: rapid dorsiflexion
-    'C282,12 306,12 332,15',      // mid-swing: clearance
-    'C356,18 382,24 400,27'       // late swing: prepare for next contact
-  ].join(' ');
-
-  // vGRF: vertical ground reaction force — classic walking double-hump
-  //   near-zero at heel strike → first hump (loading) → mid-stance valley
-  //   second hump (push-off) → drop to zero in swing
-  var PATH_VGRF = [
-    'M0,57 L2,57',
-    'C4,42 9,18 18,8',            // heel strike: rapid force rise
-    'C30,4 46,8 62,16',           // loading: first peak then unloading
-    'C86,27 112,34 140,34',       // mid-stance: force valley
-    'C164,33 190,24 205,14',      // terminal stance: rise toward second peak
-    'C218,7 232,12 244,30',       // push-off: second peak and unloading
-    'C252,42 258,53 264,57 L400,57' // swing: foot off ground, force near zero
-  ].join(' ');
-
-
-
-  // ─── DATA ─────────────────────────────────────────────────────────────────
+  // ─── PHASE CONTENT (per language) ───────────────────────────────────────────
   var EN = {
-    intro: 'A single step contains more information than it seems. For wearable robots, each stride is a stream of clues: intent, terrain, balance, timing, and safety. My work focuses on turning those clues into real-time control decisions that feel natural outside the lab.',
-    loopLabel: 'Real-time Control Loop',
-    feedbackLabel: 'closed-loop feedback',
-    loopNodes: [
-      { name:'Sense Motion',   sub:'Multi-modal sensor input',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="2"/><path d="M9.2 9.2a4 4 0 0 0 0 5.6"/><path d="M14.8 9.2a4 4 0 0 1 0 5.6"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4"/><path d="M17.7 6.3a8 8 0 0 1 0 11.4"/></svg>' },
-      { name:'Infer Intent',   sub:'Sit · stand · walk · stairs · speed up · slow down · stop and more',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M12 7v4.5"/><path d="M11 12L6.8 17"/><path d="M13 12L17.2 17"/></svg>' },
-      { name:'Decide Control', sub:'Human-in-the-loop assistance synchronized to motion',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3"/></svg>' },
-      { name:'Assist Motion',  sub:'Smooth, timely motor output',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="3"/><path d="M12 12h7"/><path d="M15.5 9.5l3.5 2.5-3.5 2.5"/></svg>' }
-    ],
-    telemetryTitle: 'Live signals behind each control decision',
-    telemetryCaption: 'Illustrative signals, simplified for visualization.',
     signals: [
-      { name:'Foot Pitch', unit:'deg', color:'#4d8fff', d: PATH_PITCH },
-      { name:'vGRF',       unit:'%BW', color:'#00c2a0', d: PATH_VGRF  }
+      { key: 'pitch', name: 'Foot Pitch', unit: 'deg', color: '#2f7bff', d: PATH_PITCH },
+      { key: 'vgrf', name: 'vGRF (Vertical Ground Reaction Force)', unit: '%BW', color: '#00b894', d: PATH_VGRF },
+      { key: 'cop', name: 'COP Progression (Fore-Aft)', unit: '% Foot Length', color: '#8b5cf6', d: PATH_COP }
     ],
     phases: [
-      { icon:'◉︎', name:'Heel Strike', pct:'0–12%',
-        human:  'The foot contacts the ground. Body weight begins transferring onto the leading leg.',
-        senses: 'Impact timing, rapid force rise, foot orientation, and angular velocity from the IMU.',
-        ctrl:   '"Has stance begun? Is this a normal step, a sudden stop, or an uneven surface?"' },
-      { icon:'⬇︎', name:'Loading', pct:'12–31%',
-        human:  'The body loads onto the foot. The user commits full weight to this step.',
-        senses: 'Force increase rate, IMU pitch change, motor load response, and load distribution.',
-        ctrl:   '"Is the user accelerating, braking, stepping onto a slope, or preparing for stairs?"' },
-      { icon:'◎︎', name:'Mid-Stance', pct:'31–50%',
-        human:  'The center of mass passes directly over the support foot.',
-        senses: 'Stable force plateau, foot orientation, walking speed, and sensor consistency.',
-        ctrl:   '"Is the user maintaining speed? Is terrain changing? Has intent shifted?"' },
-      { icon:'⇒︎', name:'Push-Off', pct:'50–62%',
-        human:  'The trailing foot extends to propel the body forward and upward.',
-        senses: 'Force shift toward toes, heel unloading, ankle rotation, and forward velocity.',
-        ctrl:   '"How much propulsive assistance should be delivered before the foot leaves the ground?"' },
-      { icon:'↗︎', name:'Swing', pct:'62–100%',
-        human:  'The foot clears the ground and swings forward to prepare for next contact.',
-        senses: 'IMU trajectory, estimated stride timing, foot clearance estimate, and step symmetry.',
-        ctrl:   '"Where will contact happen next? Prepare for level ground, ramp, or staircase?"' },
-      { icon:'↺︎', name:'Next Heel Strike', pct:'100%→0%',
-        human:  'The cycle begins again. The foot contacts the ground and a new stride starts.',
-        senses: 'Stride timing, step length, speed change, and bilateral coordination signals.',
-        ctrl:   '"Should the system hold its current behavior, or adapt before the user even notices?"' }
-    ],
-    humanLabel:'Human', sensesLabel:'Robot senses', ctrlLabel:'Controller asks',
-    facts: [
-      { tag:'Control Theory', hook:'A step is not just a step.',  body:'Every stride is a real-time control loop: sense motion, infer intent, update state, and command the actuators — all before the next gait phase arrives.' },
-      { tag:'Timing',         hook:'Intent has a deadline.',      body:'For wearable robots, a decision that is technically correct but arrives late still feels wrong. Latency is not a detail — it is part of the algorithm.' },
-      { tag:'Design',         hook:'Good robotics feels invisible.', body:"The goal is not to make the robot feel powerful. The goal is to make the user feel natural, confident, and in control — even when the system is doing a lot underneath." }
-    ],
-    refHtml: 'Gait-phase terminology follows clinical convention (Rancho Los Amigos). Wearable robotics concepts draw from real-time prosthetic and exoskeleton control research. <a href="#projects">See Projects</a> for related work.'
+      {
+        name: 'Heel Strike', range: '0–12%',
+        callouts: [
+          { t: 'Impact Timing', s: 'Contact detected' },
+          { t: 'Foot Orientation', s: 'Landing angle' },
+          { t: 'Load Rise', s: 'Stance begins' }
+        ],
+        arrow: { label: 'CONTACT', sub: 'Ground entry' },
+        think: [
+          'Has a new stance phase just begun?',
+          'Is the loading rate normal or unusually sharp?',
+          'Is this contact stable and expected?',
+          'Confirm contact and prepare to load.'
+        ],
+        human: 'The foot contacts the ground and the body begins loading the leading leg.',
+        senses: 'Impact timing, load rise, foot orientation, and angular velocity.',
+        asks: 'Has stance begun, and is this a normal landing?',
+        takeaway: 'Heel strike confirms ground contact and prepares the controller for loading.'
+      },
+      {
+        name: 'Loading', range: '12–31%',
+        callouts: [
+          { t: 'Load Transfer', s: 'Weight acceptance' },
+          { t: 'Contact Stability', s: 'Foot support' },
+          { t: 'Deceleration', s: 'Impact absorption' }
+        ],
+        arrow: { label: 'LOAD ACCEPTANCE', sub: 'Support builds' },
+        think: [
+          'Is the user committing full weight to this step?',
+          'How much stabilization does the loading need?',
+          'Is the surface even and the contact secure?',
+          'Stay quiet, stabilize, or adapt to terrain.'
+        ],
+        human: 'Body weight transfers onto the stance foot as impact is absorbed.',
+        senses: 'Rising vertical load, foot pitch change, deceleration, and contact stability.',
+        asks: 'Is the user loading normally, slowing down, or stepping onto uneven terrain?',
+        takeaway: 'Loading response determines whether the robot should stay quiet, stabilize, or adapt.'
+      },
+      {
+        name: 'Mid-Stance', range: '31–50%',
+        callouts: [
+          { t: 'COP Progression', s: 'Midfoot support' },
+          { t: 'Balance State', s: 'Body over foot' },
+          { t: 'Terrain Estimate', s: 'Surface context' }
+        ],
+        arrow: { label: 'BALANCE', sub: 'Support state' },
+        think: [
+          'Is the user balanced and holding speed?',
+          'Is terrain or intent starting to change?',
+          'Is the body stable over the support foot?',
+          'Hold support and track the user’s intent.'
+        ],
+        human: 'The body moves over the stance foot during single-limb support.',
+        senses: 'Center-of-pressure progression, load distribution, stance duration, and body motion.',
+        asks: 'Is the user stable and moving as expected?',
+        takeaway: 'Mid-stance gives the controller its clearest view of balance, support, and terrain.'
+      },
+      {
+        name: 'Push-Off', range: '50–62%',
+        callouts: [
+          { t: 'Toe Loading', s: 'Forefoot pressure' },
+          { t: 'Heel Unloading', s: 'Stance release' },
+          { t: 'Ankle Rotation', s: 'Push-off timing' }
+        ],
+        arrow: { label: 'PROPULSION', sub: 'Forward & upward' },
+        think: [
+          'Is the user preparing to leave the ground?',
+          'How much assist should be delivered?',
+          'Is the timing safe and within limits?',
+          'Deliver assistance at the right amount, right now.'
+        ],
+        human: 'The trailing foot propels the body forward and upward.',
+        senses: 'Toe loading, heel unloading, ankle rotation, and forward velocity.',
+        asks: 'How much assist should be delivered before toe-off?',
+        takeaway: 'Push-off assistance must arrive early enough to feel natural, but not so early that it fights the user.'
+      },
+      {
+        name: 'Swing', range: '62–100%',
+        callouts: [
+          { t: 'Foot Clearance', s: 'Toe safety' },
+          { t: 'Swing Timing', s: 'Step progression' },
+          { t: 'Forward Motion', s: 'Next placement' }
+        ],
+        arrow: { label: 'SWING', sub: 'Clearance & timing' },
+        think: [
+          'Is the foot clearing the ground safely?',
+          'When should the next contact be expected?',
+          'Is the swing trajectory within safe limits?',
+          'Time the landing for a stable next step.'
+        ],
+        human: 'The foot leaves the ground and moves forward for the next step.',
+        senses: 'Foot clearance, angular velocity, forward motion, and swing timing.',
+        asks: 'Is the foot clearing safely, and when will the next contact occur?',
+        takeaway: 'Swing control is about clearance, timing, and preparing for the next stable contact.'
+      },
+      {
+        name: 'Next Heel Strike', range: '100%→0%',
+        callouts: [
+          { t: 'Next Contact', s: 'New step begins' },
+          { t: 'Impact Pattern', s: 'Landing check' },
+          { t: 'State Reset', s: 'Continue or adapt' }
+        ],
+        arrow: { label: 'CYCLE RESET', sub: 'Next contact' },
+        think: [
+          'Is this step closing as expected?',
+          'Did speed, length, or symmetry change?',
+          'Was the step normal, or is recovery needed?',
+          'Reset, continue, or recover for the next stride.'
+        ],
+        human: 'The next foot contact closes one step and starts the next cycle.',
+        senses: 'Contact timing, load transfer, impact pattern, and phase reset.',
+        asks: 'Should the controller continue normally, reset, or recover?',
+        takeaway: 'Each new contact turns the previous step into feedback for the next one.'
+      }
+    ]
   };
 
   var ZH = {
-    intro: '一步之中，信息远比表面丰富。对可穿戴机器人而言，每一步都是一连串信号：意图、地形、平衡、时序与安全。我的工作，就是将这些信号实时转化为让用户感觉自然的控制决策。',
-    loopLabel: '实时控制回路',
-    feedbackLabel: '闭环反馈',
-    loopNodes: [
-      { name:'感知运动',   sub:'多模态传感器输入',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="2"/><path d="M9.2 9.2a4 4 0 0 0 0 5.6"/><path d="M14.8 9.2a4 4 0 0 1 0 5.6"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4"/><path d="M17.7 6.3a8 8 0 0 1 0 11.4"/></svg>' },
-      { name:'推断意图',   sub:'坐 · 站 · 走 · 楼梯 · 加速 · 减速 · 停止等',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M12 7v4.5"/><path d="M11 12L6.8 17"/><path d="M13 12L17.2 17"/></svg>' },
-      { name:'决策控制',   sub:'与运动同步的人在环辅助',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3"/></svg>' },
-      { name:'辅助运动',   sub:'平稳、及时的电机输出',
-        icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="3"/><path d="M12 12h7"/><path d="M15.5 9.5l3.5 2.5-3.5 2.5"/></svg>' }
-    ],
-    telemetryTitle: '每次控制决策背后的实时信号',
-    telemetryCaption: '示意信号，已作简化处理，仅供可视化参考。',
     signals: [
-      { name:'脚部俯仰角', unit:'deg', color:'#4d8fff', d: PATH_PITCH },
-      { name:'垂直地反力', unit:'%BW', color:'#00c2a0', d: PATH_VGRF  }
+      { key: 'pitch', name: '脚部俯仰角', unit: 'deg', color: '#2f7bff', d: PATH_PITCH },
+      { key: 'vgrf', name: '垂直地反力 (vGRF)', unit: '%BW', color: '#00b894', d: PATH_VGRF },
+      { key: 'cop', name: '压力中心推进 (前后)', unit: '%足长', color: '#8b5cf6', d: PATH_COP }
     ],
     phases: [
-      { icon:'◉︎', name:'脚跟触地', pct:'0–12%',
-        human:  '脚接触地面，体重开始向前腿转移。',
-        senses: '冲击时序、力的快速上升、脚部朝向以及 IMU 角速度。',
-        ctrl:   '"是否进入支撑相？这是正常步伐、突然停止，还是不平整地面？"' },
-      { icon:'⬇︎', name:'负重期', pct:'12–31%',
-        human:  '身体重量完全加载到支撑脚，用户将体重投入此步。',
-        senses: '力的增长速率、IMU 俯仰变化、电机负载响应与荷载分布。',
-        ctrl:   '"用户是在加速、减速、踏上坡道，还是准备上楼梯？"' },
-      { icon:'◎︎', name:'站立中期', pct:'31–50%',
-        human:  '质心通过支撑脚正上方。',
-        senses: '稳定的力平台、脚部朝向、行走速度与传感器一致性。',
-        ctrl:   '"用户是否在保持速度？地形是否在变化？意图是否已改变？"' },
-      { icon:'⇒︎', name:'蹬地期', pct:'50–62%',
-        human:  '后脚伸展发力，推动身体向前向上。',
-        senses: '力向脚尖偏移、脚跟卸荷、踝关节旋转与前进速度。',
-        ctrl:   '"在离地前，应施加多少推进辅助力？"' },
-      { icon:'↗︎', name:'摆动期', pct:'62–100%',
-        human:  '脚离地并向前摆动，准备下一次着地。',
-        senses: 'IMU 轨迹、估算步幅时序、脚部离地间隙与步态对称性。',
-        ctrl:   '"下一次着地在哪里？应为平地、坡道还是楼梯做准备？"' },
-      { icon:'↺︎', name:'下次脚跟触地', pct:'100%→0%',
-        human:  '新的步态周期开始，脚再次接触地面，下一步就此展开。',
-        senses: '步频、步长、速度变化与双侧协调信号。',
-        ctrl:   '"系统应保持当前行为，还是在用户察觉前主动适应？"' }
-    ],
-    humanLabel:'人体动作', sensesLabel:'机器人感知', ctrlLabel:'控制器决策',
-    facts: [
-      { tag:'控制理论', hook:'一步不只是一步。',               body:'每一步都是一个实时控制回路：感知运动、推断意图、更新状态、驱动执行器——在下一个步态阶段到来之前全部完成。' },
-      { tag:'时序',     hook:'意图识别有时间窗口。',           body:'对可穿戴机器人而言，技术上正确但来得太晚的决策，体验依然很差。延迟不是细节——它是算法的一部分。' },
-      { tag:'设计哲学', hook:'好的机器人系统，让你感觉不到它的存在。', body:'目标不是让机器人看起来强大，而是让用户感到自然、自信，并始终掌握主动——即便系统在背后默默承担着大量工作。' }
-    ],
-    refHtml: '步态阶段术语参考 Rancho Los Amigos 临床分类。概念来源于实时假肢与外骨骼控制研究。<a href="#projects">查看项目</a>了解相关工作。'
+      {
+        name: '脚跟触地', range: '0–12%',
+        callouts: [
+          { t: '冲击时机', s: '检测到接触' },
+          { t: '足部朝向', s: '落地角度' },
+          { t: '负载上升', s: '支撑开始' }
+        ],
+        arrow: { label: '接触', sub: '进入地面' },
+        think: [
+          '新的支撑相是否已经开始？',
+          '落地冲击是否符合正常步态？',
+          '接触是否稳定且在预期范围内？',
+          '确认触地，并准备进入加载。'
+        ],
+        human: '足部接触地面，身体开始加载前侧腿。',
+        senses: '冲击时机、负载上升、足部朝向和角速度。',
+        asks: '支撑是否已经开始？这是否为正常落地？',
+        takeaway: '脚跟触地确认地面接触，并让控制器为加载做准备。'
+      },
+      {
+        name: '加载期', range: '12–31%',
+        callouts: [
+          { t: '负载转移', s: '承重接受' },
+          { t: '接触稳定性', s: '足部支撑' },
+          { t: '减速', s: '冲击吸收' }
+        ],
+        arrow: { label: '负载接受', sub: '支撑建立' },
+        think: [
+          '用户是否正在正常承重？',
+          '是否需要稳定辅助或地形适应？',
+          '接触是否可靠，冲击是否被吸收？',
+          '保持安静、稳定支撑，或主动适应。'
+        ],
+        human: '身体重量转移到支撑足上，同时吸收落地冲击。',
+        senses: '上升的垂直负载、足部俯仰变化、减速和接触稳定性。',
+        asks: '用户是在正常承重、减速，还是踏上不平整地面？',
+        takeaway: '加载响应决定机器人应保持安静、提供稳定，还是适应地形。'
+      },
+      {
+        name: '站立中期', range: '31–50%',
+        callouts: [
+          { t: '压力中心推进', s: '中足支撑' },
+          { t: '平衡状态', s: '身体位于足上方' },
+          { t: '地形估计', s: '地面环境' }
+        ],
+        arrow: { label: '平衡', sub: '支撑状态' },
+        think: [
+          '用户是否稳定并按预期移动？',
+          '支撑状态是否可靠？',
+          '地形或身体运动是否发生变化？',
+          '维持支撑，并持续估计意图。'
+        ],
+        human: '身体在单腿支撑中越过支撑足。',
+        senses: '压力中心推进、负载分布、支撑时长与身体运动。',
+        asks: '用户是否稳定，并按预期移动？',
+        takeaway: '站立中期让控制器最清楚地观察平衡、支撑和地形。'
+      },
+      {
+        name: '蹬地期', range: '50–62%',
+        callouts: [
+          { t: '脚尖承载', s: '前足压力' },
+          { t: '脚跟卸载', s: '支撑释放' },
+          { t: '踝关节旋转', s: '蹬地时机' }
+        ],
+        arrow: { label: '推进', sub: '向前向上' },
+        think: [
+          '用户是否准备离地？',
+          '应当输出多少辅助力？',
+          '此刻的时机是否安全、是否在限度内？',
+          '此刻就以恰当的力度输出辅助。'
+        ],
+        human: '后侧足部推动身体向前并向上运动。',
+        senses: '脚尖承载、脚跟卸荷、踝关节旋转与前进速度。',
+        asks: '在脚离地前，应施加多少推进力？',
+        takeaway: '蹬地辅助必须来得足够早以显得自然，又足够晚以避免与用户对抗。'
+      },
+      {
+        name: '摆动期', range: '62–100%',
+        callouts: [
+          { t: '足部离地间隙', s: '脚尖安全' },
+          { t: '摆动时序', s: '步态推进' },
+          { t: '前向运动', s: '下一次落点' }
+        ],
+        arrow: { label: '摆动', sub: '离地与时序' },
+        think: [
+          '脚是否安全离地？',
+          '下一次着地预计何时？',
+          '摆动轨迹是否在安全范围内？',
+          '把握落地时机，确保下一步稳定。'
+        ],
+        human: '脚离开地面并向前摆动，为下一步做准备。',
+        senses: '足部离地间隙、角速度、前向运动和摆动时序。',
+        asks: '脚是否安全离地，下一次着地预计何时？',
+        takeaway: '摆动控制关注离地间隙、时序，并为下一次稳定接触做准备。'
+      },
+      {
+        name: '下次脚跟触地', range: '100%→0%',
+        callouts: [
+          { t: '下一次接触', s: '新步伐开始' },
+          { t: '冲击模式', s: '落地检查' },
+          { t: '状态重置', s: '继续或适应' }
+        ],
+        arrow: { label: '周期重置', sub: '下一次接触' },
+        think: [
+          '这一步是否如预期收尾？',
+          '速度、步长或对称性是否改变？',
+          '步态是否正常，还是需要恢复？',
+          '为下一步选择重置、继续或恢复。'
+        ],
+        human: '下一次着地结束这一步，并开启下一个控制周期。',
+        senses: '新的接触时序、负载转移、冲击模式与相位重置。',
+        asks: '控制器应该正常继续、重置，还是进入恢复？',
+        takeaway: '每一次新接触都会把上一步转化为下一步的反馈。'
+      }
+    ]
   };
 
   var d = isZh ? ZH : EN;
+  var phases = d.phases;
 
-  // ─── DOM REFS ─────────────────────────────────────────────────────────────
-  var introEl  = section.querySelector('.stepEngIntro');
-  var loopEl   = section.querySelector('.controlLoop');
-  var tlEl     = section.querySelector('.stepTimeline');
-  var progFill = section.querySelector('.timelineProgressFill');
-  var wavesEl  = section.querySelector('.signalWaves');
-  var seHuman  = section.querySelector('#seHuman');
-  var seSenses = section.querySelector('#seSenses');
-  var seCtrl   = section.querySelector('#seCtrl');
-  var factGrid = section.querySelector('.factGrid');
-  var refEl    = section.querySelector('.stepRef');
-  var stageEl  = section.querySelector('.seStage');
-
-  if (loopEl) loopEl.innerHTML = '';
-  if (tlEl) tlEl.innerHTML = '';
-  if (wavesEl) wavesEl.innerHTML = '';
-  if (factGrid) factGrid.innerHTML = '';
-
-  // ─── INTRO ────────────────────────────────────────────────────────────────
-  if (introEl) introEl.textContent = d.intro;
-
-  // ─── CONTROL LOOP ─────────────────────────────────────────────────────────
-  if (loopEl) {
-    var loopLbl = document.createElement('div');
-    loopLbl.className = 'seLoopLabel';
-    loopLbl.textContent = d.loopLabel;
-    loopEl.appendChild(loopLbl);
-
-    var pipeline = document.createElement('div');
-    pipeline.className = 'seLoopPipeline';
-
-    var nodesRow = document.createElement('div');
-    nodesRow.className = 'seLoopNodesRow';
-
-    d.loopNodes.forEach(function(node) {
-      var wrap = document.createElement('div');
-      wrap.className = 'seLoopNodeWrap';
-
-      var dot = document.createElement('div');
-      dot.className = 'seLoopNodeDot';
-      dot.setAttribute('aria-hidden', 'true');
-      dot.innerHTML = node.icon;
-      wrap.appendChild(dot);
-
-      var nameEl = document.createElement('div');
-      nameEl.className = 'seLoopNodeName';
-      nameEl.textContent = node.name;
-      wrap.appendChild(nameEl);
-
-      var subEl = document.createElement('div');
-      subEl.className = 'seLoopNodeSub';
-      subEl.textContent = node.sub;
-      wrap.appendChild(subEl);
-
-      nodesRow.appendChild(wrap);
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
     });
-
-    // Auto-cycle nodes, same pattern as phase buttons
-    var nodeWraps = Array.prototype.slice.call(nodesRow.querySelectorAll('.seLoopNodeWrap'));
-    var loopIdx = 0;
-    var loopPaused = false;
-    var loopTimer = null;
-
-    function activateNode(idx) {
-      loopIdx = ((idx % nodeWraps.length) + nodeWraps.length) % nodeWraps.length;
-      nodeWraps.forEach(function(n) { n.classList.remove('seActive'); });
-      nodeWraps[loopIdx].classList.add('seActive');
-    }
-
-    function startLoopAuto() {
-      if (reduce) return;
-      clearInterval(loopTimer);
-      loopTimer = setInterval(function() {
-        if (!loopPaused) activateNode(loopIdx + 1);
-      }, 3000);
-    }
-
-    nodeWraps.forEach(function(w, i) {
-      w.addEventListener('mouseenter', function() {
-        loopPaused = true;
-        activateNode(i);
-      });
-      w.addEventListener('mouseleave', function() {
-        setTimeout(function() { loopPaused = false; }, 800);
-      });
-    });
-
-    activateNode(0);
-    startLoopAuto();
-
-    pipeline.appendChild(nodesRow);
-
-    var fb = document.createElement('div');
-    fb.className = 'seLoopFeedback';
-    fb.setAttribute('aria-hidden', 'true');
-    fb.innerHTML =
-      '<div class="seLoopFbLine"></div>' +
-      '<span class="seLoopFbLabel">↺ ' + d.feedbackLabel + '</span>' +
-      '<div class="seLoopFbLine seLoopFbLineR"></div>';
-    pipeline.appendChild(fb);
-
-    loopEl.appendChild(pipeline);
+  }
+  function imgSrc(file) { return gaitAssetRoot + 'public/assets/gait/' + file; }
+  function phaseBands(meta) {
+    return Array.isArray(meta.band[0]) ? meta.band : [meta.band];
+  }
+  function phaseStart(meta) {
+    return phaseBands(meta)[0][0];
   }
 
-  // ─── PHASE BUTTONS ────────────────────────────────────────────────────────
-  var phaseBtns = [];
-  if (tlEl) {
-    d.phases.forEach(function(phase, i) {
+  // ─── REFS ───────────────────────────────────────────────────────────────────
+  var timelineEl = dash.querySelector('[data-gd-timeline]');
+  var stageEl    = dash.querySelector('[data-gd-stage]');
+  var signalsEl  = dash.querySelector('[data-gd-signals]');
+  var thinkEls   = Array.prototype.slice.call(dash.querySelectorAll('[data-think]'));
+  var glanceEls  = {
+    human:  dash.querySelector('[data-glance="human"]'),
+    senses: dash.querySelector('[data-glance="senses"]'),
+    asks:   dash.querySelector('[data-glance="asks"]')
+  };
+  var takeawayEl = dash.querySelector('[data-takeaway]');
+
+  // ─── TIMELINE ───────────────────────────────────────────────────────────────
+  var nodeBtns = [];
+  var lineFill = null;
+  if (timelineEl) {
+    var line = document.createElement('div');
+    line.className = 'gdLine';
+    line.setAttribute('aria-hidden', 'true');
+    line.innerHTML = '<div class="gdLineFill"></div>';
+    timelineEl.appendChild(line);
+    lineFill = line.querySelector('.gdLineFill');
+
+    phases.forEach(function (p, i) {
+      var pct = String(phaseStart(META[i])) + '%';
+      if (i === phases.length - 1) pct = '100%';
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'sePhase';
+      btn.className = 'gdNode';
       btn.setAttribute('role', 'tab');
-      btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
-      btn.setAttribute('aria-label', phase.name);
+      btn.setAttribute('aria-selected', 'false');
+      btn.setAttribute('tabindex', '-1');
+      btn.setAttribute('aria-label', p.name);
       btn.dataset.idx = i;
       btn.innerHTML =
-        '<span class="sePhaseIcon" aria-hidden="true">' + phase.icon + '</span>' +
-        '<span class="sePhaseName">' + phase.name + '</span>' +
-        '<span class="sePhasePct">' + phase.pct + '</span>';
-      tlEl.appendChild(btn);
-      phaseBtns.push(btn);
-      if (i < d.phases.length - 1) {
-        var conn = document.createElement('div');
-        conn.className = 'sePhaseConn';
-        conn.setAttribute('aria-hidden', 'true');
-        tlEl.appendChild(conn);
-      }
+        '<span class="gdNodePct">' + esc(pct) + '</span>' +
+        '<span class="gdNodeDot" aria-hidden="true"></span>' +
+        '<span class="gdNodeAction" aria-hidden="true">' + TIMELINE_ICONS[i] + '</span>' +
+        '<span class="gdNodeName">' + esc(p.name) + '</span>';
+      timelineEl.appendChild(btn);
+      nodeBtns.push(btn);
     });
   }
 
-  // ─── SIGNAL PLOTS ─────────────────────────────────────────────────────────
-  var highlightRects = [];
+  // ─── STAGE ──────────────────────────────────────────────────────────────────
+  var stageImgs = [], stagePhaseEl = null, stageRangeEl = null;
+  var calloutEls = [], arrowLabelEl = null, arrowSubEl = null;
+  var arrowLineEl = null, arrowFillEl = null, arrowCoreEl = null;
+  var arrowGlowEl = null, arrowMainEl = null, arrowTagEl = null, leaderEls = [];
 
-  if (wavesEl) {
-    if (reduce) {
-      wavesEl.hidden = true;
-    } else {
-      var telWrap = document.createElement('div');
-      telWrap.className = 'seTelemetry';
-
-      var telTitle = document.createElement('div');
-      telTitle.className = 'seTelemetryTitle';
-      telTitle.textContent = d.telemetryTitle;
-      telWrap.appendChild(telTitle);
-
-      var telStack = document.createElement('div');
-      telStack.className = 'seTelemetryStack';
-      telWrap.appendChild(telStack);
-
-      d.signals.forEach(function(sig) {
-        var card = document.createElement('div');
-        card.className = 'seSignalCard seSignalCardLarge';
-
-        var hdr = document.createElement('div');
-        hdr.className = 'seCardHeader';
-        hdr.innerHTML =
-          '<span class="seCardName">' + sig.name + '</span>' +
-          '<span class="seCardUnit">' + sig.unit + '</span>';
-
-        var svg = document.createElementNS(NS, 'svg');
-        svg.setAttribute('viewBox', '0 0 ' + TW + ' ' + TH);
-        svg.setAttribute('preserveAspectRatio', 'none');
-        svg.setAttribute('class', 'seTraceSvg seTraceSvgLarge');
-
-        // Phase boundary grid lines
-        GRID_X.forEach(function(gx) {
-          var gl = document.createElementNS(NS, 'line');
-          gl.setAttribute('x1', gx); gl.setAttribute('x2', gx);
-          gl.setAttribute('y1', 0);  gl.setAttribute('y2', TH);
-          gl.setAttribute('stroke', 'currentColor');
-          gl.setAttribute('stroke-width', '0.5');
-          gl.setAttribute('opacity', '0.18');
-          gl.setAttribute('stroke-dasharray', '3 3');
-          svg.appendChild(gl);
-        });
-
-        // Phase highlight rects (updated on phase change; supports wrapped phases)
-        var rectGroup = [];
-        for (var hr = 0; hr < 2; hr++) {
-          var rect = document.createElementNS(NS, 'rect');
-          rect.setAttribute('x', '0');
-          rect.setAttribute('y', '0');
-          rect.setAttribute('width', '0');
-          rect.setAttribute('height', TH);
-          rect.setAttribute('rx', '3');
-          rect.setAttribute('fill', PHASE_COLORS[0]);
-          rect.setAttribute('opacity', '0');
-          rect.setAttribute('class', 'seHighlightRect');
-          svg.appendChild(rect);
-          rectGroup.push(rect);
-        }
-        highlightRects.push(rectGroup);
-
-        // Signal trace
-        var path = document.createElementNS(NS, 'path');
-        path.setAttribute('d', sig.d);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', sig.color);
-        path.setAttribute('stroke-width', '1.8');
-        path.setAttribute('stroke-linecap', 'round');
-        path.setAttribute('stroke-linejoin', 'round');
-        path.setAttribute('class', 'seTracePath');
-        svg.appendChild(path);
-
-        card.appendChild(hdr);
-        card.appendChild(svg);
-        telStack.appendChild(card);
-      });
-
-      // Caption
-      var caption = document.createElement('p');
-      caption.className = 'seTelemetryCaption';
-      caption.textContent = d.telemetryCaption;
-      telWrap.appendChild(caption);
-
-      wavesEl.appendChild(telWrap);
+  // Build a filled, tapered arrow "ribbon" from a cubic centerline path element:
+  // sample the curve, offset both sides by a widening profile, cap with a broad
+  // arrowhead. Returns { fill, core } path data in the 0..100 overlay space.
+  function arrowRibbon(pathEl) {
+    var L = pathEl.getTotalLength();
+    if (!L) return null;
+    var N = 30;
+    var pts = [];
+    for (var i = 0; i <= N; i++) {
+      var sp = pathEl.getPointAtLength(L * i / N);
+      pts.push({ x: sp.x, y: sp.y });
     }
-  }
-
-  // ─── RENDERED GAIT-PHASE STAGE ────────────────────────────────────────────
-  var phaseImages = [];
-  var stagePhaseEl = null, stagePctEl = null;
-  var overlayEls = {};
-  var activeStageIdx = 0;
-  var STAGE_PHASES = [
-    {
-      image:'heel-strike.webp',
-      contactPx:{x:650,y:780,rx:105,ry:16,opacity:.36}, focusPx:{x:650,y:765}, haloPx:{rx:76,ry:34}, callout:{x:88,y:74}, anchor:'start',
-      label:isZh ? 'heel contact' : 'heel contact', air:false
-    },
-    {
-      image:'loading.webp',
-      contactPx:{x:678,y:782,rx:165,ry:16,opacity:.30}, focusPx:{x:678,y:765}, haloPx:{rx:118,ry:34}, callout:{x:82,y:72}, anchor:'start',
-      label:isZh ? 'load transfer' : 'load transfer', air:false
-    },
-    {
-      image:'mid-stance.webp',
-      contactPx:{x:745,y:776,rx:132,ry:16,opacity:.28}, focusPx:{x:745,y:760}, haloPx:{rx:100,ry:32}, callout:{x:318,y:78}, anchor:'end',
-      label:isZh ? 'stable support' : 'stable support', air:false
-    },
-    {
-      image:'push-off.webp',
-      contactPx:{x:770,y:770,rx:58,ry:16,opacity:.42}, focusPx:{x:770,y:758}, haloPx:{rx:62,ry:32}, callout:{x:318,y:74}, anchor:'end',
-      label:isZh ? 'propulsion' : 'propulsion', air:false
-    },
-    {
-      image:'swing.webp',
-      contactPx:{x:582,y:768,rx:58,ry:14,opacity:0}, focusPx:{x:582,y:748}, haloPx:{rx:72,ry:34}, callout:{x:318,y:76}, anchor:'end',
-      label:isZh ? 'clearance' : 'clearance', air:true
-    },
-    {
-      image:'next-heel-strike.webp',
-      contactPx:{x:650,y:780,rx:105,ry:16,opacity:.34}, focusPx:{x:650,y:765}, haloPx:{rx:76,ry:34}, callout:{x:82,y:76}, anchor:'start',
-      label:isZh ? 'next contact' : 'next contact', air:false
+    var headStart = Math.round(N * 0.72);
+    var wTail = 0.7, wBody = 3.4, headW = 6.6;
+    function normalAt(i) {
+      var a = pts[Math.max(0, i - 1)], b = pts[Math.min(N, i + 1)];
+      var tx = b.x - a.x, ty = b.y - a.y;
+      var len = Math.hypot(tx, ty) || 1;
+      return { x: -ty / len, y: tx / len };
     }
-  ];
-
-  function escStage(s) {
-    return String(s).replace(/[&<>"']/g, function(ch) {
-      return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch];
-    });
-  }
-
-  function phaseImageSrc(file) {
-    return gaitAssetRoot + 'public/assets/gait/' + file;
-  }
-
-  function imageFit(img) {
-    var imgRect = img.getBoundingClientRect();
-    var stageRect = stageEl.getBoundingClientRect();
-    var naturalW = img.naturalWidth || 1400;
-    var naturalH = img.naturalHeight || 900;
-    var imageAspect = naturalW / naturalH;
-    var boxAspect = imgRect.width / imgRect.height;
-    var renderW = imgRect.width;
-    var renderH = imgRect.height;
-    var offsetX = 0;
-    var offsetY = 0;
-    if (boxAspect > imageAspect) {
-      renderW = imgRect.height * imageAspect;
-      offsetX = (imgRect.width - renderW) / 2;
-    } else {
-      renderH = imgRect.width / imageAspect;
-      offsetY = (imgRect.height - renderH) / 2;
+    var upper = [], lower = [];
+    for (var j = 0; j <= headStart; j++) {
+      var t = j / headStart;
+      var w = wTail + (wBody - wTail) * Math.pow(t, 0.65);
+      var n = normalAt(j);
+      upper.push({ x: pts[j].x + n.x * w, y: pts[j].y + n.y * w });
+      lower.push({ x: pts[j].x - n.x * w, y: pts[j].y - n.y * w });
     }
-    return {
-      stageRect: stageRect,
-      imgRect: imgRect,
-      naturalW: naturalW,
-      naturalH: naturalH,
-      renderW: renderW,
-      renderH: renderH,
-      offsetX: offsetX,
-      offsetY: offsetY,
-      sx: 400 / stageRect.width,
-      sy: 240 / stageRect.height
-    };
+    var base = pts[headStart], tip = pts[N], nh = normalAt(headStart);
+    var wingU = { x: base.x + nh.x * headW, y: base.y + nh.y * headW };
+    var wingL = { x: base.x - nh.x * headW, y: base.y - nh.y * headW };
+    function fmt(p) { return p.x.toFixed(2) + ',' + p.y.toFixed(2); }
+    var d = 'M' + fmt(upper[0]);
+    for (var u = 1; u < upper.length; u++) d += ' L' + fmt(upper[u]);
+    d += ' L' + fmt(wingU) + ' L' + fmt(tip) + ' L' + fmt(wingL);
+    for (var lo = lower.length - 1; lo >= 0; lo--) d += ' L' + fmt(lower[lo]);
+    d += ' Z';
+    // Gloss core: a slim spine along the centerline up to the arrowhead base.
+    var core = 'M' + fmt(pts[0]);
+    for (var c = 1; c <= headStart; c++) core += ' L' + fmt(pts[c]);
+    return { fill: d, core: core };
   }
-
-  function imagePointToStage(fit, point) {
-    return {
-      x: (fit.imgRect.left - fit.stageRect.left + fit.offsetX + point.x / fit.naturalW * fit.renderW) * fit.sx,
-      y: (fit.imgRect.top - fit.stageRect.top + fit.offsetY + point.y / fit.naturalH * fit.renderH) * fit.sy
-    };
-  }
-
-  function imageSizeToStage(fit, size) {
-    return {
-      x: size.x / fit.naturalW * fit.renderW * fit.sx,
-      y: size.y / fit.naturalH * fit.renderH * fit.sy
-    };
-  }
-
-  function overlayPath(focus, callout, anchor) {
-    var side = anchor === 'end' ? -1 : 1;
-    var c1x = focus.x + side * 38;
-    var c1y = Math.max(92, focus.y - 34);
-    var c2x = callout.x - side * 28;
-    var c2y = callout.y + 8;
-    return 'M' + focus.x.toFixed(1) + ',' + focus.y.toFixed(1) +
-      ' C' + c1x.toFixed(1) + ',' + c1y.toFixed(1) +
-      ' ' + c2x.toFixed(1) + ',' + c2y.toFixed(1) +
-      ' ' + callout.x + ',' + callout.y;
-  }
-
-  function motionArcPath(focus, callout, anchor) {
-    var side = anchor === 'end' ? -1 : 1;
-    var startX = Math.max(56, Math.min(344, focus.x - side * 84));
-    var endX = Math.max(56, Math.min(344, focus.x + side * 78));
-    var y = Math.max(70, Math.min(116, focus.y - 128));
-    var lift = Math.max(48, y - 28);
-    return 'M' + startX.toFixed(1) + ',' + (y + 16).toFixed(1) +
-      ' C' + (startX + side * 38).toFixed(1) + ',' + lift.toFixed(1) +
-      ' ' + (endX - side * 28).toFixed(1) + ',' + lift.toFixed(1) +
-      ' ' + endX.toFixed(1) + ',' + y.toFixed(1);
-  }
-
-  function renderPhaseImage(p, idx) {
-    var phase = d.phases[idx] || d.phases[0];
-    return '<img class="sePhaseImage' + (idx === 0 ? ' seImageActive' : '') + '" src="' + phaseImageSrc(p.image) + '" alt="' + escStage(phase.name + ' lower-limb gait phase render') + '" loading="' + (idx === 0 ? 'eager' : 'lazy') + '" decoding="async" data-phase="' + idx + '"/>';
-  }
-
   if (stageEl) {
-    var imageMarkup = STAGE_PHASES.map(renderPhaseImage).join('');
+    var imgs = META.map(function (m, i) {
+      return '<img class="gdImg' + (i === DEFAULT_IDX ? ' gdImgActive' : '') + '" src="' +
+        imgSrc(m.image) + '" alt="" loading="' + (i === DEFAULT_IDX ? 'eager' : 'lazy') +
+        '" decoding="async" data-i="' + i + '"/>';
+    }).join('');
+    var calloutMarkup = '';
+    for (var ci = 0; ci < 3; ci++) {
+      calloutMarkup +=
+        '<div class="gdCallout gdCallout' + ci + '">' +
+          '<span class="gdCalloutIcon" aria-hidden="true"></span>' +
+          '<span class="gdCalloutText"><strong></strong><span></span></span>' +
+        '</div>';
+    }
+    var leaderMarkup = '';
+    for (var li = 0; li < 3; li++) {
+      leaderMarkup +=
+        '<g class="gdLeader">' +
+          '<line class="gdLeaderLine" x1="0" y1="0" x2="0" y2="0"/>' +
+          '<circle class="gdLeaderDot gdLeaderDotEnd" r="0.9"/>' +
+          '<circle class="gdLeaderHalo" r="3.4"/>' +
+          '<circle class="gdLeaderDot gdLeaderDotLeg" r="1.7"/>' +
+        '</g>';
+    }
     stageEl.innerHTML =
-      '<div class="seGridBackground" aria-hidden="true"></div>' +
-      '<div class="seStageLabel">' +
-        '<span class="seStagePhase"></span>' +
-        '<span class="seStagePct"></span>' +
-      '</div>' +
-      '<div class="seImageStack" aria-hidden="true">' + imageMarkup + '</div>' +
-      '<svg viewBox="0 0 400 240" class="seStageOverlay" preserveAspectRatio="none" aria-hidden="true">' +
-        '<path class="seOverlayArc" d="M78 84 C120 44 198 38 280 70"/>' +
-        '<line class="seOverlayGround" x1="34" y1="214" x2="366" y2="214"/>' +
-        '<ellipse class="seOverlayContact" cx="226" cy="212" rx="28" ry="5"/>' +
-        '<ellipse class="seOverlayHalo" cx="218" cy="204" rx="24" ry="14"/>' +
-        '<circle class="seOverlayMarker" cx="218" cy="204" r="3.6"/>' +
-        '<path class="seOverlayCallout" d="M218,204 C152,160 86,72 86,72"/>' +
-        '<circle class="seOverlayDot" cx="86" cy="72" r="2.4"/>' +
-        '<text class="seOverlayNote" x="86" y="62" text-anchor="start">heel contact</text>' +
-      '</svg>';
-    phaseImages = Array.prototype.slice.call(stageEl.querySelectorAll('.sePhaseImage'));
-    stagePhaseEl = stageEl.querySelector('.seStagePhase');
-    stagePctEl   = stageEl.querySelector('.seStagePct');
-    overlayEls = {
-      arc: stageEl.querySelector('.seOverlayArc'),
-      ground: stageEl.querySelector('.seOverlayGround'),
-      contact: stageEl.querySelector('.seOverlayContact'),
-      halo: stageEl.querySelector('.seOverlayHalo'),
-      marker: stageEl.querySelector('.seOverlayMarker'),
-      callout: stageEl.querySelector('.seOverlayCallout'),
-      dot: stageEl.querySelector('.seOverlayDot'),
-      note: stageEl.querySelector('.seOverlayNote')
-    };
-    phaseImages.forEach(function(img) {
-      img.addEventListener('load', function() { updateStageOverlay(activeStageIdx); });
+      '<div class="gdStageDepth" aria-hidden="true"></div>' +
+      '<div class="gdStageGrid" aria-hidden="true"></div>' +
+      '<div class="gdStageArcs" aria-hidden="true"></div>' +
+      '<div class="gdStageBadge"><span class="gdStagePhase"></span><span class="gdStageRange"></span></div>' +
+      '<div class="gdImageStack" aria-hidden="true">' + imgs + '</div>' +
+      '<div class="gdStageGlow" aria-hidden="true"></div>' +
+      '<div class="gdFootGlow" aria-hidden="true"><span></span><i></i></div>' +
+      '<svg class="gdOverlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
+        '<defs>' +
+          '<linearGradient id="gdArrowGrad" x1="0" y1="1" x2="1" y2="0">' +
+            '<stop offset="0" stop-color="#1f63ff"/>' +
+            '<stop offset="0.5" stop-color="#4d9bff"/>' +
+            '<stop offset="1" stop-color="#8fecff"/>' +
+          '</linearGradient>' +
+          '<marker id="gdArrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">' +
+            '<path d="M0,0 L8,4 L0,8 Z" fill="#8fecff"/>' +
+          '</marker>' +
+        '</defs>' +
+        '<path class="gdProtractor" d="M47,31 A23,23 0 0 1 79,23"/>' +
+        '<g class="gdLeaders">' + leaderMarkup + '</g>' +
+        '<path class="gdArrowFill" d=""/>' +
+        '<path class="gdArrowCore" d=""/>' +
+        '<path class="gdArrowGlow" d=""/>' +
+        '<path class="gdArrowMain" d=""/>' +
+        '<path class="gdArrowLine" d=""/>' +
+      '</svg>' +
+      '<div class="gdArrowTag"><strong class="gdArrowLabel"></strong><span class="gdArrowSub"></span></div>' +
+      '<div class="gdCallouts" aria-hidden="true">' + calloutMarkup + '</div>';
+
+    stageImgs = Array.prototype.slice.call(stageEl.querySelectorAll('.gdImg'));
+    stagePhaseEl = stageEl.querySelector('.gdStagePhase');
+    stageRangeEl = stageEl.querySelector('.gdStageRange');
+    arrowLabelEl = stageEl.querySelector('.gdArrowLabel');
+    arrowSubEl   = stageEl.querySelector('.gdArrowSub');
+    arrowTagEl   = stageEl.querySelector('.gdArrowTag');
+    arrowLineEl  = stageEl.querySelector('.gdArrowLine');
+    arrowFillEl  = stageEl.querySelector('.gdArrowFill');
+    arrowCoreEl  = stageEl.querySelector('.gdArrowCore');
+    arrowGlowEl  = stageEl.querySelector('.gdArrowGlow');
+    arrowMainEl  = stageEl.querySelector('.gdArrowMain');
+    leaderEls = Array.prototype.slice.call(stageEl.querySelectorAll('.gdLeader')).map(function (g) {
+      return {
+        line: g.querySelector('.gdLeaderLine'),
+        legDot: g.querySelector('.gdLeaderDotLeg'),
+        halo: g.querySelector('.gdLeaderHalo'),
+        endDot: g.querySelector('.gdLeaderDotEnd')
+      };
     });
-    window.addEventListener('resize', function() { updateStageOverlay(activeStageIdx); });
+    calloutEls = Array.prototype.slice.call(stageEl.querySelectorAll('.gdCallout')).map(function (el) {
+      return {
+        icon: el.querySelector('.gdCalloutIcon'),
+        title: el.querySelector('strong'),
+        sub: el.querySelector('.gdCalloutText span')
+      };
+    });
   }
+
+  // Point the arrow + the three leader lines at the current phase's anatomy and
+  // place the motion label clear of the arrow.
   function updateStageOverlay(idx) {
-    var p = STAGE_PHASES[idx] || STAGE_PHASES[0];
-    var img = phaseImages[idx] || phaseImages[0];
-    if (!stageEl || !img || !img.getBoundingClientRect) return;
-    var fit = imageFit(img);
-    var focus = imagePointToStage(fit, p.focusPx);
-    var contact = imagePointToStage(fit, { x: p.contactPx.x, y: p.contactPx.y });
-    var contactSize = imageSizeToStage(fit, { x: p.contactPx.rx, y: p.contactPx.ry });
-    var haloSize = imageSizeToStage(fit, { x: p.haloPx.rx, y: p.haloPx.ry });
-    var groundY = p.air ? Math.max(204, contact.y + 8) : contact.y + 5;
-    if (overlayEls.arc) overlayEls.arc.setAttribute('d', motionArcPath(focus, p.callout, p.anchor));
-    if (overlayEls.ground) {
-      overlayEls.ground.setAttribute('y1', groundY.toFixed(1));
-      overlayEls.ground.setAttribute('y2', groundY.toFixed(1));
-    }
-    if (overlayEls.contact) {
-      overlayEls.contact.setAttribute('cx', contact.x.toFixed(1));
-      overlayEls.contact.setAttribute('cy', contact.y.toFixed(1));
-      overlayEls.contact.setAttribute('rx', Math.max(16, contactSize.x).toFixed(1));
-      overlayEls.contact.setAttribute('ry', Math.max(3.5, contactSize.y).toFixed(1));
-      overlayEls.contact.style.opacity = p.contactPx.opacity;
-    }
-    if (overlayEls.halo) {
-      overlayEls.halo.setAttribute('cx', focus.x.toFixed(1));
-      overlayEls.halo.setAttribute('cy', focus.y.toFixed(1));
-      overlayEls.halo.setAttribute('rx', Math.max(18, haloSize.x).toFixed(1));
-      overlayEls.halo.setAttribute('ry', Math.max(8, haloSize.y).toFixed(1));
-    }
-    if (overlayEls.marker) {
-      overlayEls.marker.setAttribute('cx', focus.x.toFixed(1));
-      overlayEls.marker.setAttribute('cy', focus.y.toFixed(1));
-    }
-    if (overlayEls.callout) overlayEls.callout.setAttribute('d', overlayPath(focus, p.callout, p.anchor));
-    if (overlayEls.dot) {
-      overlayEls.dot.setAttribute('cx', p.callout.x);
-      overlayEls.dot.setAttribute('cy', p.callout.y);
-    }
-    if (overlayEls.note) {
-      overlayEls.note.setAttribute('x', p.callout.x);
-      overlayEls.note.setAttribute('y', p.callout.y - 10);
-      overlayEls.note.setAttribute('text-anchor', p.anchor);
-      overlayEls.note.textContent = p.label;
-    }
-  }
-  function setPose(idx) {
-    var p = STAGE_PHASES[idx] || STAGE_PHASES[0];
-    activeStageIdx = idx;
-    phaseImages.forEach(function(img, i) {
-      img.classList.toggle('seImageActive', i === idx);
-    });
-    if (stageEl) {
-      stageEl.classList.toggle('seAirborne', !!p.air);
-      stageEl.classList.remove('sePoseChanged');
-      if (!reduce) {
-        void stageEl.offsetWidth;
-        stageEl.classList.add('sePoseChanged');
+    var meta = META[idx];
+    if (arrowLineEl) {
+      arrowLineEl.setAttribute('d', meta.arrow); // measured centerline
+      if (arrowGlowEl) arrowGlowEl.setAttribute('d', meta.arrow);
+      if (arrowMainEl) arrowMainEl.setAttribute('d', meta.arrow);
+      var ribbon = arrowRibbon(arrowLineEl);
+      if (ribbon) {
+        if (arrowFillEl) arrowFillEl.setAttribute('d', ribbon.fill);
+        if (arrowCoreEl) arrowCoreEl.setAttribute('d', ribbon.core);
       }
     }
-    updateStageOverlay(idx);
-    if (stagePhaseEl) stagePhaseEl.textContent = d.phases[idx].name;
-    if (stagePctEl)   stagePctEl.textContent   = d.phases[idx].pct;
-  }
-
-  function updateDetail(phase) {
-    if (seHuman)  seHuman.innerHTML  = '<h4>' + d.humanLabel  + '</h4><p>' + phase.human  + '</p>';
-    if (seSenses) seSenses.innerHTML = '<h4>' + d.sensesLabel + '</h4><p>' + phase.senses + '</p>';
-    if (seCtrl)   seCtrl.innerHTML   = '<h4>' + d.ctrlLabel   + '</h4><p><em>' + phase.ctrl + '</em></p>';
-  }
-
-  function updatePlots(idx) {
-    var segments = PHASE_X[idx] || PHASE_X[0];
-    var color = PHASE_COLORS[idx];
-    var opac  = idx === 5 ? '0.13' : '0.16';
-    highlightRects.forEach(function(group) {
-      group.forEach(function(r, i) {
-        var px = segments[i];
-        r.setAttribute('x',       px ? px.x : 0);
-        r.setAttribute('width',   px ? px.w : 0);
-        r.setAttribute('fill',    color);
-        r.setAttribute('opacity', px ? opac : 0);
-      });
+    if (arrowTagEl && meta.tag) {
+      arrowTagEl.style.left = meta.tag[0] + '%';
+      arrowTagEl.style.top = meta.tag[1] + '%';
+      arrowTagEl.dataset.anchor = meta.tag[2] || 'center';
+    }
+    if (stageEl && meta.contact) {
+      stageEl.style.setProperty('--gd-contact-x', meta.contact[0] + '%');
+      stageEl.style.setProperty('--gd-contact-y', meta.contact[1] + '%');
+      stageEl.style.setProperty('--gd-contact-w', meta.contact[2] + '%');
+      stageEl.style.setProperty('--gd-contact-h', meta.contact[3] + 'px');
+      stageEl.style.setProperty('--gd-contact-opacity', String(meta.contact[4]));
+    }
+    // The compact callout chips end near 36% of the stage width, so the dotted
+    // leader starts just outside the chip and ends on the anatomy.
+    var CHIP_EDGE = 37;
+    leaderEls.forEach(function (l, i) {
+      var a = meta.anchors[i];
+      if (!a) return;
+      var ax = a[0], ay = a[1];
+      var endX = Math.min(ax - 3, CHIP_EDGE);
+      l.line.setAttribute('x1', ax); l.line.setAttribute('y1', ay);
+      l.line.setAttribute('x2', endX); l.line.setAttribute('y2', ay);
+      l.legDot.setAttribute('cx', ax); l.legDot.setAttribute('cy', ay);
+      l.halo.setAttribute('cx', ax); l.halo.setAttribute('cy', ay);
+      l.endDot.setAttribute('cx', endX); l.endDot.setAttribute('cy', ay);
     });
   }
 
-  // ─── INTERACTION ──────────────────────────────────────────────────────────
-  var activeIdx = 0;
-  var isPaused  = false;
-  var autoTimer = null;
+  // ─── SIGNALS ────────────────────────────────────────────────────────────────
+  var signalParts = [];
+  if (signalsEl) {
+    var guideMarkup = [0.25, 0.5, 0.75].map(function (t) {
+      var y = (PLOT.top + (PLOT.bottom - PLOT.top) * t).toFixed(2);
+      return '<line class="gdSignalGuideLine" x1="' + PLOT.left + '" y1="' + y + '" x2="' + (PLOT.left + PLOT.width) + '" y2="' + y + '"/>';
+    }).join('');
+    var gridMarkup = PHASE_GRID.map(function (pct) {
+      var x = signalX(pct).toFixed(2);
+      return '<line class="gdSignalGridLine" x1="' + x + '" y1="' + PLOT.top + '" x2="' + x + '" y2="' + PLOT.bottom + '"/>';
+    }).join('');
+    d.signals.forEach(function (sig) {
+      var key = sig.key || ['pitch', 'vgrf', 'cop'][signalParts.length] || '';
+      var card = document.createElement('div');
+      card.className = 'gdSignal gdSignal-' + key;
+      card.innerHTML =
+        '<div class="gdSignalHead">' +
+          '<span class="gdSignalName">' + esc(sig.name) + '</span>' +
+          '<span class="gdSignalUnit">' + esc(sig.unit) + '</span>' +
+        '</div>' +
+        '<div class="gdSignalPlot">' +
+          '<svg class="gdSignalSvg" viewBox="0 0 100 36" preserveAspectRatio="none">' +
+            '<g class="gdSignalGuides">' + guideMarkup + '</g>' +
+            '<g class="gdSignalGrid">' + gridMarkup + '</g>' +
+            '<rect class="gdSignalBand" x="0" y="0" width="0" height="36"/>' +
+            '<rect class="gdSignalBand" x="0" y="0" width="0" height="36"/>' +
+            '<path class="gdSignalGlow" d="' + sig.d + '" fill="none" stroke="' + sig.color + '"/>' +
+            '<path class="gdSignalTrace" d="' + sig.d + '" fill="none" stroke="' + sig.color + '"/>' +
+          '</svg>' +
+          '<span class="gdSignalMarker"></span>' +
+        '</div>';
+      signalsEl.appendChild(card);
+      var mk = card.querySelector('.gdSignalMarker');
+      // True round HTML marker (an SVG circle would stretch with the plot).
+      mk.style.background = sig.color;
+      mk.style.boxShadow = '0 0 0 3px ' + sig.color + '2e, 0 0 9px ' + sig.color + '99';
+      signalParts.push({
+        card: card,
+        bands: Array.prototype.slice.call(card.querySelectorAll('.gdSignalBand')),
+        trace: card.querySelector('.gdSignalTrace'),
+        marker: mk,
+        unit: card.querySelector('.gdSignalUnit'),
+        key: key,
+        unitText: sig.unit,
+        color: sig.color
+      });
+    });
+    var axis = document.createElement('div');
+    axis.className = 'gdSignalAxis';
+    axis.setAttribute('aria-hidden', 'true');
+    axis.innerHTML = '<span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>';
+    signalsEl.appendChild(axis);
+  }
 
-  function scrollPhaseInView(btn) {
-    if (!tlEl || !btn) return;
-    var left  = btn.offsetLeft;
-    var right = left + btn.offsetWidth;
-    var vis   = tlEl.clientWidth;
-    var scr   = tlEl.scrollLeft;
-    if (left < scr)             tlEl.scrollLeft = left - 8;
-    else if (right > scr + vis) tlEl.scrollLeft = right - vis + 8;
+  // Find the point on a monotonic-in-x path at a given x (0..100 viewBox units).
+  function pointAtX(path, targetX) {
+    var total = path.getTotalLength();
+    if (!total) return { x: targetX, y: 18 };
+    var lo = 0, hi = total, pt = path.getPointAtLength(total);
+    for (var i = 0; i < 26; i++) {
+      var mid = (lo + hi) / 2;
+      var p = path.getPointAtLength(mid);
+      if (p.x < targetX) lo = mid; else { hi = mid; pt = p; }
+    }
+    return pt;
+  }
+
+  function updateSignals(idx) {
+    var meta = META[idx];
+    var bands = phaseBands(meta);
+    signalParts.forEach(function (s) {
+      var noContact = s.key === 'cop' && meta.air;
+      s.card.classList.toggle('gdSignalNoContact', noContact);
+      s.bands.forEach(function (band, i) {
+        var b = bands[i];
+        if (!b) {
+          band.setAttribute('width', 0);
+          return;
+        }
+        band.setAttribute('x', signalX(b[0]).toFixed(2));
+        band.setAttribute('width', ((Math.max(0, b[1] - b[0]) / 100) * PLOT.width).toFixed(2));
+      });
+      var markerX = signalX(meta.marker);
+      var pt = pointAtX(s.trace, markerX);
+      s.marker.style.left = markerX.toFixed(2) + '%';
+      s.marker.style.top = (pt.y / 36 * 100).toFixed(2) + '%';
+      s.marker.style.opacity = noContact ? '0' : '1';
+      if (s.unit) s.unit.textContent = noContact ? 'no contact' : s.unitText;
+    });
+  }
+
+  // ─── ANIMATION HELPER ───────────────────────────────────────────────────────
+  function flash(el) {
+    if (!el || reduce) return;
+    el.classList.remove('gdSwap');
+    void el.offsetWidth;
+    el.classList.add('gdSwap');
+  }
+
+  // ─── SELECT ─────────────────────────────────────────────────────────────────
+  var activeIdx = DEFAULT_IDX;
+
+  function scrollNodeIntoView(btn) {
+    if (!timelineEl || !btn) return;
+    var left = btn.offsetLeft, right = left + btn.offsetWidth;
+    var scr = timelineEl.scrollLeft, vis = timelineEl.clientWidth;
+    if (left < scr) timelineEl.scrollLeft = left - 12;
+    else if (right > scr + vis) timelineEl.scrollLeft = right - vis + 12;
   }
 
   function selectPhase(idx, isInit) {
-    activeIdx = ((idx % d.phases.length) + d.phases.length) % d.phases.length;
-    phaseBtns.forEach(function(btn, i) {
-      var active = i === activeIdx;
-      btn.setAttribute('aria-selected', active ? 'true' : 'false');
-      btn.setAttribute('tabindex',      active ? '0'    : '-1');
+    activeIdx = ((idx % phases.length) + phases.length) % phases.length;
+    var p = phases[activeIdx];
+    var meta = META[activeIdx];
+
+    nodeBtns.forEach(function (btn, i) {
+      var on = i === activeIdx;
+      btn.classList.toggle('gdNodeActive', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      btn.setAttribute('tabindex', on ? '0' : '-1');
     });
-    updateDetail(d.phases[activeIdx]);
-    updatePlots(activeIdx);
-    setPose(activeIdx);
-    if (progFill) progFill.style.width = ((activeIdx + 1) / d.phases.length * 100) + '%';
-    if (!isInit) scrollPhaseInView(phaseBtns[activeIdx]);
+    if (lineFill) lineFill.style.width = (activeIdx / (phases.length - 1) * 100) + '%';
+
+    if (stageEl) {
+      stageEl.dataset.phase = String(activeIdx);
+      stageImgs.forEach(function (img, i) { img.classList.toggle('gdImgActive', i === activeIdx); });
+      if (stagePhaseEl) stagePhaseEl.textContent = p.name;
+      if (stageRangeEl) stageRangeEl.textContent = p.range;
+      if (arrowLabelEl) arrowLabelEl.textContent = p.arrow.label;
+      if (arrowSubEl) arrowSubEl.textContent = p.arrow.sub;
+      calloutEls.forEach(function (c, i) {
+        var data = p.callouts[i];
+        if (!data) return;
+        if (c.icon && meta.icons[i]) c.icon.innerHTML = meta.icons[i];
+        if (c.title) c.title.textContent = data.t;
+        if (c.sub) c.sub.textContent = data.s;
+      });
+      stageEl.classList.toggle('gdAir', !!meta.air);
+      stageEl.setAttribute('aria-label', p.name + ' — ' + p.range);
+      updateStageOverlay(activeIdx);
+      flash(stageEl);
+    }
+
+    thinkEls.forEach(function (el, i) {
+      if (p.think[i] != null) el.textContent = p.think[i];
+    });
+    if (glanceEls.human)  glanceEls.human.textContent  = p.human;
+    if (glanceEls.senses) glanceEls.senses.textContent = p.senses;
+    if (glanceEls.asks)   glanceEls.asks.textContent   = p.asks;
+    if (takeawayEl) takeawayEl.textContent = p.takeaway;
+    flash(takeawayEl);
+
+    updateSignals(activeIdx);
+    if (!isInit) scrollNodeIntoView(nodeBtns[activeIdx]);
   }
 
-  function startAuto() {
-    if (reduce) return;
-    clearInterval(autoTimer);
-    autoTimer = setInterval(function() {
-      if (!isPaused) selectPhase(activeIdx + 1);
-    }, 3000);
-  }
-
-  phaseBtns.forEach(function(btn, i) {
-    btn.addEventListener('click',      function() { isPaused = true; selectPhase(i); });
-    btn.addEventListener('mouseenter', function() { isPaused = true; selectPhase(i); });
-    btn.addEventListener('mouseleave', function() { setTimeout(function() { isPaused = false; }, 800); });
-    btn.addEventListener('keydown',    function(e) {
+  // ─── INTERACTION ────────────────────────────────────────────────────────────
+  nodeBtns.forEach(function (btn, i) {
+    btn.addEventListener('click', function () { selectPhase(i); });
+    btn.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault(); selectPhase(i + 1); phaseBtns[activeIdx].focus();
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault(); selectPhase(i - 1); phaseBtns[activeIdx].focus();
+        e.preventDefault(); selectPhase(i + 1); nodeBtns[activeIdx].focus();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault(); selectPhase(i - 1); nodeBtns[activeIdx].focus();
+      } else if (e.key === 'Home') {
+        e.preventDefault(); selectPhase(0); nodeBtns[activeIdx].focus();
+      } else if (e.key === 'End') {
+        e.preventDefault(); selectPhase(phases.length - 1); nodeBtns[activeIdx].focus();
       }
     });
   });
 
-  // ─── FACT CARDS ───────────────────────────────────────────────────────────
-  if (factGrid) {
-    d.facts.forEach(function(fact) {
-      var card = document.createElement('div');
-      card.className = 'seFactCard';
-      card.innerHTML =
-        '<div class="seFactTag">'  + fact.tag  + '</div>' +
-        '<div class="seFactHook">' + fact.hook + '</div>' +
-        '<p class="seFactBody">'   + fact.body + '</p>';
-      factGrid.appendChild(card);
-    });
-  }
+  // Recompute marker positions once images/layout settle and on resize.
+  window.addEventListener('resize', function () { updateSignals(activeIdx); });
 
-  if (refEl) refEl.innerHTML = d.refHtml;
-
-  selectPhase(0, true);
-  startAuto();
+  selectPhase(DEFAULT_IDX, true);
 })();
